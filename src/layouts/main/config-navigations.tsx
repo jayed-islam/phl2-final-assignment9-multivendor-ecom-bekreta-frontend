@@ -2,15 +2,15 @@ import { paths } from "../paths";
 
 export const navConfs = [
   {
-    title: "বিভাগ সমূহ",
+    title: "Offers",
     path: paths.root,
   },
   {
-    title: "আমাদের সম্পর্কে",
+    title: "Hot Sale",
     path: paths.root,
   },
   {
-    title: "যোগাযোগ",
+    title: "Contact",
     path: paths.root,
   },
 ];

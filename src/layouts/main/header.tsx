@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import {
   AppBar,
-  Toolbar,
   Typography,
   IconButton,
   Button,
@@ -12,14 +11,10 @@ import {
   ListItem,
   ListItemText,
   Box,
-  Container,
-  Stack,
 } from "@mui/material";
 import { navConfs } from "./config-navigations";
 import Link from "next/link";
-import Image from "next/image";
 import { paths } from "../paths";
-import iqaLogo from "../../../public/assets/logo/iqa-logo-h.svg";
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -34,91 +29,56 @@ const Header = () => {
   return (
     <AppBar
       position="relative"
-      // variant="outlined"
       style={{
         boxShadow:
           "0px 1px 3px 0px rgba(10, 5, 41, 0.10), 0px 1px 2px 0px rgba(10, 5, 41, 0.06)",
-        // zIndex: 99999
       }}
     >
-      <Container
-        disableGutters
-        maxWidth="xl"
-        sx={{
-          maxWidth: 1300,
-        }}
-      >
-        <Toolbar
-          disableGutters
+      <div className="max-w-5xl mx-auto w-full flex items-center justify-between">
+        <Link href={paths.root} className="text-black">
+          Logo
+        </Link>
+        <Box
           sx={{
-            justifyContent: "space-between",
+            display: { xs: "none", md: "flex" },
+            gap: "3.12rem",
+            alignItems: "center",
           }}
         >
-          <Link href={paths.root}>
-            <Image
-              src={iqaLogo}
-              alt="iqa logo horiz."
+          {navConfs.map((route) => (
+            <Link
+              href={route.path}
+              key={route.title}
               style={{
-                width: "14.625rem",
-                height: "2rem",
+                textDecoration: "none",
+                color: "#0A0A0A",
               }}
-            />
-          </Link>
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              gap: "3.12rem",
-              alignItems: "center",
-            }}
-          >
-            {navConfs.map((route) => (
-              <Link
-                href={route.path}
-                key={route.title}
-                style={{
-                  textDecoration: "none",
-                  color: "#0A0A0A",
-                }}
-              >
-                <Typography
-                  color="inherit"
-                  variant="h6"
-                  sx={{
-                    "&:hover": {
-                      textDecoration: "underline",
-                    },
-                  }}
-                >
-                  {route.title}
-                </Typography>
-              </Link>
-            ))}
-            <Stack direction="row" spacing="0.5rem">
-              <Button
+            >
+              <Typography
+                color="inherit"
+                variant="h6"
                 sx={{
-                  bgcolor: "primary.light",
-                  color: "primary.dark",
                   "&:hover": {
-                    bgcolor: "primary.mediumLight",
+                    textDecoration: "underline",
                   },
                 }}
               >
-                দান করুন
-              </Button>
-              <Button>লগ ইন করুন</Button>
-            </Stack>
-          </Box>
+                {route.title}
+              </Typography>
+            </Link>
+          ))}
+          <Button>Login</Button>
+        </Box>
 
-          <IconButton
-            edge="end"
-            color="inherit"
-            sx={{ display: { xs: "block", md: "none" } }}
-            onClick={toggleDrawer(true)}
-          >
-            menu
-          </IconButton>
-        </Toolbar>
-      </Container>
+        <IconButton
+          edge="end"
+          color="inherit"
+          sx={{ display: { xs: "block", md: "none" } }}
+          onClick={toggleDrawer(true)}
+        >
+          menu
+        </IconButton>
+      </div>
 
       {/* Drawer Component */}
       <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
