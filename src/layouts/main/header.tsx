@@ -20,8 +20,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { paths } from "../paths";
 import iqaLogo from "../../../public/assets/logo/iqa-logo-h.svg";
-import SadakahIcon from "@/components/icons/sadakah-icon";
-import UserIcon from "@/components/icons/user-icon";
+
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -96,7 +95,6 @@ const Header = () => {
             ))}
             <Stack direction="row" spacing="0.5rem">
               <Button
-                startIcon={<SadakahIcon />}
                 sx={{
                   bgcolor: "primary.light",
                   color: "primary.dark",
@@ -107,7 +105,7 @@ const Header = () => {
               >
                 দান করুন
               </Button>
-              <Button startIcon={<UserIcon />}>লগ ইন করুন</Button>
+              <Button>লগ ইন করুন</Button>
             </Stack>
           </Box>
 
