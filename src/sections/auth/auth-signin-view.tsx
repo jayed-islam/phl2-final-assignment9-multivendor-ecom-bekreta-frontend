@@ -1,0 +1,152 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
+import { useEffect, useState } from "react";
+
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { alpha, useTheme } from "@mui/material/styles";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { AuthFormValues, authValidationSchema } from "./auth-validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAppDispatch } from "@/redux/hooks";
+import { useLoginMutation } from "@/redux/reducers/auth/authApi";
+import toast from "react-hot-toast";
+import { setToken } from "@/redux/reducers/auth/authSlice";
+import { Alert } from "@mui/material";
+import Link from "next/link";
+import { paths } from "@/layouts/paths";
+import RHFTextField from "@/components/hook-form/rhf-text-field";
+import FormProvider from "@/components/hook-form/form-provider";
+
+// ----------------------------------------------------------------------
+
+export default function LoginView() {
+  const theme = useTheme();
+
+  const router = useRouter();
+
+  const methods = useForm<AuthFormValues>({
+    resolver: zodResolver(authValidationSchema),
+  });
+  const dispatch = useAppDispatch();
+
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = methods;
+
+  const [loginUser, { isLoading }] = useLoginMutation();
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      const response = await loginUser(data).unwrap();
+      if (response.success) {
+        dispatch(setToken(response?.data?.accessToken));
+        toast.success(response.message);
+        router.push(paths.root);
+      } else {
+        toast.error(response.message);
+        setErrorMessage(response.message);
+      }
+    } catch (error: any) {
+      console.error("Error submitting form:", error);
+      toast.error(error.data.message);
+      setErrorMessage(error.data.message);
+    }
+  });
+
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage(null);
+      }, 11000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+
+  const renderForm = (
+    <>
+      <Stack
+        spacing={3}
+        sx={{
+          mt: 3,
+        }}
+      >
+        <RHFTextField label="Email" name="email" />
+        <RHFTextField label="Password" type="password" name="password" />
+      </Stack>
+
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="flex-end"
+        sx={{ my: 3 }}
+      >
+        <Link href="/" className="hover:underline">
+          Forgot password?
+        </Link>
+      </Stack>
+
+      <LoadingButton
+        fullWidth
+        size="large"
+        type="submit"
+        variant="contained"
+        loading={isLoading}
+        color="success"
+      >
+        Login
+      </LoadingButton>
+
+      <Typography variant="body2" sx={{ mt: 2 }} textAlign="center">
+        Don’t have an account?
+        <Link
+          href={paths.signup}
+          className="pl-2 text-green-500 hover:underline"
+        >
+          Get started
+        </Link>
+      </Typography>
+    </>
+  );
+
+  return (
+    <FormProvider methods={methods} onSubmit={onSubmit}>
+      <Box
+        sx={{
+          height: 1,
+        }}
+      >
+        <div className="h-screen">
+          <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
+            <Card
+              sx={{
+                p: 5,
+                width: 1,
+                maxWidth: 420,
+              }}
+            >
+              <Typography variant="h4">Sign in to Deenly</Typography>
+
+              {errorMessage && (
+                <Alert severity="error" sx={{ mt: 3 }}>
+                  {errorMessage}
+                </Alert>
+              )}
+
+              {renderForm}
+            </Card>
+          </Stack>
+        </div>
+      </Box>
+    </FormProvider>
+  );
+}

@@ -17,7 +17,7 @@ export const PermissionGuard: FC<PermissionGuardProp> = ({
   const { user } = useAppSelector((state) => state.auth);
 
   const isPermitted =
-    user?.role === "superAdmin" || roles.some((role) => user?.role === role);
+    user?.role === "admin" || roles.some((role) => user?.role === role);
 
   if (!isPermitted) {
     return hasContent ? (

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import { Noto_Sans_Bengali } from "next/font/google";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import "./globals.css";
 import MuiThemeProvider from "@/theme/MuiThemeProvider";
+import { ReduxProvider } from "@/redux/ReduxProvider";
 
 const notoSansBengali = Noto_Sans_Bengali({
   subsets: ["bengali"],
@@ -26,7 +26,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${notoSansBengali.className} antialiased`}>
         <AppRouterCacheProvider>
-          <MuiThemeProvider>{children}</MuiThemeProvider>
+          <MuiThemeProvider>
+            <ReduxProvider>{children}</ReduxProvider>
+          </MuiThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

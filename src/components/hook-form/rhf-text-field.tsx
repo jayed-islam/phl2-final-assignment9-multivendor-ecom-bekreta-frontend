@@ -1,71 +1,81 @@
-import { Controller, useFormContext } from "react-hook-form";
-import { ReactNode } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { IconButton, TextField, TextFieldProps } from "@mui/material";
+import React from "react";
+import { useFormContext, Controller } from "react-hook-form";
 
-type RHFTextFieldProps = {
+type Props = TextFieldProps & {
   name: string;
-  type?: string;
-  placeholder?: string;
-  helperText?: string;
-  icon?: ReactNode;
-  className?: string;
+  readOnly?: boolean;
 };
 
-export default function RHFTextField({
+const RHFTextField: React.FC<Props> = ({
   name,
-  type = "text",
-  placeholder,
+  type,
   helperText,
-  icon,
-  className,
-}: RHFTextFieldProps) {
-  const { control } = useFormContext();
+  disabled,
+  readOnly = false,
+  ...others
+}) => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
 
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <div>
-          <div
-            className={`relative flex items-start h-[3.25rem] rounded-[0.625rem] w-full flex-col ${className}`}
-          >
-            {icon && (
-              <span className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                {icon}
-              </span>
-            )}
-            <input
-              {...field}
-              type={type}
-              placeholder={placeholder}
-              className={`h-[3.25rem] w-full px-4 pl-12 rounded-[0.625rem] border outline-none 
-              ${
-                error
-                  ? "border-red-500 focus:ring-red-600 focus:border-red-500"
-                  : "border-gray-300 focus:ring-primary focus:border-primary"
-              } 
-              focus:ring-1`}
-              onChange={(event) => {
-                if (type === "number") {
-                  field.onChange(Number(event.target.value));
-                } else {
-                  field.onChange(event.target.value);
+        <TextField
+          variant="outlined"
+          {...field}
+          type={showPassword ? "text" : type}
+          value={type === "number" && field.value === 0 ? "" : field.value}
+          fullWidth
+          onChange={(event) => {
+            if (type === "number") {
+              field.onChange(Number(event.target.value));
+            } else {
+              field.onChange(event.target.value);
+            }
+          }}
+          disabled={disabled}
+          inputProps={
+            disabled || readOnly ? { style: { cursor: "not-allowed" } } : {}
+          }
+          error={!!error}
+          helperText={error ? error.message : helperText}
+          {...others}
+          InputProps={
+            type === "password"
+              ? {
+                  endAdornment: (
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  ),
                 }
-              }}
-            />
-          </div>
-          {helperText && !error && (
-            <p className="mt-1 text-sm text-gray-500 font-inter">
-              {helperText}
-            </p>
-          )}
-          {error && (
-            <p className="mt-1 text-xs text-red-600 font-inter">
-              {error.message}
-            </p>
-          )}
-        </div>
+              : undefined
+          }
+        />
       )}
     />
   );
-}
+};
+
+export default RHFTextField;

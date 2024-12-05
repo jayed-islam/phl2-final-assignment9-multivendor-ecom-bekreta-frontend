@@ -1,4 +1,7 @@
-import { paths } from "../layout/paths";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prefer-const */
+
+import { paths } from "@/layouts/paths";
 
 function jwtDecode(token: string) {
   const [_, base64Url, signature] = token.split(".");
