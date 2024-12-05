@@ -34,10 +34,10 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
           open={isSidebarOpen || isDesktop}
           onClose={toggleSidebar}
           sx={{
-            width: 240,
+            width: 265,
             flexShrink: 0,
             "& .MuiDrawer-paper": {
-              width: 240,
+              width: 265,
               boxSizing: "border-box",
             },
           }}
@@ -50,7 +50,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
           component="main"
           className="flex-1 bg-gray-50 p-4"
           sx={{
-            ml: isDesktop && isSidebarOpen ? "240px" : "0",
+            ml: isDesktop && isSidebarOpen ? "265px" : "0",
             transition: "margin 0.3s",
           }}
         >

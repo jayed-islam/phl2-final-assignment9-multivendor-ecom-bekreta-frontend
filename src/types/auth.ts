@@ -1,3 +1,5 @@
+import { IUser } from "./user";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface LoginRequest {
   email: string;
@@ -7,18 +9,6 @@ export interface LoginRequest {
 export interface RegisterRequest {
   email: string;
   password: string;
-}
-
-export interface IUser {
-  _id: string;
-  email: string;
-  role: string;
-  name: string;
-  addresses: any[];
-  isDeleted: boolean;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
 }
 
 export interface AuthData {

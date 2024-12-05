@@ -18,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
           <ListItem
             key={route.path}
             onClick={() => router.push(route.path)}
-            className="hover:bg-gray-200 rounded-lg"
+            className="hover:bg-gray-200 rounded-lg cursor-pointer"
           >
             <ListItemIcon>{route.icon}</ListItemIcon>
             <ListItemText primary={route.name} />

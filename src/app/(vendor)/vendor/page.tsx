@@ -1,7 +1,8 @@
+import VendorAccountView from "@/sections/account/vendor-account-view";
 import React from "react";
 
 const Page = () => {
-  return <div>Vendor Home Page</div>;
+  return <VendorAccountView />;
 };
 
 export default Page;

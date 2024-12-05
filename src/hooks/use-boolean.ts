@@ -1,37 +1,16 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { BooleanState } from "@/types/utils";
+import { useCallback, useState } from "react";
 
-// ----------------------------------------------------------------------
+const useBoolean = (initialValue?: boolean): BooleanState => {
+  const [value, setValue] = useState(!!initialValue);
 
-interface ReturnType {
-  value: boolean;
-  onTrue: () => void;
-  onFalse: () => void;
-  onToggle: () => void;
-  setValue: React.Dispatch<React.SetStateAction<boolean>>;
-}
+  const setTrue = useCallback(() => setValue(true), []);
+  const setFalse = useCallback(() => setValue(false), []);
+  const toggle = useCallback(() => setValue((prevValue) => !prevValue), []);
 
-export function useBoolean(defaultValue?: boolean): ReturnType {
-  const [value, setValue] = useState(!!defaultValue);
+  return { value, setTrue, setFalse, toggle, setValue };
+};
 
-  const onTrue = useCallback(() => {
-    setValue(true);
-  }, []);
-
-  const onFalse = useCallback(() => {
-    setValue(false);
-  }, []);
-
-  const onToggle = useCallback(() => {
-    setValue((prev) => !prev);
-  }, []);
-
-  return {
-    value,
-    onTrue,
-    onFalse,
-    onToggle,
-    setValue,
-  };
-}
+export default useBoolean;

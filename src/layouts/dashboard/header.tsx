@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
           fontWeight: "bold",
           flex: 1,
           textAlign: isDesktop ? "left" : "center",
-          ml: isDesktop ? "240px" : "0",
+          ml: isDesktop ? "265px" : "0",
         }}
       >
         Dashboard

@@ -4,11 +4,11 @@ import {
   IAuthLoginResponse,
   IGetMeResponse,
   IRegisterResponse,
-  IUser,
   LoginRequest,
   RegisterRequest,
 } from "@/types/auth";
 import { setAuthLoading, setUser } from "./authSlice";
+import { IUser } from "@/types/user";
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
