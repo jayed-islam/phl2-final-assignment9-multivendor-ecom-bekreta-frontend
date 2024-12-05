@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dialog, Divider, IconButton } from "@mui/material";
-import "react-quill/dist/quill.snow.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAppSelector } from "@/redux/hooks";
 import toast from "react-hot-toast";
@@ -12,7 +11,7 @@ import { LoadingButton } from "@mui/lab";
 import { BooleanState } from "@/types/utils";
 import FormProvider from "@/components/hook-form/form-provider";
 import RHFTextField from "@/components/hook-form/rhf-text-field";
-import { useUpdateVendorProfileMutation } from "@/redux/reducers/vendor/vendorSlice";
+import { useUpdateVendorProfileMutation } from "@/redux/reducers/vendor/vendorApi";
 
 export const profileUpdateSchema = z.object({
   shopName: z.string().optional(),
@@ -27,6 +26,8 @@ interface Props {
 
 const UpdateVendorProfileDilaog = ({ dialog }: Props) => {
   const { user } = useAppSelector((state) => state.auth);
+
+  console.log("user", user);
 
   const methods = useForm({
     resolver: zodResolver(profileUpdateSchema),
@@ -47,6 +48,7 @@ const UpdateVendorProfileDilaog = ({ dialog }: Props) => {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log("ddd", data);
     const payload: any = { _id: user?.vendor._id };
 
     if (data.shopName && data.shopName !== user.vendor?.shopName) {
@@ -83,10 +85,7 @@ const UpdateVendorProfileDilaog = ({ dialog }: Props) => {
       open={dialog.value}
       onClose={dialog.setFalse}
       fullWidth
-      sx={{
-        maxWidth: 600,
-        margin: "auto",
-      }}
+      maxWidth="xs"
     >
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <div className="w-full relative p-5">
@@ -108,7 +107,6 @@ const UpdateVendorProfileDilaog = ({ dialog }: Props) => {
             </h3>
           </div>
 
-          <Divider />
           <div className="flex flex-col gap-3">
             <RHFTextField name="shopName" label="Shop name" />
             <RHFTextField name="address" label="Address" />

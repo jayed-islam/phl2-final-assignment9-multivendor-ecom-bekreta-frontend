@@ -3,13 +3,16 @@
 import React from "react";
 import { Box, Typography, Card, Button, Grid, Avatar } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
-import UpdateVendorProfileDilaog from "./update-my-profile";
+import UpdateVendorProfileDilaog from "./update-vendor-profile";
 import useBoolean from "@/hooks/use-boolean";
+import { useAppSelector } from "@/redux/hooks";
+import LogoPicker from "./logo-picker";
 
 const VendorAccountView = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const dialog = useBoolean();
+  const { user } = useAppSelector((state) => state.auth);
 
   return (
     <Box
@@ -46,27 +49,25 @@ const VendorAccountView = () => {
               gap: 3,
             }}
           >
-            <Avatar
-              alt="Shop Logo"
-              src="/shop-logo-placeholder.png"
-              sx={{
-                width: 95,
-                height: 95,
-              }}
-            />
+            <LogoPicker />
             <Box>
               <Typography variant="h5" fontWeight="bold">
-                Vendor Shop Name
+                {(user && user?.vendor?.shopName) ?? "Change Shop Name"}
               </Typography>
               <Typography variant="body1" color="textSecondary" mt={1}>
                 Welcome to our shop! We offer the best products at amazing
                 prices.
               </Typography>
               <Typography variant="body2" color="textSecondary" mt={1}>
-                <strong>Contact:</strong> +123 456 7890
+                <strong>Contact:</strong>{" "}
+                {(user && user?.vendor?.contactPhone) ?? "N/A"}
               </Typography>
               <Typography variant="body2" color="textSecondary" mt={1}>
-                <strong>Email:</strong> shop@example.com
+                <strong>Email:</strong> {(user && user?.vendor?.email) ?? "N/A"}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" mt={1}>
+                <strong>Address:</strong>{" "}
+                {(user && user?.vendor?.address) ?? "N/A"}
               </Typography>
               <Button
                 variant="contained"

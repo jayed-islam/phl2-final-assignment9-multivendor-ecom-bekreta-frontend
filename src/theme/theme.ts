@@ -85,15 +85,15 @@ const options: ThemeOptions = {
     primary: colors.primary,
     secondary: colors.secondary,
   },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 300,
-      md: 660,
-      lg: 855,
-      xl: 1296,
-    },
-  },
+  // breakpoints: {
+  //   values: {
+  //     xs: 0,
+  //     sm: 300,
+  //     md: 660,
+  //     lg: 855,
+  //     xl: 1296,
+  //   },
+  // },
   components: {
     MuiCssBaseline: {},
     MuiContainer: {
@@ -186,13 +186,13 @@ const options: ThemeOptions = {
       styleOverrides: {
         root: {
           "& .MuiInputBase-root": {
-            padding: "18px 24px",
+            padding: "18px 12px",
             borderRadius: "0.75rem",
             fontSize: "16px",
             fontWeight: 400,
           },
           "& .MuiOutlinedInput-root": {
-            padding: "0px 24px",
+            padding: "0px 12px",
             "& fieldset": {
               borderColor: colors.gray[200],
             },

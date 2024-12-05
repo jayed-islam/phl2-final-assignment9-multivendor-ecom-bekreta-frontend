@@ -10,12 +10,24 @@ export const vendorApi = api.injectEndpoints({
     >({
       query: ({ _id, ...data }) => ({
         url: `/vendor/${_id}`,
-        method: "POST",
+        method: "PUT",
         body: data,
+      }),
+      invalidatesTags: ["user-me"],
+    }),
+    updateVandorLogo: builder.mutation<
+      IGetUpdateVendorProfileResponse,
+      { body: FormData; id: string }
+    >({
+      query: ({ id, body }) => ({
+        url: `/vendor/logo/${id}`,
+        method: "PUT",
+        body,
       }),
       invalidatesTags: ["user-me"],
     }),
   }),
 });
 
-export const { useUpdateVendorProfileMutation } = vendorApi;
+export const { useUpdateVendorProfileMutation, useUpdateVandorLogoMutation } =
+  vendorApi;
