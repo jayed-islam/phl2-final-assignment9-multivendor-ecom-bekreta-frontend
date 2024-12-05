@@ -4,6 +4,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import "./globals.css";
 import MuiThemeProvider from "@/theme/MuiThemeProvider";
 import { ReduxProvider } from "@/redux/ReduxProvider";
+import { Toaster } from "react-hot-toast";
 
 const notoSansBengali = Noto_Sans_Bengali({
   subsets: ["bengali"],
@@ -27,7 +28,10 @@ export default function RootLayout({
       <body className={`${notoSansBengali.className} antialiased`}>
         <AppRouterCacheProvider>
           <MuiThemeProvider>
-            <ReduxProvider>{children}</ReduxProvider>
+            <ReduxProvider>
+              <Toaster />
+              {children}
+            </ReduxProvider>
           </MuiThemeProvider>
         </AppRouterCacheProvider>
       </body>

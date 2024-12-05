@@ -42,6 +42,7 @@ export default function SignUpView() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       const response = await createUser(data).unwrap();
+      console.log("res", response);
       if (response.success) {
         toast.success(response.message);
         router.push(paths.signin);
@@ -69,24 +70,52 @@ export default function SignUpView() {
 
   const renderForm = (
     <>
-      <Stack direction="row" spacing={2} sx={{ my: 3 }}>
+      <Typography
+        variant="body1"
+        sx={{
+          mt: 3,
+        }}
+      >
+        Choose Account Type
+      </Typography>
+      <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
         <Button
           variant={role === "customer" ? "contained" : "outlined"}
-          onClick={() => methods.setValue("role", "customer")}
+          onClick={() => {
+            methods.setValue("role", "customer");
+            methods.clearErrors("role");
+          }}
         >
           Customer
         </Button>
         <Button
           variant={role === "vendor" ? "contained" : "outlined"}
-          onClick={() => methods.setValue("role", "vendor")}
+          onClick={() => {
+            methods.setValue("role", "vendor");
+            methods.clearErrors("role");
+          }}
         >
           Vendor
         </Button>
       </Stack>
+
+      {errors.role?.message && (
+        <Typography
+          variant="body2"
+          color="error"
+          sx={{
+            mt: 1,
+          }}
+        >
+          {errors.role.message}
+        </Typography>
+      )}
+
       <Stack
         spacing={3}
         sx={{
-          my: 3,
+          mt: 5,
+          mb: 3,
         }}
       >
         <RHFTextField label="Email" name="email" />
@@ -132,7 +161,9 @@ export default function SignUpView() {
                 maxWidth: 420,
               }}
             >
-              <Typography variant="h4">Register to Deenly</Typography>
+              <Typography variant="h3" textAlign="center">
+                Sign Up
+              </Typography>
 
               {errorMessage && (
                 <Alert severity="error" sx={{ mt: 3 }}>

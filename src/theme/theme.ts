@@ -42,7 +42,7 @@ const options: ThemeOptions = {
     },
     h3: {
       fontSize: "1.75rem",
-      fontWeight: 400,
+      fontWeight: 700,
     },
     h4: {
       fontSize: "1.5rem",
@@ -113,11 +113,11 @@ const options: ThemeOptions = {
       styleOverrides: {
         root: {
           backgroundColor: "#fff",
-          boxShadow: "none",
           height: "5.5rem",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "space-between",
+          color: "#000",
         },
       },
     },

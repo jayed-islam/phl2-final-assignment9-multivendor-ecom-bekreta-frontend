@@ -51,7 +51,11 @@ export default function LoginView() {
       if (response.success) {
         dispatch(setToken(response?.data?.accessToken));
         toast.success(response.message);
-        router.push(paths.root);
+        if (response?.data?.user?.role === "vendor") {
+          router.push(paths.vendor.root);
+        } else {
+          router.push(paths.root);
+        }
       } else {
         toast.error(response.message);
         setErrorMessage(response.message);
@@ -77,7 +81,7 @@ export default function LoginView() {
       <Stack
         spacing={3}
         sx={{
-          mt: 3,
+          mt: 5,
         }}
       >
         <RHFTextField label="Email" name="email" />
@@ -110,9 +114,9 @@ export default function LoginView() {
         Don’t have an account?
         <Link
           href={paths.signup}
-          className="pl-2 text-green-500 hover:underline"
+          className="pl-2 text-green-600 hover:underline"
         >
-          Get started
+          Register
         </Link>
       </Typography>
     </>
@@ -132,9 +136,12 @@ export default function LoginView() {
                 p: 5,
                 width: 1,
                 maxWidth: 420,
+                borderRadius: "2rem",
               }}
             >
-              <Typography variant="h4">Sign in to Deenly</Typography>
+              <Typography variant="h3" textAlign="center">
+                Sign In
+              </Typography>
 
               {errorMessage && (
                 <Alert severity="error" sx={{ mt: 3 }}>

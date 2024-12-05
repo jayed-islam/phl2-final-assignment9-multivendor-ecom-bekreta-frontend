@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FC } from "react";
 import { Container, Typography } from "@mui/material";
 import { useAppSelector } from "@/redux/hooks";
