@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import {
   Avatar,
@@ -10,9 +11,7 @@ import { PhotoCamera } from "@mui/icons-material";
 import { useUpdateVandorLogoMutation } from "@/redux/reducers/vendor/vendorApi";
 import { useAppSelector } from "@/redux/hooks";
 
-interface LogoPickerProps {}
-
-const LogoPicker: React.FC<LogoPickerProps> = ({}) => {
+const LogoPicker = ({}) => {
   const { user } = useAppSelector((state) => state.auth);
   const [logo, setLogo] = useState((user && user?.vendor?.logo) ?? null);
 

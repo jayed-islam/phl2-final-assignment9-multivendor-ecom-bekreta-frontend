@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 
 import { routes } from "./config-navigation";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { logout } from "@/redux/reducers/auth/authSlice";
 
@@ -19,6 +19,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ role }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -30,7 +31,11 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
           <ListItem
             key={route.path}
             onClick={() => router.push(route.path)}
-            className="hover:bg-gray-200 rounded-lg cursor-pointer"
+            className={`cursor-pointer mb-2 rounded-lg ${
+              pathname === route.path
+                ? "bg-gray-200 text-white"
+                : "hover:bg-gray-300"
+            }`}
           >
             <ListItemIcon>{route.icon}</ListItemIcon>
             <ListItemText primary={route.name} />

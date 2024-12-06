@@ -48,7 +48,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
         {/* Page Content */}
         <Box
           component="main"
-          className="flex-1 bg-gray-50 p-4"
+          className="flex-1 bg-gray-50 p-4 h-screen"
           sx={{
             ml: isDesktop && isSidebarOpen ? "265px" : "0",
             transition: "margin 0.3s",
