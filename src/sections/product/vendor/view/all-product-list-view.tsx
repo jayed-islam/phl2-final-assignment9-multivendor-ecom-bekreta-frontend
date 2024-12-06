@@ -21,6 +21,9 @@ import {
 import { FilterList, Add } from "@mui/icons-material";
 import { useGetAllProductForAdminQuery } from "@/redux/reducers/product/productApi";
 import { useAppSelector } from "@/redux/hooks";
+import { useRouter } from "next/navigation";
+import { paths } from "@/layouts/paths";
+import ProductRow from "../product-row";
 
 const TableShimmer = () => {
   const rows = 5;
@@ -60,6 +63,7 @@ const VendorAllProductListView = () => {
   const [isOldestFirst, setIsOldestFirst] = useState(false);
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
+  const router = useRouter();
 
   const { data, isFetching } = useGetAllProductForAdminQuery({
     category,
@@ -98,6 +102,7 @@ const VendorAllProductListView = () => {
           color="primary"
           size="large"
           startIcon={<Add />}
+          onClick={() => router.push(paths.vendor.product.create)}
         >
           Create New Product
         </Button>
@@ -152,6 +157,7 @@ const VendorAllProductListView = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Product Name</TableCell>
+                  <TableCell>Banner</TableCell>
                   <TableCell>Category</TableCell>
                   <TableCell>Price</TableCell>
                   <TableCell>Stock</TableCell>
@@ -161,20 +167,7 @@ const VendorAllProductListView = () => {
               <TableBody>
                 {data && data?.data?.products?.length > 0 ? (
                   data?.data?.products.map((product) => (
-                    <TableRow key={product._id}>
-                      <TableCell>{product.name}</TableCell>
-                      <TableCell>{product.category}</TableCell>
-                      <TableCell>${product.price}</TableCell>
-                      <TableCell>{product.inventoryCount}</TableCell>
-                      <TableCell>
-                        <Button size="small" variant="text" color="primary">
-                          Edit
-                        </Button>
-                        <Button size="small" variant="text" color="secondary">
-                          Delete
-                        </Button>
-                      </TableCell>
-                    </TableRow>
+                    <ProductRow product={product} key={product._id} />
                   ))
                 ) : (
                   <TableRow>

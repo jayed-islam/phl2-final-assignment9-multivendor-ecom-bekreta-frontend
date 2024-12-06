@@ -28,7 +28,6 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* Main Content */}
       <Box sx={{ display: "flex" }}>
-        {/* Sidebar */}
         <Drawer
           variant={isDesktop ? "persistent" : "temporary"}
           open={isSidebarOpen || isDesktop}

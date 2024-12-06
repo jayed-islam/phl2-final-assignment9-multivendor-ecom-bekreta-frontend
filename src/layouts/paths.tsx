@@ -4,5 +4,9 @@ export const paths = {
   signup: "/auth/signup",
   vendor: {
     root: "/vendor",
+    product: {
+      root: "/vendor/products",
+      create: "/vendor/products/create",
+    },
   },
 };

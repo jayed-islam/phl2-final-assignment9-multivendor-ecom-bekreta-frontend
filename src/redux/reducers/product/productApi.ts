@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { api } from "@/redux/api";
 import { IPagination, IProduct } from "@/types/product";
-import { IGetUpdateVendorProfileResponse, IVendor } from "@/types/vendor";
 
 export type IProductFilterOptions = {
   page?: number;
@@ -22,6 +21,12 @@ interface IGetAllProductListResponse {
   };
 }
 
+interface IGetSingleProduct {
+  success: boolean;
+  message: string;
+  data: IProduct;
+}
+
 export const productApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllProductForAdmin: builder.query<
@@ -33,8 +38,48 @@ export const productApi = api.injectEndpoints({
         method: "POST",
         body: options,
       }),
+      providesTags: ["admin-products"],
+    }),
+    createProduct: builder.mutation<IGetSingleProduct, FormData>({
+      query: (body) => ({
+        url: `/product`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["admin-products"],
+    }),
+    updateProduct: builder.mutation<
+      IGetSingleProduct,
+      { id: string; data: Partial<IProduct> }
+    >({
+      query: ({ id, data }) => ({
+        url: `/product/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["admin-products"],
+    }),
+    softDeleteProduct: builder.mutation<IGetSingleProduct, { id: string }>({
+      query: ({ id }) => ({
+        url: `/product/delete/${id}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["admin-products"],
+    }),
+    duplicateProduct: builder.mutation<IGetSingleProduct, { id: string }>({
+      query: ({ id }) => ({
+        url: `/product/duplicate/${id}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["admin-products"],
     }),
   }),
 });
 
-export const { useGetAllProductForAdminQuery } = productApi;
+export const {
+  useGetAllProductForAdminQuery,
+  useCreateProductMutation,
+  useUpdateProductMutation,
+  useSoftDeleteProductMutation,
+  useDuplicateProductMutation,
+} = productApi;
