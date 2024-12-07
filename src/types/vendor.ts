@@ -1,3 +1,6 @@
+import { IProduct } from "./product";
+import { IUser } from "./user";
+
 export interface IVendor {
   _id: string;
   user: string;
@@ -5,8 +8,8 @@ export interface IVendor {
   logo?: string;
   contactPhone: string;
   description?: string;
-  products: string[];
-  followers: string[];
+  products: IProduct[];
+  followers: IUser[];
   address: string;
   isBlacklisted: boolean;
   isVerified: boolean;

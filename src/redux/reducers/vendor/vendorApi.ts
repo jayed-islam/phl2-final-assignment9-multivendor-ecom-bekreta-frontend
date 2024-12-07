@@ -26,8 +26,28 @@ export const vendorApi = api.injectEndpoints({
       }),
       invalidatesTags: ["user-me"],
     }),
+    toggleFollowUnfollwVendor: builder.mutation<
+      IGetUpdateVendorProfileResponse,
+      string
+    >({
+      query: (id) => ({
+        url: `/vendor/make-follow-unfollow/${id}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["user-me", "single-vendor"],
+    }),
+    getSingleVendor: builder.query<IGetUpdateVendorProfileResponse, string>({
+      query: (id) => ({
+        url: `/vendor/${id}`,
+      }),
+      providesTags: ["single-vendor"],
+    }),
   }),
 });
 
-export const { useUpdateVendorProfileMutation, useUpdateVandorLogoMutation } =
-  vendorApi;
+export const {
+  useUpdateVendorProfileMutation,
+  useUpdateVandorLogoMutation,
+  useGetSingleVendorQuery,
+  useToggleFollowUnfollwVendorMutation,
+} = vendorApi;

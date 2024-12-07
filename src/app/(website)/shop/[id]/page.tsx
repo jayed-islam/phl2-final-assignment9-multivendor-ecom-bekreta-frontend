@@ -1,4 +1,4 @@
-import ProductDetailsView from "@/sections/product/user/view/product-detail-view";
+import ShopProfileView from "@/sections/product/vendor/view/shop-profile-view";
 import { Metadata } from "next";
 import React from "react";
 
@@ -13,7 +13,7 @@ interface Props {
 
 const Page = ({ params }: Props) => {
   const { id } = params;
-  return <ProductDetailsView id={id} />;
+  return <ShopProfileView id={id} />;
 };
 
 export default Page;

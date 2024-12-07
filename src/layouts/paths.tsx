@@ -5,6 +5,7 @@ export const paths = {
   product: {
     root: "/products",
     flashSale: "/flash-sale",
+    recent: "/recent-viewed",
   },
   vendor: {
     root: "/vendor",

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -15,6 +15,7 @@ import ProductCard from "@/layouts/common/product-card";
 import { ShoppingBagOutlined } from "@mui/icons-material";
 import { IProduct } from "@/types/product";
 import Image from "next/image";
+import { trackRecentlyViewedProduct } from "./recent-product-utils";
 interface Props {
   id: string;
 }
@@ -35,6 +36,10 @@ const ProductDetailsView = ({ id }: Props) => {
 
   const { product, relatedProducts } = data?.data || {};
   const { vendor, qualities } = product as IProduct;
+
+  if (product?._id) {
+    trackRecentlyViewedProduct(product);
+  }
 
   const vendorData = typeof vendor === "string" ? null : vendor;
 

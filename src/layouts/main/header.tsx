@@ -34,7 +34,7 @@ const Header = () => {
           "0px 1px 3px 0px rgba(10, 5, 41, 0.10), 0px 1px 2px 0px rgba(10, 5, 41, 0.06)",
       }}
     >
-      <div className="max-w-5xl mx-auto w-full flex items-center justify-between">
+      <div className="max-w-5xl mx-auto w-full h-full flex items-center justify-between">
         <Link href={paths.root} className="text-black">
           Logo
         </Link>

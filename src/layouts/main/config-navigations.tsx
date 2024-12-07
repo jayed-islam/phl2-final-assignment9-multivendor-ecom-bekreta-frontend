@@ -6,8 +6,8 @@ export const navConfs = [
     path: paths.root,
   },
   {
-    title: "Hot Sale",
-    path: paths.root,
+    title: "Recent Viewed",
+    path: paths.product.recent,
   },
   {
     title: "Contact",
