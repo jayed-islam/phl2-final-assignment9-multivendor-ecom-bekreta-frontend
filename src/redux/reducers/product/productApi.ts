@@ -12,6 +12,17 @@ export type IProductFilterOptions = {
   vendorId?: string;
 };
 
+export type IProductListFilterOptions = {
+  searchTerm: string;
+  category: string;
+  page: number;
+  limit: number;
+  minPrice: number;
+  maxPrice: number;
+  isLowestFirst?: boolean;
+  userId?: string;
+};
+
 interface IGetAllProductListResponse {
   success: boolean;
   message: string;
@@ -27,6 +38,12 @@ interface IGetSingleProduct {
   data: IProduct;
 }
 
+interface IGetProductList {
+  success: boolean;
+  message: string;
+  data: IProduct[];
+}
+
 export const productApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllProductForAdmin: builder.query<
@@ -39,6 +56,22 @@ export const productApi = api.injectEndpoints({
         body: options,
       }),
       providesTags: ["admin-products"],
+    }),
+    getAllProductList: builder.query<
+      IGetAllProductListResponse,
+      IProductListFilterOptions
+    >({
+      query: (options) => ({
+        url: `/product/get-list`,
+        method: "POST",
+        body: options,
+      }),
+      providesTags: ["products"],
+    }),
+    getFlashSaleProducts: builder.query<IGetProductList, void>({
+      query: (options) => ({
+        url: `/product/flash-sale`,
+      }),
     }),
     createProduct: builder.mutation<IGetSingleProduct, FormData>({
       query: (body) => ({
@@ -82,4 +115,6 @@ export const {
   useUpdateProductMutation,
   useSoftDeleteProductMutation,
   useDuplicateProductMutation,
+  useGetFlashSaleProductsQuery,
+  useGetAllProductListQuery,
 } = productApi;

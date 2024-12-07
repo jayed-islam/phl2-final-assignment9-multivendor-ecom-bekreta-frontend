@@ -5,6 +5,7 @@ import Image from "next/image";
 import React from "react";
 import { UpdateProductView } from "./edit-product-dilaog";
 import SoftDeleteDialog from "./soft-delete-product-dialog";
+import DuplicateDialog from "./make-duplicate-product-dialog";
 
 interface Props {
   product: IProduct;
@@ -12,6 +13,7 @@ interface Props {
 const ProductRow = ({ product }: Props) => {
   const editDialog = useBoolean();
   const deleteDialog = useBoolean();
+  const duplicateDilaog = useBoolean();
   return (
     <>
       <TableRow key={product._id}>
@@ -49,7 +51,11 @@ const ProductRow = ({ product }: Props) => {
             >
               Edit
             </Button>
-            <Button size="small" color="warning">
+            <Button
+              size="small"
+              color="warning"
+              onClick={duplicateDilaog.setTrue}
+            >
               Duplicate
             </Button>
           </div>
@@ -59,6 +65,11 @@ const ProductRow = ({ product }: Props) => {
       <SoftDeleteDialog
         onClose={deleteDialog.setFalse}
         open={deleteDialog.value}
+        productId={product._id}
+      />
+      <DuplicateDialog
+        onClose={duplicateDilaog.setFalse}
+        open={duplicateDilaog.value}
         productId={product._id}
       />
     </>

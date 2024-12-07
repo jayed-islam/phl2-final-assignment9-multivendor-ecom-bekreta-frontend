@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import React, { useState } from "react";
@@ -24,6 +25,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { paths } from "@/layouts/paths";
 import ProductRow from "../product-row";
+import { useGetCategoriesQuery } from "@/redux/reducers/category/categoryApi";
 
 const TableShimmer = () => {
   const rows = 5;
@@ -64,6 +66,9 @@ const VendorAllProductListView = () => {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const router = useRouter();
+
+  const { data: categoryData, isLoading: isCategoryLoading } =
+    useGetCategoriesQuery();
 
   const { data, isFetching } = useGetAllProductForAdminQuery({
     category,
@@ -126,8 +131,11 @@ const VendorAllProductListView = () => {
             sx={{ flex: 1, minWidth: "200px" }}
           >
             <MenuItem value="">All Categories</MenuItem>
-            <MenuItem value="category1">Category 1</MenuItem>
-            <MenuItem value="category2">Category 2</MenuItem>
+            {categoryData?.data?.map((item) => (
+              <MenuItem value={item._id} key={item._id}>
+                {item.name}
+              </MenuItem>
+            ))}
           </Select>
           <Button
             variant={isLowestFirst ? "contained" : "outlined"}
