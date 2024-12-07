@@ -32,6 +32,15 @@ interface IGetAllProductListResponse {
   };
 }
 
+interface IGetSingleProductResponse {
+  success: boolean;
+  message: string;
+  data: {
+    product: IProduct;
+    relatedProducts: IProduct[];
+  };
+}
+
 interface IGetSingleProduct {
   success: boolean;
   message: string;
@@ -106,6 +115,12 @@ export const productApi = api.injectEndpoints({
       }),
       invalidatesTags: ["admin-products"],
     }),
+    getSingleProduct: builder.query<IGetSingleProductResponse, string>({
+      query: (id) => ({
+        url: `/product/get-single/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -117,4 +132,5 @@ export const {
   useDuplicateProductMutation,
   useGetFlashSaleProductsQuery,
   useGetAllProductListQuery,
+  useGetSingleProductQuery,
 } = productApi;

@@ -1,4 +1,5 @@
 import { ICategory } from "./category";
+import { IUser } from "./user";
 import { IVendor } from "./vendor";
 
 export interface IProduct {
@@ -8,7 +9,7 @@ export interface IProduct {
   price: number;
   inventoryCount: number;
   category: ICategory;
-  reviews: string[];
+  reviews: IReview[];
   qualities: string[];
   images: string[];
   isFeatured: boolean;
@@ -25,3 +26,11 @@ export type IPagination = {
   currentPage: number;
   itemsPerPage: number;
 };
+
+export interface IReview {
+  product: string;
+  customer: IUser;
+  rating: number;
+  comment: string;
+  image: string;
+}

@@ -22,51 +22,9 @@ const ShimmerLoader = () => {
 const HomeCategorySection = () => {
   const { data: categoryData, isLoading: isCategoryLoading } =
     useGetCategoriesQuery();
-  const fakeCategories = [
-    {
-      slug: "football",
-      name: "Football",
-      image: "https://via.placeholder.com/300x200?text=Football",
-    },
-    {
-      slug: "basketball",
-      name: "Basketball",
-      image: "https://via.placeholder.com/300x200?text=Basketball",
-    },
-    {
-      slug: "tennis",
-      name: "Tennis",
-      image: "https://via.placeholder.com/300x200?text=Tennis",
-    },
-    {
-      slug: "cricket",
-      name: "Cricket",
-      image: "https://via.placeholder.com/300x200?text=Cricket",
-    },
-    {
-      slug: "swimming",
-      name: "Swimming",
-      image: "https://via.placeholder.com/300x200?text=Swimming",
-    },
-    {
-      slug: "running",
-      name: "Running",
-      image: "https://via.placeholder.com/300x200?text=Running",
-    },
-    {
-      slug: "cycling",
-      name: "Cycling",
-      image: "https://via.placeholder.com/300x200?text=Cycling",
-    },
-    {
-      slug: "gym",
-      name: "Gym",
-      image: "https://via.placeholder.com/300x200?text=Gym",
-    },
-  ];
 
   return (
-    <section className="px-5 2xl:px-0 max-w-5xl mx-auto">
+    <section className="px-5 2xl:px-0 max-w-5xl mx-auto mt-11 md:mt-16">
       <h2 className="text-2xl font-bold text-center mb-6">
         Explore Categories
       </h2>
@@ -74,9 +32,9 @@ const HomeCategorySection = () => {
         <ShimmerLoader />
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5  gap-5">
-          {fakeCategories.map((category) => (
+          {categoryData?.data.map((category) => (
             <Link
-              href={`${paths.product.root}?slug=${category.slug}`}
+              href={`${paths.product.root}?category=${category._id}`}
               key={category.slug}
             >
               <div className="cursor-pointer group">

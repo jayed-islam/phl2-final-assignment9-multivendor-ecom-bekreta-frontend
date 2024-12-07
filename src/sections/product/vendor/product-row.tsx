@@ -26,7 +26,7 @@ const ProductRow = ({ product }: Props) => {
               alt="image"
               height={500}
               width={500}
-              className="h-12 w-20 rounded-sm border p-1"
+              className="h-12 w-auto rounded-sm border p-1"
             />
           ))}
         </TableCell>
