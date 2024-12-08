@@ -1,19 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  Typography,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Button,
-  IconButton,
-  Divider,
-  Box,
-} from "@mui/material";
-import { Add, Remove, Delete } from "@mui/icons-material";
+import { Typography, Grid, Card, Button, Divider, Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   clearCart,
@@ -22,6 +10,7 @@ import {
 } from "@/redux/reducers/cart/cartSlice";
 import Link from "next/link";
 import { paths } from "@/layouts/paths";
+import CartItemView from "../cart-item-view";
 
 const CartView: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -80,57 +69,14 @@ const CartView: React.FC = () => {
         {/* Cart Items */}
         <Grid item xs={12} md={8}>
           {items.map((item) => (
-            <Card
+            <CartItemView
+              item={item}
               key={item.productId}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: 2,
-              }}
-            >
-              <CardMedia
-                component="img"
-                image={item.image}
-                alt={item.name}
-                sx={{ width: 120, height: 120, objectFit: "contain" }}
-              />
-              <CardContent sx={{ flex: 1 }}>
-                <Typography variant="h6">{item.name}</Typography>
-                <Typography variant="body2" color="textSecondary">
-                  ${item.price} x {item.quantity} = ${item.total.toFixed(2)}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <IconButton
-                  onClick={() =>
-                    handleUpdateQuantity(item.productId, item.quantity - 1)
-                  }
-                  disabled={item.quantity <= 1}
-                  sx={{
-                    border: "1px solid gray",
-                  }}
-                >
-                  <Remove />
-                </IconButton>
-                <Typography>{item.quantity}</Typography>
-                <IconButton
-                  onClick={() =>
-                    handleUpdateQuantity(item.productId, item.quantity + 1)
-                  }
-                  sx={{
-                    border: "1px solid gray",
-                  }}
-                >
-                  <Add />
-                </IconButton>
-                <IconButton
-                  color="error"
-                  onClick={() => handleRemoveItem(item.productId)}
-                >
-                  <Delete />
-                </IconButton>
-              </CardActions>
-            </Card>
+              handleRemoveItem={() => handleRemoveItem(item.productId)}
+              handleUpdateQuantity={() =>
+                handleUpdateQuantity(item.productId, item.quantity + 1)
+              }
+            />
           ))}
         </Grid>
 

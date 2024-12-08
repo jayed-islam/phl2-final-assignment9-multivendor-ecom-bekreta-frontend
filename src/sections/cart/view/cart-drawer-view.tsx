@@ -73,75 +73,80 @@ const CartDrawer: React.FC = () => {
           <>
             <List>
               {items.map((item) => (
-                <ListItem key={item.productId} alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar
-                      src={item.image}
-                      variant="rounded"
-                      sx={{
-                        height: "3rem",
-                        width: "3rem",
-                      }}
-                    />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={item.name}
-                    secondary={
-                      <>
-                        <Typography variant="body2" color="textSecondary">
-                          ${item.price} x {item.quantity} = ${item.total}
-                        </Typography>
-                        <div className="flex items-center gap-3 border w-min rounded-xl">
-                          <IconButton
-                            size="small"
-                            onClick={() =>
-                              handleUpdateQuantity(
-                                item.productId,
-                                item.quantity - 1
-                              )
-                            }
-                            disabled={item.quantity <= 1}
-                            sx={{
-                              px: 1,
-                              py: 0,
-                            }}
-                          >
-                            <Remove />
-                          </IconButton>
-                          <Typography variant="body1">
-                            {item.quantity}
+                <Link
+                  key={item.productId}
+                  href={`${paths.product.root}/${item.productId}`}
+                >
+                  <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                      <Avatar
+                        src={item.image}
+                        variant="rounded"
+                        sx={{
+                          height: "3rem",
+                          width: "3rem",
+                        }}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={item.name}
+                      secondary={
+                        <>
+                          <Typography variant="body2" color="textSecondary">
+                            ${item.price} x {item.quantity} = ${item.total}
                           </Typography>
-                          <IconButton
-                            size="small"
-                            onClick={() =>
-                              handleUpdateQuantity(
-                                item.productId,
-                                item.quantity + 1
-                              )
-                            }
-                            sx={{
-                              px: 1,
-                              py: 0,
-                            }}
-                          >
-                            <Add />
-                          </IconButton>
-                        </div>
-                      </>
-                    }
-                  />
-                  <IconButton
-                    size="small"
-                    color="error"
-                    onClick={() => handleDeleteItem(item.productId)}
-                    sx={{
-                      border: "1px solid red",
-                      mt: 2,
-                    }}
-                  >
-                    <Delete />
-                  </IconButton>
-                </ListItem>
+                          <div className="flex items-center gap-3 border w-min rounded-xl">
+                            <IconButton
+                              size="small"
+                              onClick={() =>
+                                handleUpdateQuantity(
+                                  item.productId,
+                                  item.quantity - 1
+                                )
+                              }
+                              disabled={item.quantity <= 1}
+                              sx={{
+                                px: 1,
+                                py: 0,
+                              }}
+                            >
+                              <Remove />
+                            </IconButton>
+                            <Typography variant="body1">
+                              {item.quantity}
+                            </Typography>
+                            <IconButton
+                              size="small"
+                              onClick={() =>
+                                handleUpdateQuantity(
+                                  item.productId,
+                                  item.quantity + 1
+                                )
+                              }
+                              sx={{
+                                px: 1,
+                                py: 0,
+                              }}
+                            >
+                              <Add />
+                            </IconButton>
+                          </div>
+                        </>
+                      }
+                    />
+                    <IconButton
+                      size="small"
+                      color="error"
+                      onClick={() => handleDeleteItem(item.productId)}
+                      sx={{
+                        border: "1px solid red",
+                        mt: 2,
+                      }}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </ListItem>
+                </Link>
               ))}
             </List>
 

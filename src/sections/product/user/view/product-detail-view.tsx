@@ -71,7 +71,10 @@ const ProductDetailsView = ({ id }: Props) => {
     productId: data?.data?.product?._id as string,
     quantity: 1,
     total: data?.data?.product?.price as number,
-    vendorId: data?.data?.product?.vendor?._id as string,
+    vendorId:
+      typeof data?.data?.product?.vendor === "object"
+        ? (data?.data?.product?.vendor?._id as string)
+        : (data?.data?.product?.vendor as string),
   };
 
   return (
