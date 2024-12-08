@@ -13,42 +13,65 @@ import {
 import { useGetSingleProductQuery } from "@/redux/reducers/product/productApi";
 import ProductCard from "@/layouts/common/product-card";
 import { ShoppingBagOutlined } from "@mui/icons-material";
-import { IProduct } from "@/types/product";
 import Image from "next/image";
 import { trackRecentlyViewedProduct } from "./recent-product-utils";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  addProduct,
+  ICartItem,
+  replaceCart,
+  toggleCart,
+} from "@/redux/reducers/cart/cartSlice";
+import useBoolean from "@/hooks/use-boolean";
+import VendorConflictModal from "@/sections/cart/view/vendor-confllict-on-cart-dialog";
 interface Props {
   id: string;
 }
 
 const ProductDetailsView = ({ id }: Props) => {
   const { data, isLoading } = useGetSingleProductQuery(id);
+  const cart = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
   const [currentImage, setCurrentImage] = useState<string | null>(null);
 
-  if (isLoading) {
-    return (
-      <div className="max-w-5xl mx-auto px-5 2xl:px-0 py-8">
-        <div className="border p-20 flex items-center justify-center text-4xl font-semibold">
-          Loading...
-        </div>
-      </div>
-    );
-  }
+  const conflictDilaog = useBoolean();
 
-  const { product, relatedProducts } = data?.data || {};
-  const { vendor, qualities } = product as IProduct;
-
-  if (product?._id) {
-    trackRecentlyViewedProduct(product);
-  }
-
-  const vendorData = typeof vendor === "string" ? null : vendor;
-
-  if (!product) {
-    return <Typography variant="h6">Product not found</Typography>;
-  }
+  useEffect(() => {
+    if (data?.data?.product?._id) {
+      trackRecentlyViewedProduct(data.data.product);
+    }
+  }, [data?.data]);
+  const vendorData =
+    typeof data?.data?.product?.vendor === "string"
+      ? null
+      : data?.data?.product?.vendor;
 
   const handleImageClick = (image: string) => {
     setCurrentImage(image);
+  };
+
+  const handleAddToCart = (product: ICartItem) => {
+    if (cart.vendorId && cart.vendorId !== product.vendorId) {
+      conflictDilaog.setTrue();
+    } else {
+      dispatch(addProduct(product));
+      dispatch(toggleCart());
+    }
+  };
+
+  const handleReplaceCart = (product: ICartItem) => {
+    dispatch(replaceCart(product));
+    conflictDilaog.setFalse();
+  };
+
+  const cartItem: ICartItem = {
+    image: data?.data?.product?.images[0] as string,
+    name: data?.data?.product?.name as string,
+    price: data?.data?.product?.price as number,
+    productId: data?.data?.product?._id as string,
+    quantity: 1,
+    total: data?.data?.product?.price as number,
+    vendorId: data?.data?.product?.vendor?._id as string,
   };
 
   return (
@@ -69,8 +92,8 @@ const ProductDetailsView = ({ id }: Props) => {
                   {/* Main Image */}
                   <Box
                     component="img"
-                    src={currentImage || product.images[0]}
-                    alt={product.name}
+                    src={currentImage || data?.data?.product.images[0]}
+                    alt={data?.data?.product.name}
                     sx={{
                       width: "100%",
                       height: { xs: "300px", md: "500px" },
@@ -88,36 +111,40 @@ const ProductDetailsView = ({ id }: Props) => {
                   mt={2}
                   flexWrap="wrap"
                 >
-                  {product.images.map((image: string, index: number) => (
-                    <Box
-                      key={index}
-                      onClick={() => handleImageClick(image)}
-                      sx={{
-                        width: 80,
-                        height: 80,
-                        cursor: "pointer",
-                        borderRadius: "0.5rem",
-                        overflow: "hidden",
-                        border:
-                          image === currentImage ? "2px solid #1976d2" : "none",
-                        transition: "all 0.3s ease",
-                        "&:hover": { opacity: 0.8 },
-                      }}
-                    >
-                      <Image
-                        src={image}
-                        alt={`Thumbnail ${index + 1}`}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          borderRadius: "8px",
+                  {data?.data?.product.images.map(
+                    (image: string, index: number) => (
+                      <Box
+                        key={index}
+                        onClick={() => handleImageClick(image)}
+                        sx={{
+                          width: 80,
+                          height: 80,
+                          cursor: "pointer",
+                          borderRadius: "0.5rem",
+                          overflow: "hidden",
+                          border:
+                            image === currentImage
+                              ? "2px solid #1976d2"
+                              : "none",
+                          transition: "all 0.3s ease",
+                          "&:hover": { opacity: 0.8 },
                         }}
-                        height={500}
-                        width={500}
-                      />
-                    </Box>
-                  ))}
+                      >
+                        <Image
+                          src={image}
+                          alt={`Thumbnail ${index + 1}`}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            borderRadius: "8px",
+                          }}
+                          height={500}
+                          width={500}
+                        />
+                      </Box>
+                    )
+                  )}
                 </Box>
               </Grid>
 
@@ -125,7 +152,7 @@ const ProductDetailsView = ({ id }: Props) => {
               <Grid item xs={12} md={6}>
                 <Box sx={{ padding: 2 }}>
                   <Typography variant="h3" fontWeight="bold" gutterBottom>
-                    {product.name}
+                    {data?.data?.product.name}
                   </Typography>
                   <Typography
                     variant="h5"
@@ -133,20 +160,20 @@ const ProductDetailsView = ({ id }: Props) => {
                     fontWeight="bold"
                     mb={2}
                   >
-                    ${product.price}
+                    ${data?.data?.product.price}
                   </Typography>
                   <Typography variant="body1" color="textSecondary" paragraph>
-                    {product.description}
+                    {data?.data?.product.description}
                   </Typography>
 
                   {/* Category */}
                   <Typography variant="body2" fontWeight="bold" mb={1}>
                     Category:
                     <Link
-                      href={`/products?category=${product.category._id}`}
+                      href={`/products?category=${data?.data?.product.category._id}`}
                       color="primary"
                     >
-                      {product.category.name}
+                      {data?.data?.product.category.name}
                     </Link>
                   </Typography>
 
@@ -193,6 +220,7 @@ const ProductDetailsView = ({ id }: Props) => {
                     sx={{
                       mt: 3,
                     }}
+                    onClick={() => handleAddToCart(cartItem)}
                   >
                     Add to Cart
                   </Button>
@@ -205,9 +233,10 @@ const ProductDetailsView = ({ id }: Props) => {
                 Qualities
               </Typography>
               <div>
-                {qualities && qualities.length > 0 ? (
+                {data?.data?.product?.qualities &&
+                data?.data?.product?.qualities.length > 0 ? (
                   <ul>
-                    {qualities.map((quality, index) => (
+                    {data?.data?.product?.qualities.map((quality, index) => (
                       <li key={index}>
                         <Typography variant="body1" color="textSecondary">
                           {quality}
@@ -227,8 +256,8 @@ const ProductDetailsView = ({ id }: Props) => {
               <Typography variant="h4" fontWeight="bold" gutterBottom>
                 Customer Reviews
               </Typography>
-              {product.reviews?.length > 0 ? (
-                product.reviews.map((review, index) => (
+              {data?.data && data?.data?.product.reviews?.length > 0 ? (
+                data?.data?.product.reviews.map((review, index) => (
                   <Paper
                     key={index}
                     elevation={3}
@@ -258,14 +287,14 @@ const ProductDetailsView = ({ id }: Props) => {
             <div className="mt-16">
               <h2 className="text-xl font-semibold mb-5">Related Products</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {relatedProducts?.length === 0 ? (
+                {data?.data?.relatedProducts?.length === 0 ? (
                   // No products message
                   <Typography variant="h6" color="textSecondary" align="center">
                     No related products found
                   </Typography>
                 ) : (
                   // Product cards
-                  relatedProducts?.map((product, idx) => (
+                  data?.data?.relatedProducts?.map((product, idx) => (
                     <ProductCard product={product} key={idx} />
                   ))
                 )}
@@ -274,6 +303,11 @@ const ProductDetailsView = ({ id }: Props) => {
           </div>
         )}
       </div>
+      <VendorConflictModal
+        onReplaceCart={() => handleReplaceCart(cartItem)}
+        onCancel={conflictDilaog.setFalse}
+        open={conflictDilaog.value}
+      />
     </div>
   );
 };

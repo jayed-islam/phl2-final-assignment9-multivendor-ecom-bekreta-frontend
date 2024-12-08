@@ -15,13 +15,20 @@ import {
 import { navConfs } from "./config-navigations";
 import Link from "next/link";
 import { paths } from "../paths";
+import { ShoppingCart } from "@mui/icons-material";
+import { useAppDispatch } from "@/redux/hooks";
+import { toggleCart } from "@/redux/reducers/cart/cartSlice";
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
-  // Toggle the drawer state
-  const toggleDrawer = (open: boolean) => () => {
+  const toggleMenu = (open: boolean) => () => {
     setDrawerOpen(open);
+  };
+
+  const handleOpenCart = () => {
+    dispatch(toggleCart());
   };
 
   const routes = ["Home", "About", "Services", "Contact"];
@@ -68,25 +75,28 @@ const Header = () => {
             </Link>
           ))}
           <Button>Login</Button>
+          <IconButton edge="end" color="inherit" onClick={handleOpenCart}>
+            <ShoppingCart />
+          </IconButton>
         </Box>
 
         <IconButton
           edge="end"
           color="inherit"
           sx={{ display: { xs: "block", md: "none" } }}
-          onClick={toggleDrawer(true)}
+          onClick={toggleMenu(true)}
         >
           menu
         </IconButton>
       </div>
 
       {/* Drawer Component */}
-      <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
+      <Drawer anchor="right" open={drawerOpen} onClose={toggleMenu(false)}>
         <Box
           sx={{ width: 250 }}
           role="presentation"
-          onClick={toggleDrawer(false)}
-          onKeyDown={toggleDrawer(false)}
+          onClick={toggleMenu(false)}
+          onKeyDown={toggleMenu(false)}
         >
           <List>
             {routes.map((route) => (

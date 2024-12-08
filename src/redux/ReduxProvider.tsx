@@ -9,6 +9,7 @@ import { isValidToken } from "@/auth/utils";
 import { logout, setToken } from "./reducers/auth/authSlice";
 
 import { PersistGate } from "redux-persist/integration/react";
+import { hydrateCart } from "./reducers/cart/cartSlice";
 
 interface IReudxProviderProps {
   children: ReactNode;
@@ -34,6 +35,7 @@ const GLobalApiCallProvider: FC<IReudxProviderProps> = ({ children }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(hydrateCart());
     const token = localStorage?.getItem("accessToken");
     if (token && isValidToken(token)) {
       dispatch(setToken(token));
