@@ -3,34 +3,25 @@
 import React from "react";
 import { Typography, Grid, Card, Button, Divider, Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import {
-  clearCart,
-  updateQuantity,
-  deleteItem,
-} from "@/redux/reducers/cart/cartSlice";
+import { clearCart } from "@/redux/reducers/cart/cartSlice";
 import Link from "next/link";
 import { paths } from "@/layouts/paths";
 import CartItemView from "../cart-item-view";
+import { useRouter } from "next/navigation";
 
 const CartView: React.FC = () => {
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.cart);
   const { items, totalCost } = cart;
 
-  const handleUpdateQuantity = (productId: string, quantity: number) => {
-    dispatch(updateQuantity({ productId, quantity }));
-  };
+  const router = useRouter();
 
   const handleClearCart = () => {
     dispatch(clearCart());
   };
 
-  const handleRemoveItem = (productId: string) => {
-    dispatch(deleteItem(productId));
-  };
-
   const handleCheckout = () => {
-    console.log("Proceed to checkout");
+    router.push(paths.checkout.root);
   };
 
   if (items.length === 0) {
@@ -65,18 +56,11 @@ const CartView: React.FC = () => {
       <Typography variant="h4" gutterBottom align="center">
         Shopping Cart
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} mt={2}>
         {/* Cart Items */}
         <Grid item xs={12} md={8}>
           {items.map((item) => (
-            <CartItemView
-              item={item}
-              key={item.productId}
-              handleRemoveItem={() => handleRemoveItem(item.productId)}
-              handleUpdateQuantity={() =>
-                handleUpdateQuantity(item.productId, item.quantity + 1)
-              }
-            />
+            <CartItemView item={item} key={item.productId} />
           ))}
         </Grid>
 

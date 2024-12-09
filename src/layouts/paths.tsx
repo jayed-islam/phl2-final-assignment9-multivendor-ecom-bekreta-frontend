@@ -2,8 +2,15 @@ export const paths = {
   root: "/",
   signin: "/auth/signin",
   signup: "/auth/signup",
+  success: "/success",
+  account: {
+    orders: "/account/orders",
+  },
   cart: {
     root: "/carts",
+  },
+  checkout: {
+    root: "/checkout",
   },
   product: {
     root: "/products",

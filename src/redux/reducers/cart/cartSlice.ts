@@ -1,3 +1,4 @@
+import { ICoupon } from "@/types/order";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UpdateQuantityPayload {
@@ -20,6 +21,8 @@ interface CartState {
   items: ICartItem[];
   totalCost: number;
   isCartOpen: boolean;
+  appliedCoupon: ICoupon | null;
+  discount: number;
 }
 
 const initialState: CartState = {
@@ -27,6 +30,8 @@ const initialState: CartState = {
   items: [],
   totalCost: 0,
   isCartOpen: false,
+  appliedCoupon: null,
+  discount: 0,
 };
 
 const loadCartState = (): CartState => {
@@ -38,7 +43,14 @@ const loadCartState = (): CartState => {
   } catch (error) {
     console.error("Failed to load cart from local storage:", error);
   }
-  return { vendorId: null, items: [], totalCost: 0, isCartOpen: false };
+  return {
+    vendorId: null,
+    items: [],
+    totalCost: 0,
+    isCartOpen: false,
+    appliedCoupon: null,
+    discount: 0,
+  };
 };
 
 // Helper to save cart state to local storage
@@ -63,6 +75,7 @@ const cartSlice = createSlice({
       }
       state.items = localStorageState.items;
       state.totalCost = localStorageState.totalCost;
+      resetCouponLogic(state);
     },
     addProduct: (state, action: PayloadAction<ICartItem>) => {
       const existingItemIndex = state.items.findIndex(
@@ -88,17 +101,20 @@ const cartSlice = createSlice({
       }
 
       saveCartState(state);
+      resetCouponLogic(state);
     },
     replaceCart: (state, action: PayloadAction<ICartItem>) => {
       state.vendorId = action.payload.vendorId;
       state.items = [action.payload];
       state.totalCost = action.payload.total;
       saveCartState(state);
+      resetCouponLogic(state);
     },
     clearCart: (state) => {
       state.vendorId = null;
       state.items = [];
       state.totalCost = 0;
+      resetCouponLogic(state);
       saveCartState(state);
     },
     updateQuantity: (state, action: PayloadAction<UpdateQuantityPayload>) => {
@@ -115,6 +131,7 @@ const cartSlice = createSlice({
         state.totalCost += item.total;
       }
       saveCartState(state);
+      resetCouponLogic(state);
     },
     deleteItem: (state, action: PayloadAction<string>) => {
       const productId = action.payload;
@@ -137,9 +154,35 @@ const cartSlice = createSlice({
       }
 
       saveCartState(state);
+      resetCouponLogic(state);
     },
     toggleCart: (state) => {
       state.isCartOpen = !state.isCartOpen;
+    },
+    applyCoupon(state, action: PayloadAction<ICoupon>) {
+      const coupon = action.payload;
+
+      // Validate usage limit and expiration
+      const isValid = validateCoupon(coupon);
+      if (!isValid) return;
+
+      state.appliedCoupon = coupon;
+
+      // Calculate discount
+      const subtotal = state.items.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+      );
+
+      if (coupon.discountType === "percentage") {
+        state.discount = (coupon.discountValue / 100) * subtotal;
+      } else if (coupon.discountType === "fixed") {
+        state.discount = coupon.discountValue;
+      }
+    },
+    removeCoupon(state) {
+      state.appliedCoupon = null;
+      state.discount = 0;
     },
   },
 });
@@ -151,6 +194,21 @@ export const {
   updateQuantity,
   hydrateCart,
   toggleCart,
+  applyCoupon,
+  removeCoupon,
   deleteItem,
 } = cartSlice.actions;
 export default cartSlice.reducer;
+
+const resetCouponLogic = (state: CartState) => {
+  state.appliedCoupon = null;
+  state.discount = 0;
+};
+
+// Helper function to validate coupon
+const validateCoupon = (coupon: ICoupon) => {
+  const currentDate = new Date();
+  if (coupon.expiryDate < currentDate) return false;
+  if (coupon.usageLimit <= coupon.usedCount) return false;
+  return true;
+};
