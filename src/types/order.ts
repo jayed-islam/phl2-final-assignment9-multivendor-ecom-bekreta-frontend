@@ -1,3 +1,20 @@
+import { IPagination, IProduct } from "./product";
+
+export const ORDER_STATUS = [
+  { value: "pending", label: "Pending" },
+  { value: "confirmed", label: "Confirmed" },
+  { value: "shipped", label: "Shipped" },
+  { value: "delivered", label: "Delivered" },
+  { value: "cancelled", label: "Cancelled" },
+];
+
+export type OrderStatus =
+  | "pending"
+  | "confirmed"
+  | "shipped"
+  | "delivered"
+  | "cancelled";
+
 export interface ICoupon {
   _id: string;
   code: string;
@@ -17,7 +34,14 @@ export interface IOrderItem {
   price: number;
 }
 
+export interface IOrderedItem {
+  product: IProduct;
+  quantity: number;
+  price: number;
+}
+
 export interface IOrder {
+  _id?: string;
   user: string;
   vendor: string;
   name: string;
@@ -25,7 +49,7 @@ export interface IOrder {
   deliveryCharge: number;
   address: string;
   status: "pending" | "shipped" | "delivered" | "canceled";
-  items: IOrderItem[];
+  items: IOrderedItem[];
   totalPrice: number;
   shippingAddress: string;
   paymentStatus: "paid" | "unpaid";
@@ -33,6 +57,7 @@ export interface IOrder {
   discount: number;
   coupon: string;
   isCouponApplied: boolean;
+  createdAt: Date;
 }
 
 export interface ICreateOrder {
@@ -47,4 +72,46 @@ export interface ICreateOrder {
   discount?: number;
   coupon?: string;
   isCouponApplied?: boolean;
+}
+
+export type OrderStatusMeta = {
+  pending: number;
+  confirmed: number;
+  shipped: number;
+  delivered: number;
+  cancelled: number;
+};
+
+export interface IGetOrderListResponse {
+  data: {
+    pagination: IPagination;
+    orders: IOrder[];
+    meta: OrderStatusMeta;
+  };
+}
+
+export interface IGetFeaturedOrderBody {
+  page: number;
+  limit: number;
+  startDate: Date | null;
+  endDate: Date | null;
+  searchTerm: string;
+  status: OrderStatus;
+  sortBy: "latest" | "oldest";
+  vendor?: string;
+  admin?: string;
+}
+
+export type IOrderTableFilterValue = string | string[];
+
+export interface IOrderFilters {
+  status: OrderStatus;
+  searchTerm: string;
+  page: number;
+  limit: number;
+  startDate: Date | null;
+  endDate: Date | null;
+  sortBy: "latest" | "oldest";
+  vendor?: string;
+  admin?: string;
 }

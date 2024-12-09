@@ -37,17 +37,17 @@ const HomeCategorySection = () => {
               href={`${paths.product.root}?category=${category._id}`}
               key={category.slug}
             >
-              <div className="cursor-pointer group">
-                <div className="relative w-full h-40 bg-gray-100 rounded-2xl overflow-hidden shadow">
+              <div className="cursor-pointer group shadow border rounded-2xl">
+                <div className="relative w-full h-40 bg-gray-100 rounded-2xl overflow-hidden p-2">
                   <Image
                     src={category.image}
                     alt={category.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-2xl"
                     height={500}
                     width={500}
                   />
                 </div>
-                <h3 className="text-lg font-medium text-center mt-2">
+                <h3 className="text-lg font-medium text-center py-1">
                   {category.name}
                 </h3>
               </div>

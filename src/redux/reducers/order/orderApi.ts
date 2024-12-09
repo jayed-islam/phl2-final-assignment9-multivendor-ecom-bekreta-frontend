@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ICoupon, ICreateOrder, IOrder } from "@/types/order";
+import {
+  ICoupon,
+  ICreateOrder,
+  IGetFeaturedOrderBody,
+  IGetOrderListResponse,
+  IOrder,
+} from "@/types/order";
 import { api } from "../../api";
 import { IPagination } from "@/types/product";
 
@@ -28,6 +34,11 @@ interface IGetSingleOrderResponse {
   data: IOrder;
   message: string;
   success: boolean;
+}
+
+export interface IFeatureOrderUpdateBody {
+  orderId: string;
+  status: string;
 }
 
 export const orderApi = api.injectEndpoints({
@@ -65,6 +76,28 @@ export const orderApi = api.injectEndpoints({
         body,
       }),
     }),
+    getAdminOrderList: builder.query<
+      IGetOrderListResponse,
+      IGetFeaturedOrderBody
+    >({
+      query: (body: IGetFeaturedOrderBody) => ({
+        url: "/order/get-order-list",
+        method: "POST",
+        body,
+      }),
+      providesTags: ["admin-orders"],
+    }),
+    updateOrderStatus: builder.mutation<
+      IGetSingleOrderResponse,
+      IFeatureOrderUpdateBody
+    >({
+      query: ({ orderId, status }) => ({
+        url: `/order/update-status`,
+        method: "PATCH",
+        body: { orderId, status },
+      }),
+      invalidatesTags: ["admin-orders"],
+    }),
   }),
   overrideExisting: true,
 });
@@ -74,4 +107,6 @@ export const {
   useGetUserOrderByIdQuery,
   useGetSingleOrderQuery,
   useVerifyCouponMutation,
+  useGetAdminOrderListQuery,
+  useUpdateOrderStatusMutation,
 } = orderApi;
