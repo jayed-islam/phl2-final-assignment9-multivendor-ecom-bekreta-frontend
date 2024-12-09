@@ -81,7 +81,7 @@ const CartView: React.FC = () => {
               sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}
             >
               <Typography>Shipping</Typography>
-              <Typography>Free</Typography>
+              <Typography>101</Typography>
             </Box>
             <Divider sx={{ marginY: 2 }} />
             <Box

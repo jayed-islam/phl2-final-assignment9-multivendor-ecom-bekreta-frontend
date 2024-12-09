@@ -65,6 +65,7 @@ const CheckoutPage: React.FC = () => {
   } = methods;
 
   console.log("err", errors);
+  const shippingCharge = 111;
 
   const [createOrder] = useCreateOrderMutation();
   const onSubmit = handleSubmit(async (data) => {
@@ -91,7 +92,7 @@ const CheckoutPage: React.FC = () => {
       deliveryCharge: 111,
       paymentMethod: data.paymentMethod as "cashOnDelivery" | "aamarpay",
       subTotal: totalCost,
-      totalPrice: totalCost - discount,
+      totalPrice: totalCost + shippingCharge - discount,
       ...(discount > 0 && {
         coupon: appliedCoupon?._id,
         isCouponApplied: true,
@@ -218,15 +219,23 @@ const CheckoutPage: React.FC = () => {
                 <Typography>Subtotal:</Typography>
                 <Typography>${totalCost.toFixed(2)}</Typography>
               </Box>
+
               <Box display="flex" justifyContent="space-between" mt={1}>
-                <Typography>Discount:</Typography>
-                <Typography>{discount.toFixed(2)}</Typography>{" "}
-                {/* Replace with coupon logic */}
+                <Typography>Shipping Charge:</Typography>
+                <Typography>{shippingCharge}</Typography>{" "}
               </Box>
+              {discount > 0 && (
+                <Box display="flex" justifyContent="space-between" mt={1}>
+                  <Typography>Discount:</Typography>
+                  <Typography>{discount.toFixed(2)}</Typography>{" "}
+                </Box>
+              )}
               <Divider sx={{ my: 2 }} />
               <Box display="flex" justifyContent="space-between">
                 <Typography>Total:</Typography>
-                <Typography>${(totalCost - discount).toFixed(2)}</Typography>
+                <Typography>
+                  ${(totalCost + shippingCharge - discount).toFixed(2)}
+                </Typography>
               </Box>
 
               <Divider sx={{ my: 2 }} />
