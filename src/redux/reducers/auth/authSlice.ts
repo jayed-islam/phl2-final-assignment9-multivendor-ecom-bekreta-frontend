@@ -26,7 +26,7 @@ const authSlice = createSlice({
       state.accessToken = "";
       state.user = null;
       setSession(null);
-      localStorage.clear();
+      localStorage.removeItem("accessToken");
     },
     setToken: (state, action: PayloadAction<string>) => {
       setSession(action.payload);

@@ -22,3 +22,9 @@ export interface IUser {
   followedVendors: string[];
   vendor: IVendor;
 }
+
+export interface IGetUpdateUSERProfileResponse {
+  success: boolean;
+  message: string;
+  data: IUser;
+}

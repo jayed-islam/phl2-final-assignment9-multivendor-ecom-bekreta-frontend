@@ -4,6 +4,7 @@ export const paths = {
   signup: "/auth/signup",
   success: "/success",
   account: {
+    root: "/account",
     orders: "/account/orders",
   },
   cart: {

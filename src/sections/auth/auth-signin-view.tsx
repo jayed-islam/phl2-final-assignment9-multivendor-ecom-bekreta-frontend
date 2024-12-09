@@ -53,6 +53,8 @@ export default function LoginView() {
         toast.success(response.message);
         if (response?.data?.user?.role === "vendor") {
           router.push(paths.vendor.root);
+        } else if (response?.data?.user?.role === "customer") {
+          router.push(paths.account.root);
         } else {
           router.push(paths.root);
         }

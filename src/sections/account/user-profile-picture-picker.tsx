@@ -10,12 +10,15 @@ import {
 import { PhotoCamera } from "@mui/icons-material";
 import { useUpdateVandorLogoMutation } from "@/redux/reducers/vendor/vendorApi";
 import { useAppSelector } from "@/redux/hooks";
+import { useUpdateUserProfilePictureMutation } from "@/redux/reducers/user/userApi";
 
-const LogoPicker = ({}) => {
+const UserProfilePicturePicker = ({}) => {
   const { user } = useAppSelector((state) => state.auth);
-  const [logo, setLogo] = useState((user && user?.vendor?.logo) ?? null);
+  const [logo, setLogo] = useState(
+    (user && user?.profilePicture) ?? "https://via.placeholder.com/150"
+  );
 
-  const [uploadLogo, { isLoading }] = useUpdateVandorLogoMutation();
+  const [updatePicture, { isLoading }] = useUpdateUserProfilePictureMutation();
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -29,8 +32,8 @@ const LogoPicker = ({}) => {
 
     try {
       // Call the upload API
-      const response = await uploadLogo({
-        id: user?.vendor?._id,
+      const response = await updatePicture({
+        id: user?._id as string,
         body: formData,
       }).unwrap();
 
@@ -113,8 +116,7 @@ const LogoPicker = ({}) => {
           />
         </IconButton>
       </Box>
-
-      {/* Logo Label */}
+      {/* 
       {!isLoading && (
         <Typography
           position="absolute"
@@ -125,9 +127,9 @@ const LogoPicker = ({}) => {
         >
           Shop Logo
         </Typography>
-      )}
+      )} */}
     </Box>
   );
 };
 
-export default LogoPicker;
+export default UserProfilePicturePicker;

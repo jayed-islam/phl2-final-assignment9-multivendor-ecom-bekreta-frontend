@@ -74,7 +74,9 @@ const Header = () => {
               </Typography>
             </Link>
           ))}
-          <Button>Login</Button>
+          <Link href={paths.signin}>
+            <Button>Login</Button>
+          </Link>
           <IconButton edge="end" color="inherit" onClick={handleOpenCart}>
             <ShoppingCart />
           </IconButton>

@@ -1,4 +1,5 @@
 import { IPagination, IProduct } from "./product";
+import { IVendor } from "./vendor";
 
 export const ORDER_STATUS = [
   { value: "pending", label: "Pending" },
@@ -43,7 +44,7 @@ export interface IOrderedItem {
 export interface IOrder {
   _id?: string;
   user: string;
-  vendor: string;
+  vendor: IVendor;
   name: string;
   phone: string;
   deliveryCharge: number;

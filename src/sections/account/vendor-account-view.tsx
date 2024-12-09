@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { Box, Typography, Card, Button, Grid, Avatar } from "@mui/material";
+import { Box, Typography, Card, Button, Grid } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
 import UpdateVendorProfileDilaog from "./update-vendor-profile";
 import useBoolean from "@/hooks/use-boolean";
 import { useAppSelector } from "@/redux/hooks";
-import LogoPicker from "./logo-picker";
+import LogoPicker from "./vendor-logo-picker";
 
 const VendorAccountView = () => {
   const theme = useTheme();
@@ -63,7 +63,7 @@ const VendorAccountView = () => {
                 {(user && user?.vendor?.contactPhone) ?? "N/A"}
               </Typography>
               <Typography variant="body2" color="textSecondary" mt={1}>
-                <strong>Email:</strong> {(user && user?.vendor?.email) ?? "N/A"}
+                <strong>Email:</strong> {(user && user?.email) ?? "N/A"}
               </Typography>
               <Typography variant="body2" color="textSecondary" mt={1}>
                 <strong>Address:</strong>{" "}
