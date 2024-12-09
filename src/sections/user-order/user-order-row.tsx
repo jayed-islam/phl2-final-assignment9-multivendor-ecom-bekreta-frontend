@@ -20,6 +20,8 @@ import {
   KeyboardArrowUp,
 } from "@mui/icons-material";
 import { IOrder } from "@/types/order";
+import ProductReviewDialog from "./add-review-dialog";
+import useBoolean from "@/hooks/use-boolean";
 
 export enum OrderStatus {
   Pending = "pending",
@@ -46,8 +48,11 @@ const getStatusColor = (status: OrderStatus) => {
   }
 };
 
-const OrderRow = ({ row }: { row: IOrder }) => {
+const UserOrderRow = ({ row }: { row: IOrder }) => {
   const [open, setOpen] = useState(false);
+  const dialog = useBoolean();
+
+  console.log("order", row);
 
   return (
     <>
@@ -79,7 +84,6 @@ const OrderRow = ({ row }: { row: IOrder }) => {
         >
           {row.phone}
         </TableCell>
-        <TableCell>{row._id}</TableCell>
         <TableCell
           sx={{
             whiteSpace: "nowrap",
@@ -100,6 +104,16 @@ const OrderRow = ({ row }: { row: IOrder }) => {
               color: "white",
             }}
           />
+        </TableCell>
+        <TableCell>
+          {row.paymentMethod === "aamarpay" && (
+            <div
+              className="px-3 py-1 bg-gray-500 text-sm font-semibold text-white cursor-pointer rounded-xl"
+              onClick={dialog.setTrue}
+            >
+              Give Review
+            </div>
+          )}
         </TableCell>
       </TableRow>
 
@@ -168,8 +182,13 @@ const OrderRow = ({ row }: { row: IOrder }) => {
           </Collapse>
         </TableCell>
       </TableRow>
+      <ProductReviewDialog
+        dialog={dialog}
+        productId={row.items[0].product._id as string}
+        vendorId={row.vendor._id as string}
+      />
     </>
   );
 };
 
-export default OrderRow;
+export default UserOrderRow;

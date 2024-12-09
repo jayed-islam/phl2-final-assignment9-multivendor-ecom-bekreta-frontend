@@ -54,7 +54,7 @@ export interface IOrder {
   totalPrice: number;
   shippingAddress: string;
   paymentStatus: "paid" | "unpaid";
-  paymentMethods: "cashOnDelivery" | "aamarpay";
+  paymentMethod: "cashOnDelivery" | "aamarpay";
   discount: number;
   coupon: string;
   isCouponApplied: boolean;

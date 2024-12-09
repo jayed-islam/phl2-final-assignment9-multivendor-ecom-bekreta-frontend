@@ -52,6 +52,7 @@ const UserOrderView = () => {
                   <TableCell>Total Price</TableCell>
                   <TableCell>Date</TableCell>
                   <TableCell>Status</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
