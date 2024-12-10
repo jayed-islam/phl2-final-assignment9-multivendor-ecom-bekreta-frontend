@@ -16,10 +16,12 @@ import { navConfs } from "./config-navigations";
 import Link from "next/link";
 import { paths } from "../paths";
 import { ShoppingCart } from "@mui/icons-material";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { toggleCart } from "@/redux/reducers/cart/cartSlice";
+import UserProfilePopover from "./user-profile-popover";
 
 const Header = () => {
+  const { user } = useAppSelector((state) => state.auth);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -77,9 +79,17 @@ const Header = () => {
           <Link href={paths.signin}>
             <Button>Login</Button>
           </Link>
-          <IconButton edge="end" color="inherit" onClick={handleOpenCart}>
+          <IconButton
+            edge="end"
+            color="inherit"
+            onClick={handleOpenCart}
+            sx={{
+              border: "1px solid gray",
+            }}
+          >
             <ShoppingCart />
           </IconButton>
+          {user && user._id && <UserProfilePopover />}
         </Box>
 
         <IconButton

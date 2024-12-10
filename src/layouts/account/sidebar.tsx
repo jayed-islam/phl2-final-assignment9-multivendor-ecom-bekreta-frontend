@@ -21,7 +21,7 @@ const AccountSidebar = ({ mobileOpen, handleDrawerToggle }: Props) => {
   const pathname = usePathname();
   const drawerContent = (
     <div>
-      <div className="bg-gray-100 p-3 rounded-3xl flex flex-col gap-2">
+      <div className="bg-gray-100 p-3 rounded-3xl flex flex-col gap-2 border shadow">
         {navItems.map((item) => (
           <Link
             key={item.label}

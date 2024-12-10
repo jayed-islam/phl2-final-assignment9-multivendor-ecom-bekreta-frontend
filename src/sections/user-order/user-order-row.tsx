@@ -12,13 +12,8 @@ import {
   Box,
   Typography,
   Chip,
-  Button,
 } from "@mui/material";
-import {
-  Download,
-  KeyboardArrowDown,
-  KeyboardArrowUp,
-} from "@mui/icons-material";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { IOrder } from "@/types/order";
 import ProductReviewDialog from "./add-review-dialog";
 import useBoolean from "@/hooks/use-boolean";

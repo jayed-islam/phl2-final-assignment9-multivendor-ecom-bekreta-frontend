@@ -77,6 +77,13 @@ const ProductDetailsView = ({ id }: Props) => {
         : (data?.data?.product?.vendor as string),
   };
 
+  const maskName = (name: string) => {
+    if (!name) return "";
+    const length = name.length;
+    if (length <= 2) return name;
+    return `${name[0]}${"*".repeat(length - 2)}${name[length - 1]}`;
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-5 2xl:px-0 py-8">
       <div>
@@ -255,37 +262,61 @@ const ProductDetailsView = ({ id }: Props) => {
               </div>
             </div>
 
-            <Box mt={6}>
+            <div className="bg-gray-100 p-5 mt-7">
               <Typography variant="h4" fontWeight="bold" gutterBottom>
                 Customer Reviews
               </Typography>
-              {data?.data && data?.data?.product.reviews?.length > 0 ? (
-                data?.data?.product.reviews.map((review, index) => (
-                  <Paper
-                    key={index}
-                    elevation={3}
-                    sx={{
-                      padding: 3,
-                      marginBottom: 3,
-                      borderRadius: "12px",
-                      boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
-                    <Box display="flex" alignItems="center">
-                      <Typography variant="body1" fontWeight="bold">
-                        {review.customer.name}
-                      </Typography>
-                      <Rating value={review.rating} readOnly sx={{ ml: 1 }} />
-                    </Box>
-                    <Typography variant="body2" color="textSecondary" mt={1}>
-                      {review.comment}
-                    </Typography>
-                  </Paper>
-                ))
-              ) : (
-                <Typography variant="body2">No reviews yet.</Typography>
-              )}
-            </Box>
+              <div className="flex flex-col gap-3">
+                {data?.data && data?.data?.product.reviews?.length > 0 ? (
+                  data?.data?.product.reviews.map((review, index) => (
+                    <div key={index} className="bg-white shadow border p-3">
+                      <div className="flex items-start justify-between w-full">
+                        <div>
+                          <Rating value={review.rating} readOnly size="small" />
+                          <Typography variant="body2">
+                            {maskName(review.customer.name)}
+                          </Typography>
+                        </div>
+                        <Typography
+                          variant="caption"
+                          color="textSecondary"
+                          sx={{ fontStyle: "italic" }}
+                        >
+                          {new Date(review.createdAt).toLocaleDateString()} at{" "}
+                          {new Date(review.createdAt).toLocaleTimeString()}
+                        </Typography>
+                      </div>
+                      {review.comment && (
+                        <Typography
+                          variant="body1"
+                          mt={2}
+                          sx={{
+                            color: "text.primary",
+                            lineHeight: 1.6,
+                          }}
+                        >
+                          &ldquo;{review.comment}&rdquo;
+                        </Typography>
+                      )}
+
+                      {review.image && (
+                        <Image
+                          src={review.image}
+                          alt="image"
+                          className="h-20 w-20 object-cover mt-3"
+                          height={500}
+                          width={500}
+                        />
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <Typography variant="body2" color="textSecondary">
+                    No reviews yet. Be the first to review this product!
+                  </Typography>
+                )}
+              </div>
+            </div>
 
             <div className="mt-16">
               <h2 className="text-xl font-semibold mb-5">Related Products</h2>

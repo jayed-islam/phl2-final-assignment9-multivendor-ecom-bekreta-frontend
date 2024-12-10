@@ -1,4 +1,6 @@
 import { paths } from "../paths";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import InfoIcon from "@mui/icons-material/Info";
 
 export const navConfs = [
   {
@@ -38,5 +40,18 @@ export const footerNavConfs = [
     title: "প্রাইভেসি এবং টার্মস",
     path: paths.root,
     children: [],
+  },
+];
+
+export const userNavConfs = [
+  {
+    title: "My Info",
+    path: paths.account.orders,
+    icon: <InfoIcon />,
+  },
+  {
+    title: "My Orders",
+    path: paths.account.orders,
+    icon: <AccountCircleIcon />,
   },
 ];

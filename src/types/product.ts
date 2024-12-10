@@ -33,4 +33,5 @@ export interface IReview {
   rating: number;
   comment: string;
   image: string;
+  createdAt: Date;
 }
