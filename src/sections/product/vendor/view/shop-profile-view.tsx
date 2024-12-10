@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useGetSingleVendorQuery,
   useToggleFollowUnfollwVendorMutation,
@@ -11,18 +11,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { paths } from "@/layouts/paths";
 import toast from "react-hot-toast";
+import { useAppSelector } from "@/redux/hooks";
 
 interface Props {
   id: string;
 }
 
 const ShopProfileView = ({ id }: Props) => {
+  const { user } = useAppSelector((state) => state.auth);
   const { data: vendorData, isLoading: isVendorLoading } =
     useGetSingleVendorQuery(id);
   const [toggleFollowUnfollow, { isLoading }] =
     useToggleFollowUnfollwVendorMutation();
 
   const [isFollowing, setIsFollowing] = useState(false);
+
+  useEffect(() => {
+    if (vendorData?.data) {
+      const isUserFollowing = vendorData.data.followers?.some(
+        (follower: any) => follower === user?._id
+      );
+      setIsFollowing(isUserFollowing);
+    }
+  }, [user?._id, vendorData]);
 
   // Handle follow/unfollow action
   const handleFollowUnfollow = async () => {
@@ -31,7 +42,7 @@ const ShopProfileView = ({ id }: Props) => {
       const response = await toggleFollowUnfollow(id).unwrap();
       if (response.success) {
         toast.success(
-          isFollowing
+          !isFollowing
             ? "You are now following the vendor!"
             : "You have unfollowed the vendor."
         );
@@ -70,7 +81,12 @@ const ShopProfileView = ({ id }: Props) => {
           </Typography>
         </Box>
         {/* Follow/Unfollow Button */}
-        <Button sx={{ marginLeft: 2 }} onClick={handleFollowUnfollow}>
+        <Button
+          sx={{ marginLeft: 2 }}
+          onClick={handleFollowUnfollow}
+          disabled={isLoading}
+          variant="contained"
+        >
           {isFollowing ? "Unfollow" : "Follow"}
         </Button>
       </div>

@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  Grid,
-  Button,
-  Paper,
-  Link,
-  Rating,
-} from "@mui/material";
+import { Box, Typography, Grid, Button, Paper, Rating } from "@mui/material";
 import { useGetSingleProductQuery } from "@/redux/reducers/product/productApi";
 import ProductCard from "@/layouts/common/product-card";
 import { ShoppingBagOutlined } from "@mui/icons-material";
@@ -24,6 +16,7 @@ import {
 } from "@/redux/reducers/cart/cartSlice";
 import useBoolean from "@/hooks/use-boolean";
 import VendorConflictModal from "@/sections/cart/view/vendor-confllict-on-cart-dialog";
+import Link from "next/link";
 interface Props {
   id: string;
 }

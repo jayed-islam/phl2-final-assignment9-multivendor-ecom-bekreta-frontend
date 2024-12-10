@@ -5,9 +5,12 @@ import { api } from "../../api";
 
 export const reviewApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getReview: builder.query<IGetReviewResponse, { productId: string }>({
-      query: ({ productId }) => ({
-        url: `/review/${productId}`,
+    getReviewAllReviewsForVendor: builder.query<
+      IGetReviewResponse,
+      { vendorId: string }
+    >({
+      query: ({ vendorId }) => ({
+        url: `//vendor-reviews/${vendorId}`,
       }),
       providesTags: ["reviews"],
     }),
@@ -46,4 +49,5 @@ export const reviewApi = api.injectEndpoints({
   overrideExisting: true,
 });
 
-export const { useAddReviewMutation } = reviewApi;
+export const { useAddReviewMutation, useGetReviewAllReviewsForVendorQuery } =
+  reviewApi;
