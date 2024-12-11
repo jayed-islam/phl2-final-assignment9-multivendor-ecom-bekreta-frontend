@@ -20,10 +20,25 @@ export const PermissionGuard: FC<PermissionGuardProp> = ({
 }) => {
   const { user } = useAppSelector((state) => state.auth);
 
+  const userRole = user?.role;
   const isPermitted =
-    user?.role === "admin" || roles.some((role) => user?.role === role);
+    userRole && (userRole === "admin" || roles.includes(userRole));
 
   if (!isPermitted) {
+    const message = "You do not have permission to access this page.";
+    let roleMessage = "";
+
+    if (userRole) {
+      // Custom messages based on the user's role
+      if (roles.includes("admin")) {
+        roleMessage = `As an ${userRole}, you do not have admin-level permissions to access this page.`;
+      } else if (roles.includes("vendor")) {
+        roleMessage = `As a ${userRole}, you do not have vendor-level permissions to access this page.`;
+      } else if (roles.includes("customer")) {
+        roleMessage = `As a ${userRole}, you do not have customer-level permissions to access this page.`;
+      }
+    }
+
     return hasContent ? (
       <Container
         sx={{
@@ -36,14 +51,29 @@ export const PermissionGuard: FC<PermissionGuardProp> = ({
           minHeight: "51vh",
         }}
       >
-        <Typography variant="h3" sx={{ mb: 2 }}>
+        <Typography
+          variant="h3"
+          sx={{ mb: 2, fontWeight: "bold", color: "error.main" }}
+        >
           Permission Denied
         </Typography>
-        <Typography sx={{ color: "text.secondary" }}>
-          You do not have permission to access this page
+        <Typography
+          sx={{
+            color: "text.primary",
+            fontSize: "1.2rem",
+            fontWeight: "bold",
+            mb: 2,
+          }}
+        >
+          {roleMessage || message}
+        </Typography>
+        <Typography sx={{ color: "text.secondary", mb: 2 }}>
+          You do not have permission to access this page.
         </Typography>
         <Link href={paths.root}>
-          <Button>Go Back</Button>
+          <Button variant="contained" color="error" sx={{ fontWeight: "bold" }}>
+            Go Back
+          </Button>
         </Link>
       </Container>
     ) : null;
@@ -52,19 +82,4 @@ export const PermissionGuard: FC<PermissionGuardProp> = ({
   return <>{children}</>;
 };
 
-const Footer: FC = () => {
-  const currentYear = new Date().getFullYear();
-
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      sx={{ mt: 12 }}
-    >
-      &copy; {currentYear}. All rights reserved.
-    </Typography>
-  );
-};
-
-export default Footer;
+export default PermissionGuard;

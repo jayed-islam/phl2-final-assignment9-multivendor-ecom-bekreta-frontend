@@ -27,22 +27,10 @@ export const PermissionStatusGuard: FC<PermissionGuardProps> = ({
     router.push(paths.root);
   };
 
-  //   const userRole = user?.role;
-
-  //   const isPermitted =
-  //     userRole && (userRole === "admin" || roles.includes(userRole));
-
   const isRestricted =
     (user?.role === "customer" &&
       (user.status === "suspended" || user.status === "blocked")) ||
     (user?.role === "vendor" && user.vendor?.isBlacklisted);
-
-  //   useEffect(() => {
-  //     // If user is restricted, call logout
-  //     if (isRestricted) {
-  //       handleLogout();
-  //     }
-  //   }, [isRestricted]);
 
   if (isRestricted) {
     const message =
@@ -62,12 +50,29 @@ export const PermissionStatusGuard: FC<PermissionGuardProps> = ({
           minHeight: "51vh",
         }}
       >
-        <Typography variant="h3" sx={{ mb: 2 }}>
+        <Typography
+          variant="h3"
+          sx={{ mb: 2, fontWeight: "bold", color: "error.main" }}
+        >
           Access Denied
         </Typography>
-        <Typography sx={{ color: "text.secondary" }}>{message}</Typography>
+        <Typography
+          sx={{
+            color: "text.primary",
+            fontSize: "1.2rem",
+            fontWeight: "bold",
+            mb: 2,
+          }}
+        >
+          {message}
+        </Typography>
+        <Typography sx={{ color: "text.secondary", mb: 2 }}>
+          You do not have permission to access this page.
+        </Typography>
         <Link href={paths.root} onClick={handleLogout}>
-          <Button>Go Back and Logout</Button>
+          <Button variant="contained" color="error" sx={{ fontWeight: "bold" }}>
+            Go Back and Logout
+          </Button>
         </Link>
       </Container>
     ) : null;

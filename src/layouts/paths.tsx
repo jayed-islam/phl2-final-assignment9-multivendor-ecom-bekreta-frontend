@@ -9,6 +9,7 @@ export const paths = {
     reviews: "/admin/reviews",
     vendors: "/admin/vendors",
     users: "/admin/users",
+    categories: "/admin/categories",
   },
   account: {
     root: "/account",

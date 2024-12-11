@@ -22,3 +22,20 @@ export const reviewSchema = z
       path: ["content"], // This will show the error message on the content field
     }
   );
+
+export const createCategorySchema = z.object({
+  name: z
+    .string()
+    .min(1, { message: "Category name is required" })
+    .max(100, { message: "Category name must be less than 100 characters" }),
+  slug: z.string({ required_error: "Slug is required" }).nonempty(),
+});
+
+export const updateCategorySchema = z.object({
+  name: z
+    .string()
+    .min(1, { message: "Category name is required" })
+    .max(100, { message: "Category name must be less than 100 characters" })
+    .optional(),
+  slug: z.string().nonempty().optional(),
+});

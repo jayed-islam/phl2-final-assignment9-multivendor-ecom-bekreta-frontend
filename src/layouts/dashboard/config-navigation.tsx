@@ -2,7 +2,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Reviews } from "@mui/icons-material";
+import { Category, Reviews } from "@mui/icons-material";
 import { paths } from "../paths";
 
 export const routes = {
@@ -10,6 +10,7 @@ export const routes = {
     { path: "/admin", name: "Dashboard", icon: <DashboardIcon /> },
     { path: "/admin/users", name: "Manage Users", icon: <PeopleIcon /> },
     { path: paths.admin.products, name: "Products", icon: <InventoryIcon /> },
+    { path: paths.admin.categories, name: "Categories", icon: <Category /> },
   ],
   vendor: [
     { path: "/vendor", name: "Dashboard", icon: <DashboardIcon /> },
