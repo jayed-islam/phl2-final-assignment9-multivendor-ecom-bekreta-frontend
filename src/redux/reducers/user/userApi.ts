@@ -4,6 +4,8 @@ import { IPagination } from "@/types/product";
 import { IGetUpdateUSERProfileResponse, IUser } from "@/types/user";
 
 interface IGetUsersForAdminResponse {
+  success: boolean;
+  message: string;
   data: {
     users: IUser[];
     pagination: IPagination;
@@ -47,7 +49,7 @@ export const vendorApi = api.injectEndpoints({
     }),
     updateUserStatus: builder.mutation<
       IGetUsersForAdminResponse,
-      { userId: string; status?: string; isBlocklisted?: boolean }
+      { userId: string; status?: string; isBlacklisted?: boolean }
     >({
       query: (body) => ({
         url: `/user/update-status`,

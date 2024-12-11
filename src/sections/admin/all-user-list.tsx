@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import React, { useState } from "react";
@@ -18,6 +19,7 @@ import {
   Pagination,
 } from "@mui/material";
 import { useGetUsersForAdminQuery } from "@/redux/reducers/user/userApi";
+import UserRow from "./user-row";
 
 const AllUserListView = () => {
   const [tabValue, setTabValue] = useState("customer");
@@ -34,7 +36,7 @@ const AllUserListView = () => {
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
     setTabValue(newValue);
-    setPage(1); // Reset to page 1 when tab changes
+    setPage(1);
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,20 +125,7 @@ const AllUserListView = () => {
               </TableRow>
             ) : data && data?.data?.users?.length > 0 ? (
               data.data.users.map((user) => (
-                <TableRow key={user._id}>
-                  <TableCell>{user._id}</TableCell>
-                  <TableCell>
-                    {user.role === "vendor"
-                      ? user.vendor.shopName
-                      : user.name ?? "N/A"}
-                  </TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.role}</TableCell>
-                  <TableCell>{user.status}</TableCell>
-                  <TableCell>
-                    <Button size="small">Edit</Button>
-                  </TableCell>
-                </TableRow>
+                <UserRow user={user} key={user._id} />
               ))
             ) : (
               <TableRow>

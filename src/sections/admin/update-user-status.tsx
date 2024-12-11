@@ -13,12 +13,14 @@ import {
   InputLabel,
   FormControl,
   CircularProgress,
-  Typography,
+  SelectChangeEvent,
 } from "@mui/material";
 
 import { IUser } from "@/types/user";
 import { BooleanState } from "@/types/utils";
 import { useUpdateUserStatusMutation } from "@/redux/reducers/user/userApi";
+import toast from "react-hot-toast";
+import { LoadingButton } from "@mui/lab";
 
 interface Props {
   user: IUser;
@@ -27,63 +29,60 @@ interface Props {
 
 const UpdateUserStatusDialog = ({ user, dialog }: Props) => {
   const [status, setStatus] = useState(user.status || "active");
-  const [isBlocklisted, setIsBlocklisted] = useState(
-    user.role === "vendor" ? user.isBlocklisted : false
+  const [isBlacklisted, setIsBlacklisted] = useState(
+    user.role === "vendor" ? user.vendor.isBlacklisted : false
   );
-  const [loading, setLoading] = useState(false);
 
   const [updateUserStatus, { isLoading }] = useUpdateUserStatusMutation();
 
-  const handleStatusChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setStatus(event.target.value as string);
+  const handleStatusChange = (event: SelectChangeEvent<string>) => {
+    setStatus(event.target.value as "active" | "suspended" | "blocked");
   };
 
   const handleBlocklistChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setIsBlocklisted(event.target.checked);
+    setIsBlacklisted(event.target.checked);
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
     try {
-      await updateUserStatus({
-        userId: user._id,
+      const respose = await updateUserStatus({
+        userId: user._id as string,
         status,
-        isBlocklisted,
-      });
-      setLoading(false);
-      onClose(); // Close dialog on success
+        isBlacklisted,
+      }).unwrap();
+
+      if (respose.success) {
+        toast.success("Status updated");
+      } else {
+        toast.error(respose.message);
+      }
     } catch (error) {
-      setLoading(false);
       console.error("Failed to update user status", error);
     }
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Update User Status</DialogTitle>
+    <Dialog
+      open={dialog.value}
+      onClose={dialog.setFalse}
+      maxWidth="xs"
+      fullWidth
+    >
+      <DialogTitle>
+        Update {user.role === "customer" ? "User" : "Vendor"} Status
+      </DialogTitle>
       <DialogContent>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          {/* User Name */}
-          <Typography variant="body1">User: {user.name}</Typography>
-
           {/* Status Field */}
-          <FormControl fullWidth>
-            <InputLabel>Status</InputLabel>
-            <Select value={status} onChange={handleStatusChange} label="Status">
-              <MenuItem value="active">Active</MenuItem>
-              <MenuItem value="blocked">Blocked</MenuItem>
-              <MenuItem value="suspended">Suspended</MenuItem>
-            </Select>
-          </FormControl>
 
           {/* Blocklist Option for Vendors Only */}
-          {user.role === "vendor" && (
+          {user.role === "vendor" ? (
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={isBlocklisted}
+                  checked={isBlacklisted}
                   onChange={handleBlocklistChange}
                   name="blocklist"
                   color="primary"
@@ -91,16 +90,43 @@ const UpdateUserStatusDialog = ({ user, dialog }: Props) => {
               }
               label="Blocklist Vendor"
             />
+          ) : (
+            <FormControl
+              fullWidth
+              sx={{
+                mt: 3,
+              }}
+            >
+              <InputLabel>Status</InputLabel>
+              <Select
+                value={status}
+                onChange={handleStatusChange}
+                label="Status"
+              >
+                <MenuItem value="active">Active</MenuItem>
+                <MenuItem value="blocked">Blocked</MenuItem>
+                <MenuItem value="suspended">Suspended</MenuItem>
+              </Select>
+            </FormControl>
           )}
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={dialog.setFalse} variant="outlined">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} color="primary" disabled={loading}>
-          {loading ? <CircularProgress size={24} color="primary" /> : "Update"}
-        </Button>
+        <LoadingButton
+          onClick={handleSubmit}
+          color="primary"
+          variant="contained"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <CircularProgress size={24} color="primary" />
+          ) : (
+            "Update"
+          )}
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );
