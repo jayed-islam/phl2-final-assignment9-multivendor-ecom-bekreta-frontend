@@ -19,16 +19,18 @@ const ProductRow = ({ product }: Props) => {
       <TableRow key={product._id}>
         <TableCell>{product.name}</TableCell>
         <TableCell>
-          {product.images.map((item, idx) => (
-            <Image
-              key={idx}
-              src={item}
-              alt="image"
-              height={500}
-              width={500}
-              className="h-12 w-auto rounded-sm border p-1"
-            />
-          ))}
+          <div className="flex items-center gap-2">
+            {product?.images?.map((item, idx) => (
+              <Image
+                key={idx}
+                src={item}
+                alt="image"
+                height={500}
+                width={500}
+                className="h-12 w-auto rounded-sm border p-1"
+              />
+            ))}
+          </div>
         </TableCell>
         <TableCell>{product?.category?.name}</TableCell>
         <TableCell>${product.price}</TableCell>

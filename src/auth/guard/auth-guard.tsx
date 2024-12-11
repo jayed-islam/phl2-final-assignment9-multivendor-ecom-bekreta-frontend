@@ -64,7 +64,7 @@ function Container({ children }: IAuthGuardProps) {
       // Token is not valid or missing, redirect to login
       dispatch(logout());
       const searchParams = new URLSearchParams({
-        returnTo: window.location.pathname,
+        returnTo: window.location.href,
       }).toString();
       const loginPath = loginPaths.login;
       const href = `${loginPath}?${searchParams}`;

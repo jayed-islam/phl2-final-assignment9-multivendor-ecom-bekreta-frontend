@@ -11,10 +11,6 @@ export const navConfs = [
     title: "Recent Viewed",
     path: paths.product.recent,
   },
-  {
-    title: "Contact",
-    path: paths.root,
-  },
 ];
 
 export const footerNavConfs = [

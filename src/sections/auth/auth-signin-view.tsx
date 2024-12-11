@@ -10,7 +10,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { alpha, useTheme } from "@mui/material/styles";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { AuthFormValues, authValidationSchema } from "./auth-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,6 +35,7 @@ export default function LoginView() {
     resolver: zodResolver(authValidationSchema),
   });
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
 
   const {
     handleSubmit,
@@ -51,10 +52,15 @@ export default function LoginView() {
       if (response.success) {
         dispatch(setToken(response?.data?.accessToken));
         toast.success(response.message);
-        if (response?.data?.user?.role === "vendor") {
+        const returnTo = searchParams.get("returnTo");
+        if (returnTo) {
+          router.push(returnTo);
+        } else if (response?.data?.user?.role === "vendor") {
           router.push(paths.vendor.root);
         } else if (response?.data?.user?.role === "customer") {
           router.push(paths.account.root);
+        } else if (response?.data?.user?.role === "admin") {
+          router.push(paths.admin.root);
         } else {
           router.push(paths.root);
         }

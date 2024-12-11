@@ -279,7 +279,7 @@ const ProductDetailsView = ({ id }: Props) => {
                           {new Date(review.createdAt).toLocaleTimeString()}
                         </Typography>
                       </div>
-                      {review.comment && (
+                      {review.content && (
                         <Typography
                           variant="body1"
                           mt={2}
@@ -288,7 +288,7 @@ const ProductDetailsView = ({ id }: Props) => {
                             lineHeight: 1.6,
                           }}
                         >
-                          &ldquo;{review.comment}&rdquo;
+                          &ldquo;{review.content}&rdquo;
                         </Typography>
                       )}
 

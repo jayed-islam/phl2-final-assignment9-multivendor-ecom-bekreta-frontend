@@ -1,9 +1,11 @@
 "use client";
 
 import React, { FC } from "react";
-import { Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import { useAppSelector } from "@/redux/hooks";
 import { UserRoles } from "@/types/user";
+import Link from "next/link";
+import { paths } from "@/layouts/paths";
 
 type PermissionGuardProp = {
   hasContent?: boolean;
@@ -31,6 +33,7 @@ export const PermissionGuard: FC<PermissionGuardProp> = ({
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          minHeight: "51vh",
         }}
       >
         <Typography variant="h3" sx={{ mb: 2 }}>
@@ -39,6 +42,9 @@ export const PermissionGuard: FC<PermissionGuardProp> = ({
         <Typography sx={{ color: "text.secondary" }}>
           You do not have permission to access this page
         </Typography>
+        <Link href={paths.root}>
+          <Button>Go Back</Button>
+        </Link>
       </Container>
     ) : null;
   }

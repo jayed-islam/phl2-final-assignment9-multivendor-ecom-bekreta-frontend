@@ -13,15 +13,13 @@ interface Props {
 const navItems = [
   { label: "Account", route: "/account" },
   { label: "Orders", route: "/account/orders" },
-  { label: "Account Update", route: "/account/update" },
-  { label: "Account Settings", route: "/account/settings" },
 ];
 
 const AccountSidebar = ({ mobileOpen, handleDrawerToggle }: Props) => {
   const pathname = usePathname();
   const drawerContent = (
     <div>
-      <div className="bg-gray-100 p-3 rounded-3xl flex flex-col gap-2 border shadow">
+      <div className="w-56 bg-gray-100 p-3 rounded-3xl flex flex-col gap-2 border shadow">
         {navItems.map((item) => (
           <Link
             key={item.label}

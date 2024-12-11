@@ -3,6 +3,13 @@ export const paths = {
   signin: "/auth/signin",
   signup: "/auth/signup",
   success: "/success",
+  admin: {
+    root: "/admin",
+    products: "/admin/products",
+    reviews: "/admin/reviews",
+    vendors: "/admin/vendors",
+    users: "/admin/users",
+  },
   account: {
     root: "/account",
     orders: "/account/orders",

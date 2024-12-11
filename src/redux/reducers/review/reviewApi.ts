@@ -10,7 +10,7 @@ export const reviewApi = api.injectEndpoints({
       { vendorId: string }
     >({
       query: ({ vendorId }) => ({
-        url: `//vendor-reviews/${vendorId}`,
+        url: `/review/vendor-reviews/${vendorId}`,
       }),
       providesTags: ["reviews"],
     }),

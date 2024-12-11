@@ -31,7 +31,7 @@ export interface IReview {
   product: string;
   customer: IUser;
   rating: number;
-  comment: string;
+  content: string;
   image: string;
   createdAt: Date;
 }
