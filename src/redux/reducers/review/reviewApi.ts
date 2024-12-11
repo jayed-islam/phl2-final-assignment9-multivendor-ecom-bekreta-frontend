@@ -45,9 +45,17 @@ export const reviewApi = api.injectEndpoints({
       }),
       invalidatesTags: ["reviews"],
     }),
+    getReviewForAdmin: builder.query<IGetReviewResponse, void>({
+      query: () => ({
+        url: `/review/get-list`,
+      }),
+    }),
   }),
   overrideExisting: true,
 });
 
-export const { useAddReviewMutation, useGetReviewAllReviewsForVendorQuery } =
-  reviewApi;
+export const {
+  useAddReviewMutation,
+  useGetReviewAllReviewsForVendorQuery,
+  useGetReviewForAdminQuery,
+} = reviewApi;

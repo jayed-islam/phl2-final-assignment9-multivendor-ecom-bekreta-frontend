@@ -157,14 +157,12 @@ const ProductDetailsView = ({ id }: Props) => {
                   <Typography variant="h3" fontWeight="bold" gutterBottom>
                     {data?.data?.product.name}
                   </Typography>
-                  <Typography
-                    variant="h5"
-                    color="primary"
-                    fontWeight="bold"
-                    mb={2}
-                  >
-                    ${data?.data?.product.price}
-                  </Typography>
+                  <div className="flex items-center gap-3 mb-3 ">
+                    <h3 className="text-xl font-semibold">Price:</h3>
+                    <Typography variant="h5" color="primary" fontWeight="bold">
+                      ${data?.data?.product.price}
+                    </Typography>
+                  </div>
                   <Typography variant="body1" color="textSecondary" paragraph>
                     {data?.data?.product.description}
                   </Typography>
@@ -231,7 +229,14 @@ const ProductDetailsView = ({ id }: Props) => {
               </Grid>
             </Grid>
 
-            <div className="mt-16">
+            <div className="flex items-center gap-3 pt-16 ">
+              <Typography variant="h4" fontWeight="bold">
+                Rating:
+              </Typography>
+              <Rating value={data?.data?.product?.rating} readOnly />
+            </div>
+
+            <div className="mt-5">
               <Typography variant="h4" fontWeight="bold" gutterBottom>
                 Qualities
               </Typography>
