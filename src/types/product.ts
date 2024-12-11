@@ -18,6 +18,7 @@ export interface IProduct {
   vendor: string | IVendor;
   isOnSale: boolean;
   isPublished: boolean;
+  isDeleted: boolean;
 }
 
 export type IPagination = {

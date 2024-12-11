@@ -7,6 +7,8 @@ import {
   Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import Link from "next/link";
+import { paths } from "../paths";
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -41,19 +43,21 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
       )}
 
       {/* Dashboard title */}
-      <Typography
-        variant="h6"
-        component="div"
-        color="textPrimary"
-        sx={{
-          fontWeight: "bold",
-          flex: 1,
-          textAlign: isDesktop ? "left" : "center",
-          ml: isDesktop ? "265px" : "0",
-        }}
-      >
-        Dashboard
-      </Typography>
+      <Link href={paths.root}>
+        <Typography
+          variant="h6"
+          component="div"
+          color="textPrimary"
+          sx={{
+            fontWeight: "bold",
+            flex: 1,
+            textAlign: isDesktop ? "left" : "center",
+            ml: isDesktop ? "265px" : "0",
+          }}
+        >
+          Bekreta Home
+        </Typography>
+      </Link>
 
       {isDesktop && (
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>

@@ -6,6 +6,7 @@ import React from "react";
 import { UpdateProductView } from "./edit-product-dilaog";
 import SoftDeleteDialog from "./soft-delete-product-dialog";
 import DuplicateDialog from "./make-duplicate-product-dialog";
+import { useAppSelector } from "@/redux/hooks";
 
 interface Props {
   product: IProduct;
@@ -14,6 +15,8 @@ const ProductRow = ({ product }: Props) => {
   const editDialog = useBoolean();
   const deleteDialog = useBoolean();
   const duplicateDilaog = useBoolean();
+
+  const { user } = useAppSelector((state) => state.auth);
   return (
     <>
       <TableRow key={product._id}>
@@ -32,6 +35,13 @@ const ProductRow = ({ product }: Props) => {
             ))}
           </div>
         </TableCell>
+        {user && user?.role === "admin" && (
+          <TableCell>
+            <h2 className="text-sm font-semibold text-yellow-600 whitespace-nowrap">
+              {product?.isDeleted ? "Deleted" : "Not deleted"}
+            </h2>
+          </TableCell>
+        )}
         <TableCell>{product?.category?.name}</TableCell>
         <TableCell>${product.price}</TableCell>
         <TableCell>{product.inventoryCount}</TableCell>

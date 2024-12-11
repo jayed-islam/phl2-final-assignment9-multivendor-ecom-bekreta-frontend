@@ -22,6 +22,7 @@ export const api = createApi({
     "single-order",
     "admin-orders",
     "reviews",
+    "admin-users",
   ],
   endpoints: () => ({}),
 });

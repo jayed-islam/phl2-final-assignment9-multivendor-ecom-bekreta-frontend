@@ -155,6 +155,11 @@ const Header = () => {
                 <Button>Dashboard</Button>
               </Link>
             )}
+            {user && user._id && user.role === "admin" && (
+              <Link href={paths.admin.root}>
+                <Button>Admin Dahsboard</Button>
+              </Link>
+            )}{" "}
           </Stack>
         </Box>
 
@@ -228,6 +233,11 @@ const Header = () => {
               {user && user._id && user.role === "vendor" && (
                 <Link href={paths.vendor.root}>
                   <Button>Dashboard</Button>
+                </Link>
+              )}
+              {user && user._id && user.role === "admin" && (
+                <Link href={paths.admin.root}>
+                  <Button>Admin Dahsboard</Button>
                 </Link>
               )}
             </Stack>

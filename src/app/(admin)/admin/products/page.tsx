@@ -1,7 +1,8 @@
+import AdminAllProductListView from "@/sections/admin/admin-product-list";
 import React from "react";
 
 const Page = () => {
-  return <div>Page</div>;
+  return <AdminAllProductListView />;
 };
 
 export default Page;

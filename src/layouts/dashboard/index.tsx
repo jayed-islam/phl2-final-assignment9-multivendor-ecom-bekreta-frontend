@@ -26,8 +26,14 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
       {/* Header */}
       <Header toggleSidebar={toggleSidebar} />
 
-      {/* Main Content */}
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{
+          display: {
+            xs: "auto",
+            lg: "flex",
+          },
+        }}
+      >
         <Drawer
           variant={isDesktop ? "persistent" : "temporary"}
           open={isSidebarOpen || isDesktop}
@@ -44,10 +50,9 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
           {user?.role && <Sidebar role={user.role as "admin" | "vendor"} />}
         </Drawer>
 
-        {/* Page Content */}
         <Box
           component="main"
-          className="flex-1 bg-gray-50 p-4 h-screen"
+          className=" bg-gray-50 p-4 h-screen flex-1"
           sx={{
             ml: isDesktop && isSidebarOpen ? "265px" : "0",
             transition: "margin 0.3s",

@@ -4,14 +4,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import {
   Alert,
   Button,
+  Checkbox,
   Dialog,
+  FormControlLabel,
   Grid2,
   IconButton,
   InputLabel,
@@ -32,6 +34,7 @@ import { productSchema } from "@/validations/product-schema";
 import { useAppSelector } from "@/redux/hooks";
 import { IProduct } from "@/types/product";
 import { BooleanState } from "@/types/utils";
+import RHFCheckbox from "@/components/hook-form/rhf-checkbox";
 
 interface Props {
   initialValues: IProduct;
@@ -42,7 +45,11 @@ export const UpdateProductView = ({ initialValues, dialog }: Props) => {
   const { user } = useAppSelector((state) => state.auth);
   const methods = useForm({
     resolver: zodResolver(productSchema),
-    defaultValues: initialValues,
+    defaultValues: {
+      ...initialValues,
+      category: initialValues?.category?._id,
+      isDeleted: initialValues?.isDeleted ?? false,
+    },
   });
 
   const { data: categoryData, isLoading: isCategoryLoading } =
@@ -56,6 +63,7 @@ export const UpdateProductView = ({ initialValues, dialog }: Props) => {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: { dirtyFields },
   } = methods;
 
@@ -68,7 +76,10 @@ export const UpdateProductView = ({ initialValues, dialog }: Props) => {
     name: "qualities" as never,
   });
 
+  // console.log("isDeleted", watch("isDeleted"));
+
   const onSubmit = handleSubmit(async (data) => {
+    const isDeleted = watch("isDeleted");
     console.log(data);
 
     const updatePayload: Partial<IProduct> = Object.keys(dirtyFields).reduce(
@@ -88,6 +99,7 @@ export const UpdateProductView = ({ initialValues, dialog }: Props) => {
           ? initialValues.vendor._id
           : initialValues?.vendor,
       ...updatePayload,
+      isDeleted,
     };
 
     try {
@@ -147,6 +159,20 @@ export const UpdateProductView = ({ initialValues, dialog }: Props) => {
               />
               <RHFTextField name="price" label="Price" type="number" />
             </div>
+
+            {user && user.role === "admin" && (
+              <Box>
+                <Typography
+                  sx={{
+                    mb: 1,
+                  }}
+                  variant="subtitle2"
+                >
+                  Product Status
+                </Typography>
+                <RHFCheckbox name="isDeleted" label="Mark as deleted" />
+              </Box>
+            )}
 
             <Box>
               <Typography
