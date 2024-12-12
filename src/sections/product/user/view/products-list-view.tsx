@@ -9,6 +9,7 @@ import {
   Box,
   Paper,
   Typography,
+  Pagination,
 } from "@mui/material";
 import { useGetAllProductListQuery } from "@/redux/reducers/product/productApi";
 import { useGetCategoriesQuery } from "@/redux/reducers/category/categoryApi";
@@ -39,10 +40,12 @@ const getPriceRange = (key: string) => {
 
 const ProductListView = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
   const searchParams = useSearchParams();
   const queryCategory = searchParams.get("category") || "";
+  const querySearchTerm = searchParams.get("search") || "";
   const [category, setCategory] = useState(queryCategory);
+  const [searchTerm, setSearchTerm] = useState(querySearchTerm);
   const [priceRangeKey, setPriceRangeKey] = useState<string>("all");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -69,6 +72,15 @@ const ProductListView = () => {
     { label: "500 to 1000", value: "500-1000" },
     { label: "1000 and above", value: "1000+" },
   ];
+
+  const totalPages = productsData?.data?.pagination.totalPages;
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
 
   return (
     <div className="px-5 2xl:px-0 max-w-5xl mx-auto py-11">
@@ -144,6 +156,15 @@ const ProductListView = () => {
           ))
         )}
       </div>
+
+      <Box display="flex" justifyContent="center" mt={4}>
+        <Pagination
+          count={totalPages}
+          page={page}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </Box>
     </div>
   );
 };

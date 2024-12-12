@@ -2,6 +2,7 @@
 import { api } from "@/redux/api";
 import {
   IAuthLoginResponse,
+  IChangePassowrdPayload,
   IGetMeResponse,
   IRegisterResponse,
   LoginRequest,
@@ -28,6 +29,16 @@ export const authApi = api.injectEndpoints({
       }),
       invalidatesTags: ["user-me"],
     }),
+    changePassword: builder.mutation<IRegisterResponse, IChangePassowrdPayload>(
+      {
+        query: (userDetails) => ({
+          url: "/auth/change-password",
+          method: "POST",
+          body: userDetails,
+        }),
+        invalidatesTags: ["user-me"],
+      }
+    ),
     getMe: builder.query<IGetMeResponse, void>({
       query: () => ({
         url: "/user/me",
@@ -55,4 +66,9 @@ export const authApi = api.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetMeQuery } = authApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useGetMeQuery,
+  useChangePasswordMutation,
+} = authApi;

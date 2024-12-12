@@ -11,6 +11,11 @@ export interface RegisterRequest {
   password: string;
 }
 
+export interface IChangePassowrdPayload {
+  oldPassword: string;
+  newPassword: string;
+}
+
 export interface AuthData {
   accessToken: string;
   user: IUser;

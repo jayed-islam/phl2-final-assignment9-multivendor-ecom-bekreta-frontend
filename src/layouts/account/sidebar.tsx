@@ -13,6 +13,7 @@ interface Props {
 const navItems = [
   { label: "Account", route: "/account" },
   { label: "Orders", route: "/account/orders" },
+  { label: "Change password", route: "/account/change-password" },
 ];
 
 const AccountSidebar = ({ mobileOpen, handleDrawerToggle }: Props) => {

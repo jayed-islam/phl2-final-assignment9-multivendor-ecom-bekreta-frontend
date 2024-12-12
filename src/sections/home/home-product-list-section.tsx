@@ -12,6 +12,7 @@ import {
   Typography,
   Grid,
   Slider,
+  Pagination,
 } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { useGetAllProductListQuery } from "@/redux/reducers/product/productApi";
@@ -70,6 +71,15 @@ const HomeProductViewSection = () => {
     { label: "500 to 1000", value: "500-1000" },
     { label: "1000 and above", value: "1000+" },
   ];
+
+  const totalPages = productsData?.data?.pagination.totalPages;
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
 
   return (
     <div className="px-5 2xl:px-0 max-w-5xl mx-auto pt-11  md:pt-16 lg:pt-20 pb-20">
@@ -143,6 +153,14 @@ const HomeProductViewSection = () => {
           ))
         )}
       </div>
+      <Box display="flex" justifyContent="center" mt={4}>
+        <Pagination
+          count={totalPages}
+          page={page}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </Box>
     </div>
   );
 };

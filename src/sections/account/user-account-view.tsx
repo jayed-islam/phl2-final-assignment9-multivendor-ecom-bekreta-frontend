@@ -44,22 +44,6 @@ const UserAccountView = () => {
           </div>
         </div>
       </div>
-
-      {/* Orders Section */}
-      <div className="space-y-6">
-        <h3 className="text-xl font-semibold text-gray-800">Recent Orders</h3>
-        <div className="space-y-4">
-          <div className="p-4 bg-gray-50 border rounded-lg flex justify-between items-center">
-            <div>
-              <h4 className="font-medium text-gray-800">Order #12345</h4>
-              <p className="text-gray-600">Delivered on Dec 9, 2024</p>
-            </div>
-            <button className="px-4 py-2 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-              View Details
-            </button>
-          </div>
-        </div>
-      </div>
       <UpdateUserProfileDialog dialog={dialog} />
     </div>
   );
