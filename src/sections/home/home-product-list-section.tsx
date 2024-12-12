@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -14,12 +14,13 @@ import {
   Slider,
   Pagination,
 } from "@mui/material";
-import { FilterList } from "@mui/icons-material";
 import { useGetAllProductListQuery } from "@/redux/reducers/product/productApi";
 import { useGetCategoriesQuery } from "@/redux/reducers/category/categoryApi";
 import ProductCard from "@/layouts/common/product-card";
 import ProductCardShimmer from "@/layouts/common/product-shimmer-card";
 import { useAppSelector } from "@/redux/hooks";
+import { IProduct } from "@/types/product";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const getPriceRange = (key: string) => {
   switch (key) {
@@ -48,6 +49,8 @@ const HomeProductViewSection = () => {
   const [priceRangeKey, setPriceRangeKey] = useState<string>("all");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [hasMore, setHasMore] = useState(true);
 
   const { data: categoryData, isLoading: isCategoryLoading } =
     useGetCategoriesQuery();
@@ -79,6 +82,29 @@ const HomeProductViewSection = () => {
     value: number
   ) => {
     setPage(value);
+  };
+
+  useEffect(() => {
+    if (productsData?.data) {
+      const newProducts = productsData.data.products;
+
+      if (page === 1) {
+        setProducts(newProducts);
+      } else {
+        setProducts((prev) => [...prev, ...newProducts]);
+      }
+
+      if (
+        products.length + newProducts.length >=
+        productsData.data.pagination.totalItems
+      ) {
+        setHasMore(false);
+      }
+    }
+  }, [page, products.length, productsData]);
+
+  const fetchMoreProducts = () => {
+    setPage((prevPage) => prevPage + 1);
   };
 
   return (
@@ -135,7 +161,7 @@ const HomeProductViewSection = () => {
       </Paper>
 
       {/* Products Section */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      {/* <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {isProductsLoading ? (
           // Loading shimmer effect
           Array.from({ length: 6 }).map((_, index) => (
@@ -152,7 +178,30 @@ const HomeProductViewSection = () => {
             <ProductCard product={product} key={idx} />
           ))
         )}
-      </div>
+      </div> */}
+      <InfiniteScroll
+        dataLength={products.length}
+        next={fetchMoreProducts}
+        hasMore={hasMore}
+        loader={
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <ProductCardShimmer key={index} />
+            ))}
+          </div>
+        }
+        endMessage={
+          <Typography variant="h6" color="textSecondary" align="center">
+            No more products available
+          </Typography>
+        }
+      >
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {products.map((product, idx) => (
+            <ProductCard product={product} key={idx} />
+          ))}
+        </div>
+      </InfiniteScroll>
       <Box display="flex" justifyContent="center" mt={4}>
         <Pagination
           count={totalPages}

@@ -16,6 +16,7 @@ export const paths = {
   account: {
     root: "/account",
     orders: "/account/orders",
+    changePassword: "/account/change-password",
   },
   cart: {
     root: "/carts",

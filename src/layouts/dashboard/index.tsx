@@ -51,8 +51,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
         </Drawer>
 
         <Box
-          component="main"
-          className=" bg-gray-50 p-4 h-screen flex-1"
+          className=" bg-gray-50 px-5 pt-5 pb-16 flex-1"
           sx={{
             ml: isDesktop && isSidebarOpen ? "265px" : "0",
             transition: "margin 0.3s",

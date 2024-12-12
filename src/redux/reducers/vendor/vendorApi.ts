@@ -34,7 +34,7 @@ export const vendorApi = api.injectEndpoints({
         url: `/vendor/make-follow-unfollow/${id}`,
         method: "PUT",
       }),
-      invalidatesTags: ["user-me", "single-vendor"],
+      invalidatesTags: ["user-me", "single-vendor", "products"],
     }),
     getSingleVendor: builder.query<IGetUpdateVendorProfileResponse, string>({
       query: (id) => ({

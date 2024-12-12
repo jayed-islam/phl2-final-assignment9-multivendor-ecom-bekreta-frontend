@@ -50,4 +50,9 @@ export const userNavConfs = [
     path: paths.account.orders,
     icon: <AccountCircleIcon />,
   },
+  {
+    title: "Change Password",
+    path: paths.account.changePassword,
+    icon: <AccountCircleIcon />,
+  },
 ];
