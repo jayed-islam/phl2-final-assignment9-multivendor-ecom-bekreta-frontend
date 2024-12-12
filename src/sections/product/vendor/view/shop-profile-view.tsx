@@ -7,11 +7,10 @@ import {
   useToggleFollowUnfollwVendorMutation,
 } from "@/redux/reducers/vendor/vendorApi";
 import { Button, Typography, Avatar, Box } from "@mui/material";
-import Image from "next/image";
-import Link from "next/link";
-import { paths } from "@/layouts/paths";
 import toast from "react-hot-toast";
 import { useAppSelector } from "@/redux/hooks";
+import ShopProductCard from "../shop-product-card";
+import { useRouter } from "next/navigation";
 
 interface Props {
   id: string;
@@ -25,6 +24,7 @@ const ShopProfileView = ({ id }: Props) => {
     useToggleFollowUnfollwVendorMutation();
 
   const [isFollowing, setIsFollowing] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (vendorData?.data) {
@@ -37,6 +37,12 @@ const ShopProfileView = ({ id }: Props) => {
 
   // Handle follow/unfollow action
   const handleFollowUnfollow = async () => {
+    if (!user) {
+      const currentUrl = window.location.href;
+      router.push(`/auth/signin?returnTo=${encodeURIComponent(currentUrl)}`);
+      return;
+    }
+
     setIsFollowing((prevState) => !prevState);
     try {
       const response = await toggleFollowUnfollow(id).unwrap();
@@ -81,14 +87,16 @@ const ShopProfileView = ({ id }: Props) => {
           </Typography>
         </Box>
         {/* Follow/Unfollow Button */}
-        <Button
-          sx={{ marginLeft: 2 }}
-          onClick={handleFollowUnfollow}
-          disabled={isLoading}
-          variant="contained"
-        >
-          {isFollowing ? "Unfollow" : "Follow"}
-        </Button>
+        {user?.role !== "vendor" && (
+          <Button
+            sx={{ marginLeft: 2 }}
+            onClick={handleFollowUnfollow}
+            disabled={isLoading}
+            variant="contained"
+          >
+            {isFollowing ? "Unfollow" : "Follow"}
+          </Button>
+        )}
       </div>
 
       {/* Products Section */}
@@ -97,36 +105,7 @@ const ShopProfileView = ({ id }: Props) => {
       </Typography>
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {vendorData?.data.products?.map((product) => (
-          <Link
-            href={`${paths.product.root}/${product._id}`}
-            key={product._id}
-            className="bg-white shadow border rounded-3xl flex flex-col items-center justify-center"
-          >
-            <div className="relative w-full md:h-48 h-40 lg:h-56 bg-gray-100 rounded-3xl overflow-hidden">
-              <Image
-                src={product.images[0]}
-                alt={product.name}
-                className="w-full h-full object-cover"
-                height={500}
-                width={500}
-              />
-            </div>
-            <div className="flex flex-col items-center justify-center p-3">
-              <h3 className="text-md font-semibold line-clamp-1 overflow-ellipsis text-center">
-                {product.name}
-              </h3>
-              <p className="text-gray-600 mt-2">${product.price.toFixed(2)}</p>
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                //   onClick={() => handleAddToCart(product)}
-                sx={{ marginTop: 2 }}
-              >
-                Add to Cart
-              </Button>
-            </div>
-          </Link>
+          <ShopProductCard product={product} key={product._id} />
         ))}
       </div>
     </div>

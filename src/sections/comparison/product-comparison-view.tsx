@@ -1,28 +1,25 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Card,
   CardContent,
   Typography,
   Button,
-  Modal,
-  Box,
   Snackbar,
   Alert,
-  Autocomplete,
-  TextField,
-  CircularProgress,
   Table,
   TableHead,
   TableRow,
   TableCell,
   TableBody,
+  CircularProgress,
+  AlertTitle,
 } from "@mui/material";
 import { useGetProductListQuery } from "@/redux/reducers/product/productApi";
-import Image from "next/image";
 import { IProduct } from "@/types/product";
+import SelectProductDialog from "./product-selection-diloag";
 
 const ProductComparison: React.FC = () => {
   const { data, isFetching } = useGetProductListQuery();
@@ -37,25 +34,26 @@ const ProductComparison: React.FC = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  // Automatically close the warning after 3 seconds
-  useEffect(() => {
-    if (warning) {
-      const timer = setTimeout(() => setWarning(null), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [warning]);
-
-  useEffect(() => {
-    // Log warning for debugging purposes
-    console.log(warning);
-  }, [warning]);
-
   if (isFetching) {
-    return <Typography>Loading products...</Typography>;
+    return (
+      <div className="flex justify-center items-center h-[51vh]">
+        <CircularProgress size={50} />
+        <Typography variant="h6" className="ml-4">
+          Loading products...
+        </Typography>
+      </div>
+    );
   }
 
   if (!data) {
-    return <Typography>Error fetching products.</Typography>;
+    return (
+      <div className="flex justify-center items-center h-[51vh]">
+        <Alert severity="error" className="max-w-md">
+          <AlertTitle>Error</AlertTitle>
+          Failed to fetch products. Please try again later.
+        </Alert>
+      </div>
+    );
   }
 
   return (
@@ -64,7 +62,7 @@ const ProductComparison: React.FC = () => {
         Product Comparison
       </Typography>
 
-      {/* Display the warning as a Snackbar */}
+      {/* Warning Snackbar */}
       {warning && (
         <Snackbar
           open={Boolean(warning)}
@@ -78,102 +76,21 @@ const ProductComparison: React.FC = () => {
       )}
 
       {/* Comparison Selector */}
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={openModal}
-        sx={{ mt: 2 }}
-      >
+      <Button variant="contained" color="primary" onClick={openModal}>
         Select Products for Comparison
       </Button>
 
-      <Modal open={isModalOpen} onClose={closeModal}>
-        <Box
-          sx={{
-            width: 400,
-            margin: "100px auto",
-            background: "white",
-            borderRadius: "8px",
-            padding: "16px",
-          }}
-        >
-          <Typography variant="h6" gutterBottom>
-            Select Products
-          </Typography>
-          <Autocomplete
-            multiple
-            options={data?.data || []}
-            getOptionLabel={(product) => product.name}
-            renderOption={(props, product) => (
-              <Box
-                {...props}
-                component="div"
-                display="flex"
-                alignItems="center"
-                padding={1}
-                sx={{
-                  "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" },
-                  cursor: "pointer",
-                }}
-              >
-                <Image
-                  src={product.images[0]}
-                  alt={product.name}
-                  style={{
-                    width: 40,
-                    height: 40,
-                    objectFit: "cover",
-                    marginRight: 8,
-                    borderRadius: "4px",
-                  }}
-                  height={500}
-                  width={500}
-                />
-                <Typography variant="body1">{product.name}</Typography>
-              </Box>
-            )}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Choose Products"
-                placeholder="Search products"
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <>
-                      {isFetching ? <CircularProgress size={20} /> : null}
-                      {params.InputProps.endAdornment}
-                    </>
-                  ),
-                }}
-              />
-            )}
-            onChange={(event, selectedProducts: IProduct[]) => {
-              const validProducts = selectedProducts.filter((product) => {
-                if (
-                  comparisonList.length > 0 &&
-                  product.category !== comparisonList[0].category
-                ) {
-                  setWarning(
-                    "Selected products must belong to the same category."
-                  );
-                  return false;
-                }
-                return true;
-              });
-              setComparisonList(validProducts.slice(0, 3)); // Restrict to 3 items
-              setWarning(null);
-            }}
-          />
+      {/* Product Selection Dialog */}
+      <SelectProductDialog
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        productList={data.data}
+        comparisonList={comparisonList}
+        setComparisonList={setComparisonList}
+        setWarning={setWarning}
+      />
 
-          <Box marginTop={2} textAlign="right">
-            <Button onClick={closeModal} color="secondary">
-              Close
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-
+      {/* Comparison Grid */}
       <Grid container spacing={2} marginTop={2}>
         {comparisonList.map((product) => (
           <Grid item xs={12} sm={6} md={4} key={product._id}>
@@ -188,7 +105,7 @@ const ProductComparison: React.FC = () => {
                   color="secondary"
                   onClick={() => handleRemoveFromComparison(product._id)}
                 >
-                  Remove from Comparison
+                  Remove
                 </Button>
               </CardContent>
             </Card>
@@ -196,8 +113,9 @@ const ProductComparison: React.FC = () => {
         ))}
       </Grid>
 
+      {/* Comparison Table */}
       {comparisonList.length > 0 && (
-        <Box marginTop={4}>
+        <div className="mt-10">
           <Typography variant="h5" gutterBottom>
             Compare Products
           </Typography>
@@ -233,7 +151,7 @@ const ProductComparison: React.FC = () => {
               </TableRow>
             </TableBody>
           </Table>
-        </Box>
+        </div>
       )}
     </div>
   );

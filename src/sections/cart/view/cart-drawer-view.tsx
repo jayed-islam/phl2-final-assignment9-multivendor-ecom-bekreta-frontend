@@ -171,13 +171,15 @@ const CartDrawer: React.FC = () => {
                 >
                   Clear Cart
                 </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleCheckout}
-                >
-                  Checkout
-                </Button>
+                <Link href={paths.checkout.root}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleCheckout}
+                  >
+                    Checkout
+                  </Button>
+                </Link>
               </div>
             </div>
           </>

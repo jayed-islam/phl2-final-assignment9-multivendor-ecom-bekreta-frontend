@@ -72,7 +72,7 @@ const HomeProductViewSection = () => {
   ];
 
   return (
-    <div className="px-5 2xl:px-0 max-w-5xl mx-auto pt-11  md:pt-16 lg:pt-20">
+    <div className="px-5 2xl:px-0 max-w-5xl mx-auto pt-11  md:pt-16 lg:pt-20 pb-20">
       {/* Header Section */}
       <Typography variant="h4" fontWeight="bold" mb={3} align="center">
         Explore Products
