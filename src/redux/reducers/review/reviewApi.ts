@@ -14,13 +14,13 @@ export const reviewApi = api.injectEndpoints({
       }),
       providesTags: ["reviews"],
     }),
+
     addReview: builder.mutation<ICreateReviewResponse, FormData>({
       query: (body) => ({
         url: `/review`,
         method: "POST",
         body,
       }),
-      invalidatesTags: ["reviews"],
     }),
 
     updateReview: builder.mutation<
@@ -40,7 +40,7 @@ export const reviewApi = api.injectEndpoints({
       { reviewId: string }
     >({
       query: ({ reviewId }) => ({
-        url: `/review/delete/${reviewId}`,
+        url: `/review/${reviewId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["reviews"],
@@ -49,6 +49,7 @@ export const reviewApi = api.injectEndpoints({
       query: () => ({
         url: `/review/get-list`,
       }),
+      providesTags: ["reviews"],
     }),
   }),
   overrideExisting: true,
@@ -58,4 +59,5 @@ export const {
   useAddReviewMutation,
   useGetReviewAllReviewsForVendorQuery,
   useGetReviewForAdminQuery,
+  useDeleteRreviewMutation,
 } = reviewApi;

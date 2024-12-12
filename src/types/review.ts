@@ -1,3 +1,7 @@
+import { IProduct } from "./product";
+import { IUser } from "./user";
+import { IVendor } from "./vendor";
+
 export interface ICreateReviewRequest {
   content: string;
   product: string;
@@ -26,12 +30,14 @@ export enum ReviewType {
 }
 
 export interface IReview {
-  product: string;
-  customer: string;
-  vendor: string;
+  _id: string;
+  product: IProduct;
+  customer: IUser;
+  vendor: IVendor;
   rating: number;
   content: string;
   image: string;
   createdAt: Date;
   updatedAt: Date;
+  isDeleted: boolean;
 }

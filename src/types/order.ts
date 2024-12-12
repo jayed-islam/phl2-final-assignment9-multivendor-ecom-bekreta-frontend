@@ -1,4 +1,5 @@
 import { IPagination, IProduct } from "./product";
+import { IUser } from "./user";
 import { IVendor } from "./vendor";
 
 export const ORDER_STATUS = [
@@ -115,4 +116,18 @@ export interface IOrderFilters {
   sortBy: "latest" | "oldest";
   vendor?: string;
   admin?: string;
+}
+
+export interface IPayment {
+  user: IUser;
+  vendor: IVendor;
+  order: IOrder;
+  amount: number;
+  currency: string;
+  paymentMethod: string;
+  paymentStatus: "PENDING" | "COMPLETED" | "FAILED";
+  transactionId: string;
+  additionalInfo?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

@@ -10,6 +10,7 @@ export const paths = {
     vendors: "/admin/vendors",
     users: "/admin/users",
     categories: "/admin/categories",
+    transactions: "/admin/transactions",
   },
   account: {
     root: "/account",

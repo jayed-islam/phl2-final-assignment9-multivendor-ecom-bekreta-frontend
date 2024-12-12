@@ -5,6 +5,7 @@ import {
   IGetFeaturedOrderBody,
   IGetOrderListResponse,
   IOrder,
+  IPayment,
 } from "@/types/order";
 import { api } from "../../api";
 import { IPagination } from "@/types/product";
@@ -17,6 +18,12 @@ interface IGetCreateOrderResponse {
 
 interface IValidateCouponRespnse {
   data: ICoupon;
+  message: string;
+  success: boolean;
+}
+
+interface IGetPaymentList {
+  data: IPayment[];
   message: string;
   success: boolean;
 }
@@ -98,6 +105,23 @@ export const orderApi = api.injectEndpoints({
       }),
       invalidatesTags: ["admin-orders"],
     }),
+    getTransactionList: builder.query<IGetPaymentList, void>({
+      query: () => ({
+        url: "/payment/get-list",
+      }),
+      providesTags: ["admin-payments"],
+    }),
+    updatePaymentStatus: builder.mutation<
+      IGetPaymentList,
+      { transactionId: string; newStatus: string }
+    >({
+      query: (body) => ({
+        url: `/payment/update-status`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: ["admin-payments"],
+    }),
   }),
   overrideExisting: true,
 });
@@ -109,4 +133,6 @@ export const {
   useVerifyCouponMutation,
   useGetAdminOrderListQuery,
   useUpdateOrderStatusMutation,
+  useGetTransactionListQuery,
+  useUpdatePaymentStatusMutation,
 } = orderApi;

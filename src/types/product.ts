@@ -1,5 +1,5 @@
 import { ICategory } from "./category";
-import { IUser } from "./user";
+import { IReview } from "./review";
 import { IVendor } from "./vendor";
 
 export interface IProduct {
@@ -27,12 +27,3 @@ export type IPagination = {
   currentPage: number;
   itemsPerPage: number;
 };
-
-export interface IReview {
-  product: string;
-  customer: IUser;
-  rating: number;
-  content: string;
-  image: string;
-  createdAt: Date;
-}
