@@ -1,6 +1,7 @@
 export const paths = {
   root: "/",
   signin: "/auth/signin",
+  comparisonProduct: "/comparison-product",
   signup: "/auth/signup",
   success: "/success",
   admin: {

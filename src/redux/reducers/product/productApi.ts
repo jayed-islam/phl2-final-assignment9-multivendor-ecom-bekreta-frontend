@@ -121,6 +121,11 @@ export const productApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    getProductList: builder.query<IGetProductList, void>({
+      query: (id) => ({
+        url: `/product/all-products`,
+      }),
+    }),
   }),
 });
 
@@ -133,4 +138,5 @@ export const {
   useGetFlashSaleProductsQuery,
   useGetAllProductListQuery,
   useGetSingleProductQuery,
+  useGetProductListQuery,
 } = productApi;

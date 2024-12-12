@@ -4,8 +4,8 @@ import InfoIcon from "@mui/icons-material/Info";
 
 export const navConfs = [
   {
-    title: "Offers",
-    path: paths.root,
+    title: "Compaire",
+    path: paths.comparisonProduct,
   },
   {
     title: "Recent Viewed",
