@@ -45,13 +45,13 @@ To log in as an admin, use the following credentials:
 - **Database**: MongoDB (Mongoose for ODM)
 - **Authentication**: JSON Web Tokens (JWT)
 - **Email Service**: Nodemailer
-- **Validation**: Joi
+- **Validation**: zod
 - **Error Handling**: Custom Middleware
 
 ### DevOps & Deployment
 
 - **Frontend Hosting**: Vercel
-- **Backend Hosting**: AWS EC2
+- **Backend Hosting**: Vercel
 - **Database Hosting**: MongoDB Atlas
 - **Version Control**: Git, GitHub
 
@@ -61,7 +61,6 @@ To log in as an admin, use the following credentials:
 - bcryptjs
 - dotenv
 - cors
-- multer
 - nodemailer
 - mongoose-paginate-v2
 
