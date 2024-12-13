@@ -191,7 +191,14 @@ const HomeProductViewSection = () => {
           </div>
         }
         endMessage={
-          <Typography variant="h6" color="textSecondary" align="center">
+          <Typography
+            variant="h6"
+            color="textSecondary"
+            align="center"
+            sx={{
+              mt: 3,
+            }}
+          >
             No more products available
           </Typography>
         }

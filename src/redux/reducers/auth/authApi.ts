@@ -63,6 +63,14 @@ export const authApi = api.injectEndpoints({
         }
       },
     }),
+    forgotPassword: builder.mutation<IAuthLoginResponse, { email: string }>({
+      query: ({ email }) => ({
+        url: "/auth/forget-password",
+        method: "POST",
+        body: { email },
+      }),
+      invalidatesTags: ["user-me"],
+    }),
   }),
 });
 
@@ -71,4 +79,5 @@ export const {
   useRegisterMutation,
   useGetMeQuery,
   useChangePasswordMutation,
+  useForgotPasswordMutation,
 } = authApi;

@@ -1,8 +1,10 @@
 export const paths = {
   root: "/",
   signin: "/auth/signin",
-  comparisonProduct: "/comparison-product",
   signup: "/auth/signup",
+  forgetPassword: "/auth/forgot-password",
+  comparisonProduct: "/comparison-product",
+
   success: "/success",
   admin: {
     root: "/admin",

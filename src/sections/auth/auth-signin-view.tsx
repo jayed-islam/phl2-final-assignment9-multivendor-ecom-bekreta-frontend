@@ -102,7 +102,7 @@ export default function LoginView() {
         justifyContent="flex-end"
         sx={{ my: 3 }}
       >
-        <Link href="/" className="hover:underline">
+        <Link href={paths.forgetPassword} className="hover:underline">
           Forgot password?
         </Link>
       </Stack>
@@ -134,11 +134,14 @@ export default function LoginView() {
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Box
         sx={{
-          height: 1,
+          bgcolor: "#F0F2F5",
         }}
       >
-        <div className="h-screen">
-          <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
+        <div className="h-screen pt-24">
+          <Link href={paths.root}>
+            <h2 className="text-4xl font-bold text-center mb-5">Bekreta</h2>
+          </Link>
+          <Stack alignItems="center" justifyContent="center">
             <Card
               sx={{
                 p: 5,
