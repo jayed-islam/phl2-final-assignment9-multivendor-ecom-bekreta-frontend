@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import {
   Dialog,
@@ -6,18 +7,15 @@ import {
   DialogTitle,
   Button,
   Alert,
-  Rating,
   IconButton,
 } from "@mui/material";
-import { useAppSelector } from "@/redux/hooks";
 import toast from "react-hot-toast";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BooleanState } from "@/types/utils";
 import { Close, Image } from "@mui/icons-material";
-import { useAddReviewMutation } from "@/redux/reducers/review/reviewApi";
-import { createCategorySchema, reviewSchema } from "@/validations/review";
+import { createCategorySchema } from "@/validations/review";
 import FormProvider from "@/components/hook-form/form-provider";
 import RHFTextField from "@/components/hook-form/rhf-text-field";
 import { useCreateCategoryMutation } from "@/redux/reducers/category/categoryApi";
@@ -28,8 +26,6 @@ interface Props {
 
 const CreateCategoryDialog = ({ dialog }: Props) => {
   const [createCategory, { isLoading }] = useCreateCategoryMutation();
-  const { user } = useAppSelector((state) => state.auth);
-  const [rating, setRating] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -37,10 +33,7 @@ const CreateCategoryDialog = ({ dialog }: Props) => {
     resolver: zodResolver(createCategorySchema),
   });
 
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit } = methods;
 
   const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {

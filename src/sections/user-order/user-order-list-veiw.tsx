@@ -24,7 +24,7 @@ import UserOrderRow from "./user-order-row";
 const UserOrderView = () => {
   const { user } = useAppSelector((state) => state.auth);
   const [page, setPage] = useState(1);
-  const { data, isLoading, isFetching, isError } = useGetUserOrderByIdQuery({
+  const { data, isFetching, isError } = useGetUserOrderByIdQuery({
     page: page,
     userId: user?._id as string,
   });

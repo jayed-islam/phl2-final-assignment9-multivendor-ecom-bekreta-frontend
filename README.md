@@ -6,10 +6,24 @@ Bekreta is a dynamic and scalable multi-vendor e-commerce platform designed to c
 
 ---
 
+## Admin Credentials
+
+To log in as an admin, use the following credentials:
+
+- **Email**: `admin@gmail.com`
+- **Password**: `password`
+
+```json
+{
+  "email": "admin@gmail.com",
+  "password": "password"
+}
+```
+
 ## Live URLs
 
-- **Frontend**: [Frontend Live URL](https://example.com)
-- **Backend**: [Backend API Live URL](https://api.example.com)
+- **Frontend**: [Frontend Live URL](https://test-bekreta.vercel.app)
+- **Backend**: [Backend API Live URL](https://test-assign-bekreta-server.vercel.app)
 
 ---
 
@@ -112,7 +126,7 @@ cd frontend
 npm run dev
 ```
 
-Visit `http://localhost:3000` for the frontend and `http://localhost:5000` for the backend.
+Visit `https://test-bekreta.vercel.app` for the frontend and `https://test-assign-bekreta-server.vercel.app` for the backend.
 
 ---
 
@@ -160,4 +174,4 @@ For any questions or contributions, feel free to open an issue or submit a pull 
 If you have any questions, feel free to reach out:
 
 - Email: jayedbgh@example.com
-- GitHub: [jayed-islam](https://github.com/yourusername)
+- GitHub: [jayed-islam](https://github.com/jayed-islam)

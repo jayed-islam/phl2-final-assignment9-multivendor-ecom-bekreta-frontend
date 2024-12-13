@@ -1,10 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  useGetAllCategoryForAdminQuery,
-  useGetCategoriesQuery,
-} from "@/redux/reducers/category/categoryApi";
+import { useGetAllCategoryForAdminQuery } from "@/redux/reducers/category/categoryApi";
 import {
   Table,
   TableBody,

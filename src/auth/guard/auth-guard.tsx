@@ -25,7 +25,7 @@ export const AuthGuard: FC<IAuthGuardProps> = ({ children }) => {
 };
 
 function Container({ children }: IAuthGuardProps) {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  // const { isAuthenticated } = useAppSelector((state) => state.auth);
   const router = useRouter();
   const [checked, setChecked] = useState(false);
   let accessToken: string | null = null;
@@ -70,7 +70,7 @@ function Container({ children }: IAuthGuardProps) {
       const href = `${loginPath}?${searchParams}`;
       router.replace(href);
     }
-  }, [isAuthenticated, accessToken, router, dispatch]);
+  }, [accessToken, router, dispatch]);
 
   useEffect(() => {
     check();
