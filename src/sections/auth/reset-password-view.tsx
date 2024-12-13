@@ -17,6 +17,8 @@ import toast from "react-hot-toast";
 import { LoadingButton } from "@mui/lab";
 import FormProvider from "@/components/hook-form/form-provider";
 import RHFTextField from "@/components/hook-form/rhf-text-field";
+import Link from "next/link";
+import { paths } from "@/layouts/paths";
 
 const resetPasswordSchema = z
   .object({
@@ -83,46 +85,51 @@ const ResetPassword = () => {
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
-      <Container component="main" maxWidth="xs">
-        <Card
-          sx={{
-            p: 5,
-            width: 1,
-            maxWidth: 420,
-            borderRadius: "2rem",
-          }}
-        >
-          <Typography variant="h5" align="center">
-            Reset Password
-          </Typography>
-
-          <div className="flex items-center flex-col gap-3 mt-5 mb-5">
-            <RHFTextField
-              type="password"
-              name="newPassword"
-              label="New Password"
-            />
-
-            <RHFTextField
-              type="password"
-              name="confirmPassword"
-              label="Confirm Password"
-            />
-          </div>
-
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            loading={isLoading}
-            disabled={isLoading}
-            sx={{ textTransform: "capitalize" }}
+      <div className="bg-gray-100">
+        <div className="max-w-5xl mx-auto flex-col px-5 xl:px-0 h-screen flex items-center justify-center">
+          <Link href={paths.root}>
+            <h2 className="text-4xl font-bold text-center mb-5">Bekreta</h2>
+          </Link>
+          <Card
+            sx={{
+              p: 5,
+              width: 1,
+              maxWidth: 420,
+              borderRadius: "2rem",
+            }}
           >
-            {isLoading ? <CircularProgress size={24} /> : "Reset Password"}
-          </LoadingButton>
-        </Card>
-      </Container>
+            <Typography variant="h5" align="center">
+              Reset Password
+            </Typography>
+
+            <div className="flex items-center flex-col gap-3 mt-5 mb-5">
+              <RHFTextField
+                type="password"
+                name="newPassword"
+                label="New Password"
+              />
+
+              <RHFTextField
+                type="password"
+                name="confirmPassword"
+                label="Confirm Password"
+              />
+            </div>
+
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              loading={isLoading}
+              disabled={isLoading}
+              sx={{ textTransform: "capitalize" }}
+            >
+              {isLoading ? <CircularProgress size={24} /> : "Reset Password"}
+            </LoadingButton>
+          </Card>
+        </div>
+      </div>
     </FormProvider>
   );
 };

@@ -57,7 +57,7 @@ const ProductComparison: React.FC = () => {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-5 xl:px-0 py-11">
+    <div className="max-w-5xl mx-auto px-5 xl:px-0 py-11 min-h-[51vh]">
       <Typography variant="h4" gutterBottom>
         Product Comparison
       </Typography>

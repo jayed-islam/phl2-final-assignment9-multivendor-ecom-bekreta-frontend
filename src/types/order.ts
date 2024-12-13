@@ -100,7 +100,7 @@ export interface IGetFeaturedOrderBody {
   searchTerm: string;
   status: OrderStatus;
   sortBy: "latest" | "oldest";
-  vendor?: string;
+  vendorId?: string;
   admin?: string;
 }
 

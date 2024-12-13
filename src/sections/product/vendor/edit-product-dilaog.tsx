@@ -168,9 +168,12 @@ export const UpdateProductView = ({ initialValues, dialog }: Props) => {
                   }}
                   variant="subtitle2"
                 >
-                  Product Status
+                  Product Action
                 </Typography>
-                <RHFCheckbox name="isDeleted" label="Mark as deleted" />
+                <div className="flex flex-col gap-3">
+                  <RHFCheckbox name="isDeleted" label="Mark as deleted" />
+                  <RHFCheckbox name="isOnSale" label="Mark as Flash Sale" />
+                </div>
               </Box>
             )}
 

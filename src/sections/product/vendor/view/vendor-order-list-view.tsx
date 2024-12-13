@@ -27,6 +27,7 @@ import TableHeadCustom from "@/components/elements/table-custom-header";
 import VendorOrderTableFilterResult from "../vendor-order-filter-result";
 import VendorOrderTableRow from "../vendor-order-table-row";
 import TableCustomSkeleton from "@/components/elements/table-custom-skeleton";
+import { useAppSelector } from "@/redux/hooks";
 
 const TABLE_HEAD = [
   { id: "", label: "", width: 51 },
@@ -50,6 +51,7 @@ const defaultFilters: IOrderFilters = {
 };
 
 export default function VendorOrderListView() {
+  const { user } = useAppSelector((state) => state.auth);
   const [filters, setFilters] = useState(defaultFilters);
   const [order, setOrder] = useState<"asc" | "desc">("desc");
   const [orderBy, setOrderBy] = useState<string>("createdAt");
@@ -65,6 +67,7 @@ export default function VendorOrderListView() {
     sortBy: order === "desc" ? "latest" : "oldest",
     searchTerm: searchQuery,
     status: filters.status,
+    vendorId: user?.vendor?._id,
   });
 
   useEffect(() => {

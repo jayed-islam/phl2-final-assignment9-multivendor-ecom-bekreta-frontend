@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Box, Typography, Card, Button, Grid } from "@mui/material";
+import { Box, Typography, Card, Button } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
 import UpdateVendorProfileDilaog from "./update-vendor-profile";
 import useBoolean from "@/hooks/use-boolean";
@@ -84,27 +84,6 @@ const VendorAccountView = () => {
           </Box>
         </Box>
       </Card>
-
-      {/* Metrics Section */}
-      <Grid container spacing={2} sx={{ maxWidth: 800 }}>
-        {[
-          { label: "Products", value: 120 },
-          { label: "Reviews", value: 450 },
-          { label: "Orders", value: 320 },
-          { label: "Profit", value: "$12,500" },
-        ].map((item, index) => (
-          <Grid item xs={6} sm={3} key={index}>
-            <Card sx={{ p: 2, textAlign: "center", m: 0 }}>
-              <Typography variant="h6" fontWeight="bold" color="primary" mb={1}>
-                {item.value}
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                {item.label}
-              </Typography>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
       <UpdateVendorProfileDilaog dialog={dialog} />
     </Box>
   );
