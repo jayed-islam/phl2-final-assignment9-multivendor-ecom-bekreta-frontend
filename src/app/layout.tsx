@@ -14,7 +14,6 @@ const notoSansBengali = Noto_Sans_Bengali({
 
 export const metadata: Metadata = {
   title: "Bekreta",
-  // description: "As-Salamu Alaikum from ইসলামী প্রশ্নোত্তর.",
   icons: {},
 };
 

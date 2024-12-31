@@ -13,3 +13,300 @@ body {
   padding: 0;
   margin: 0;
 }
+/* 
+.navbar .navbar-nav {
+  width: 290px;
+  display: block;
+  position: fixed;
+  left: -400px;
+  top: 50px;
+  height: calc(100vh - 50px);
+  overflow: auto;
+  background: #fff;
+  -webkit-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  -o-transition: all 300ms ease;
+  transition: all 300ms ease;
+  z-index: 99999;
+  border-top: 1px solid #eee;
+  box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.navbar.open .navbar-nav {
+  left: 0;
+}
+
+.navbar-nav > .nav-item {
+  margin-right: 0;
+}
+
+.navbar-nav .nav-link {
+  line-height: 44px;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 0 20px;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+  color: #000;
+}
+
+.navbar-nav .nav-item.has-child:after,
+.navbar-nav .drop-down li.has-child:after,
+.navbar-nav .nav-item.has-child:before {
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 1px;
+  background: #999;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  border: none;
+}
+
+.navbar-nav .nav-item.has-child:before {
+  -moz-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.navbar-nav li.has-child.open:before {
+  opacity: 0;
+}
+
+.navbar-nav > .nav-item:last-child {
+  margin-bottom: 100px;
+}
+
+.navbar-nav .drop-down li.has-child:before,
+.navbar-nav .drop-down li.has-child:after {
+  opacity: 0.7;
+  top: 18px;
+}
+
+.navbar-nav .drop-down li.has-child.open:before {
+  opacity: 0;
+}
+
+.navbar-nav .nav-item .drop-down {
+  display: none !important;
+  position: static;
+  box-shadow: none !important;
+  padding: 0;
+  background: #fafafa;
+}
+
+.navbar-nav .nav-item.open > .drop-down {
+  display: block !important;
+}
+
+.navbar-nav .nav-item .drop-menu-1 {
+  border-bottom: 1px solid #eee;
+}
+
+.navbar-nav .nav-item.has-child.open > a {
+  color: var(--s-primary);
+}
+
+.navbar-nav .nav-item .drop-menu-1 .nav-link,
+.navbar-nav .nav-item .drop-menu-1 .see-all {
+  padding-left: 40px;
+  color: #666;
+}
+
+.navbar-nav .nav-item .drop-menu-2 {
+  border-bottom: 1px solid #eee;
+  padding: 5px 0;
+}
+
+.navbar-nav .nav-item .drop-menu-2 .nav-link,
+.navbar-nav .nav-item .drop-menu-2 a {
+  padding-left: 60px;
+  border-bottom: none;
+}
+
+.navbar-nav .drop-down li .nav-link,
+.navbar-nav .drop-down li a {
+  padding: 10px 15px;
+  width: 100%;
+  font-size: 15px;
+}
+
+.navbar-nav > .nav-item:hover > .nav-link {
+  box-shadow: none;
+}
+
+.navbar-nav .drop-down li:hover > a {
+  background: none;
+  color: var(--s-primary);
+}
+
+.navbar-nav .multi-col .drop-down {
+  width: 100%;
+}
+
+.navbar-nav .multi-col .drop-down ul {
+  float: none;
+  width: 100%;
+}
+
+.popup .button {
+  margin-right: -17px;
+}
+
+.popup .button.next {
+  margin-left: -17px;
+} */
+.navbar {
+  /* position: relative; */
+  background: #fff;
+}
+
+.navbar-nav {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: row;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  width: 100%;
+  position: relative;
+  left: -10px;
+}
+
+.navbar-nav .nav-item {
+  position: relative;
+}
+
+.navbar-nav > .nav-item {
+  margin-left: 0;
+}
+
+.navbar-nav .nav-item:last-child {
+  margin: 0;
+}
+
+.navbar-nav .nav-link {
+  padding: 0 7px 0 7px;
+  line-height: 50px;
+  white-space: nowrap;
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+  position: relative;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .show > .nav-link {
+  color: #1d783a;
+  text-decoration: none;
+}
+
+.navbar-nav > .nav-item:hover > .nav-link {
+  color: #1d783a;
+}
+
+.navbar-nav .nav-item .drop-down {
+  display: none;
+  position: absolute;
+  left: 10px;
+  background: #fff;
+  z-index: 99;
+  padding: 5px 0;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1), 0 10px 15px rgba(0, 0, 0, 0.1),
+    0 -3px 0 0 #1d783a;
+}
+
+.navbar-nav .nav-item:hover > .drop-down {
+  display: block;
+}
+
+.navbar-nav .drop-down li {
+  display: block;
+  position: relative;
+}
+
+.navbar-nav .multi-col > .drop-down {
+  width: 400px;
+}
+
+.navbar-nav .multi-col .drop-down > ul {
+  display: inline-block;
+  position: relative;
+  float: left;
+}
+
+.navbar-nav .drop-down li.has-child:after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4px 0 4px 4px;
+  border-color: transparent transparent transparent #1d783a;
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  opacity: 0.4;
+}
+
+.navbar-nav .drop-down li .nav-link,
+.navbar-nav .drop-down li a {
+  display: block;
+  font-weight: normal;
+  font-size: 14px;
+  white-space: normal;
+  line-height: 19px;
+  padding: 4px 15px;
+  width: 200px;
+  color: #222;
+}
+
+.navbar-nav .drop-down li:hover > a {
+  background: #1d783a;
+  color: #fff;
+}
+
+.drop-down li .nav-link ul {
+  display: none;
+}
+
+.navbar-nav .nav-item:hover > .drop-menu-2 {
+  left: 100%;
+  top: -5px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-nav > .nav-item:nth-child(10):hover .drop-menu-1,
+.navbar-nav > .nav-item:nth-child(11):hover .drop-menu-1,
+.navbar-nav > .nav-item:nth-child(12):hover .drop-menu-1,
+.navbar-nav > .nav-item:nth-child(13):hover .drop-menu-1,
+.navbar-nav > .nav-item:nth-child(14):hover .drop-menu-1,
+.navbar-nav > .nav-item:nth-child(15):hover .drop-menu-1,
+.navbar-nav > .nav-item:nth-child(16):hover .drop-menu-1,
+.navbar-nav > .nav-item:nth-child(17):hover .drop-menu-1,
+.navbar-nav > .nav-item:nth-child(18):hover .drop-menu-1 {
+  right: 10px;
+  left: auto;
+}
+
+.navbar-nav > .nav-item:nth-child(10):hover .drop-menu-2,
+.navbar-nav > .nav-item:nth-child(11):hover .drop-menu-2,
+.navbar-nav > .nav-item:nth-child(12):hover .drop-menu-2,
+.navbar-nav > .nav-item:nth-child(13):hover .drop-menu-2,
+.navbar-nav > .nav-item:nth-child(14):hover .drop-menu-2,
+.navbar-nav > .nav-item:nth-child(15):hover .drop-menu-2,
+.navbar-nav > .nav-item:nth-child(16):hover .drop-menu-2,
+.navbar-nav > .nav-item:nth-child(17):hover .drop-menu-2,
+.navbar-nav > .nav-item:nth-child(18):hover .drop-menu-2 {
+  left: inherit;
+  right: 100%;
+}
+
+.after-header {
+  margin: -10px 0 0px;
+}
