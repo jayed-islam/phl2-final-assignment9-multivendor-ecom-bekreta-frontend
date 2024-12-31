@@ -310,3 +310,10 @@ body {
 .after-header {
   margin: -10px 0 0px;
 }
+
+.slick-slide > div {
+  margin: 0px 3px;
+}
+.slick-list {
+  margin: 0 -3px;
+}

@@ -5,6 +5,8 @@ import "./globals.css";
 import MuiThemeProvider from "@/theme/MuiThemeProvider";
 import { ReduxProvider } from "@/redux/ReduxProvider";
 import { Toaster } from "react-hot-toast";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const notoSansBengali = Noto_Sans_Bengali({
   subsets: ["bengali"],

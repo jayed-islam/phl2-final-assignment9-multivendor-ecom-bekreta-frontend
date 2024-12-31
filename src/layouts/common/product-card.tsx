@@ -10,9 +10,9 @@ const ProductCard = ({ product }: Props) => {
   return (
     <Link
       href={`/products/${product._id}`}
-      className="bg-white shadow border rounded-3xl flex flex-col items-center justify-center"
+      className="bg-white shadow border rounded flex flex-col items-center justify-center"
     >
-      <div className="relative w-full md:h-48 h-40 lg:h-56 bg-gray-100 rounded-3xl overflow-hidden">
+      <div className="relative w-full md:h-48 h-38 bg-gray-100 rounded overflow-hidden">
         <Image
           src={product.images[0]}
           alt={product.name}

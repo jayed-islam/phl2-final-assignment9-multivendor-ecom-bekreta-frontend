@@ -53,6 +53,17 @@ interface IGetProductList {
   data: IProduct[];
 }
 
+interface IGetHomeData {
+  success: boolean;
+  message: string;
+  data: {
+    flashSaleProducts: IProduct[];
+    bestSellingProduct: IProduct[];
+    offerProducts: IProduct[];
+    newArrivalProducts: IProduct[];
+  };
+}
+
 export const productApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllProductForAdmin: builder.query<
@@ -126,6 +137,11 @@ export const productApi = api.injectEndpoints({
         url: `/product/all-products`,
       }),
     }),
+    getHomeData: builder.query<IGetHomeData, void>({
+      query: (id) => ({
+        url: `/product/get-home-data`,
+      }),
+    }),
   }),
 });
 
@@ -139,4 +155,5 @@ export const {
   useGetAllProductListQuery,
   useGetSingleProductQuery,
   useGetProductListQuery,
+  useGetHomeDataQuery,
 } = productApi;
