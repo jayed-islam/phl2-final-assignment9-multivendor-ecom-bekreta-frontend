@@ -15,6 +15,7 @@ import { userNavConfs } from "./config-navigations";
 import { logout } from "@/redux/reducers/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
+import { getMenuItems } from "../dashboard/config-navigation";
 
 const UserProfilePopover = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -39,6 +40,10 @@ const UserProfilePopover = () => {
 
   const handleGO = (route: string) => {
     router.push(route);
+  };
+  const handleNavigation = (path: string) => {
+    router.push(path);
+    handleClose();
   };
 
   return (
@@ -80,33 +85,70 @@ const UserProfilePopover = () => {
       >
         <div>
           {/* User Information */}
+          {/* User Information */}
           <div className="mb-2 flex items-start gap-2">
-            <Avatar
-              src={user?.profilePicture || ""}
-              alt={user?.name}
-              sx={{
-                width: 35,
-                height: 35,
-                bgcolor: user?.profilePicture ? "transparent" : "primary.main",
-              }}
-            >
-              {!user?.profilePicture && user?.name?.charAt(0).toUpperCase()}
-            </Avatar>
-            <div>
-              <Typography variant="body1" fontWeight="bold">
-                {user?.name ?? "Unamed"}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {user?.email}
-              </Typography>
-            </div>
+            {user?.role === "vendor" ? (
+              // Vendor Layout
+              <>
+                <Avatar
+                  src={user?.vendor?.logo || ""}
+                  alt={user?.vendor?.shopName || "Shop Logo"}
+                  sx={{
+                    width: 35,
+                    height: 35,
+                    bgcolor: user?.vendor?.logo
+                      ? "transparent"
+                      : "primary.main",
+                  }}
+                >
+                  {!user?.vendor?.logo &&
+                    user?.vendor?.shopName?.charAt(0).toUpperCase()}
+                </Avatar>
+                <div>
+                  <Typography variant="body1" fontWeight="bold">
+                    {user?.vendor?.shopName ?? "Shop Name"}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Managed by: {user?.name ?? "Unnamed"}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {user?.email}
+                  </Typography>
+                </div>
+              </>
+            ) : (
+              // Default Layout for User/Admin
+              <>
+                <Avatar
+                  src={user?.profilePicture || ""}
+                  alt={user?.name}
+                  sx={{
+                    width: 35,
+                    height: 35,
+                    bgcolor: user?.profilePicture
+                      ? "transparent"
+                      : "primary.main",
+                  }}
+                >
+                  {!user?.profilePicture && user?.name?.charAt(0).toUpperCase()}
+                </Avatar>
+                <div>
+                  <Typography variant="body1" fontWeight="bold">
+                    {user?.name ?? "Unnamed"}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {user?.email}
+                  </Typography>
+                </div>
+              </>
+            )}
           </div>
 
           <Divider />
 
           {/* Navigation Options */}
           <div className="flex flex-col gap-3 mt-3">
-            {userNavConfs.map((route, index) => (
+            {/* {userNavConfs.map((route, index) => (
               <MenuItem
                 key={index}
                 onClick={() => {
@@ -116,6 +158,12 @@ const UserProfilePopover = () => {
               >
                 <ListItemIcon>{route.icon}</ListItemIcon>
                 <Typography>{route.title}</Typography>
+              </MenuItem>
+            ))} */}
+            {getMenuItems(user?.role as any).map((item, index) => (
+              <MenuItem key={index} onClick={() => handleNavigation(item.path)}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <Typography>{item.name}</Typography>
               </MenuItem>
             ))}
 

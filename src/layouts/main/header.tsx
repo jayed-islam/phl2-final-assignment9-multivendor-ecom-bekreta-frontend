@@ -147,10 +147,8 @@ const Header = () => {
             >
               <ShoppingCart />
             </IconButton>
-            {user && user._id && user.role === "customer" && (
-              <UserProfilePopover />
-            )}
-            {user && user._id && user.role === "vendor" && (
+            {user && user._id && <UserProfilePopover />}
+            {/* {user && user._id && user.role === "vendor" && (
               <Link href={paths.vendor.root}>
                 <Button>Dashboard</Button>
               </Link>
@@ -159,7 +157,7 @@ const Header = () => {
               <Link href={paths.admin.root}>
                 <Button>Admin Dahsboard</Button>
               </Link>
-            )}
+            )} */}
             <IconButton
               edge="end"
               color="inherit"

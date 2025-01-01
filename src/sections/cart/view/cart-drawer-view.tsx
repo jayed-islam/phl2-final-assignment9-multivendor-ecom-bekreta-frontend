@@ -51,7 +51,7 @@ const CartDrawer: React.FC = () => {
 
   return (
     <Drawer anchor="right" open={isCartOpen} onClose={handleClose}>
-      <div className="relative w-[300px] p-3">
+      <div className="relative w-[300px] lg:w-96 p-3">
         <div className="absolute right-3 top-3">
           <IconButton onClick={handleClose}>
             <Close />

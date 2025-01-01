@@ -15,10 +15,17 @@ export interface IVendor {
   isVerified: boolean;
   rating?: number;
   totalSales?: number;
+  createdAt: Date;
 }
 
 export interface IGetUpdateVendorProfileResponse {
   success: boolean;
   message: string;
   data: IVendor;
+}
+
+export interface IGetAllVendorResponse {
+  success: boolean;
+  message: string;
+  data: IVendor[];
 }

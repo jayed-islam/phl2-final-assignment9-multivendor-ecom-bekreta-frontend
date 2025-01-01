@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { api } from "@/redux/api";
-import { IGetUpdateVendorProfileResponse, IVendor } from "@/types/vendor";
+import {
+  IGetAllVendorResponse,
+  IGetUpdateVendorProfileResponse,
+  IVendor,
+} from "@/types/vendor";
 
 export const vendorApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -42,6 +46,12 @@ export const vendorApi = api.injectEndpoints({
       }),
       providesTags: ["single-vendor"],
     }),
+    getAllVendors: builder.query<IGetAllVendorResponse, void>({
+      query: () => ({
+        url: `/vendor`,
+      }),
+      providesTags: ["vendors"],
+    }),
   }),
 });
 
@@ -50,4 +60,5 @@ export const {
   useUpdateVandorLogoMutation,
   useGetSingleVendorQuery,
   useToggleFollowUnfollwVendorMutation,
+  useGetAllVendorsQuery,
 } = vendorApi;

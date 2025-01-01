@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -18,13 +16,17 @@ import { useAppDispatch } from "@/redux/hooks";
 import { useLoginMutation } from "@/redux/reducers/auth/authApi";
 import toast from "react-hot-toast";
 import { setToken } from "@/redux/reducers/auth/authSlice";
-import { Alert } from "@mui/material";
+import { Alert, Button, Grid } from "@mui/material";
 import Link from "next/link";
 import { paths } from "@/layouts/paths";
 import RHFTextField from "@/components/hook-form/rhf-text-field";
 import FormProvider from "@/components/hook-form/form-provider";
 
-// ----------------------------------------------------------------------
+const demoCredentials = {
+  user: { email: "customer@text.com", password: "password" },
+  admin: { email: "admin@gmail.com", password: "password" },
+  vendor: { email: "vendor@gmail.com", password: "password" },
+};
 
 export default function LoginView() {
   const theme = useTheme();
@@ -34,6 +36,8 @@ export default function LoginView() {
   const methods = useForm<AuthFormValues>({
     resolver: zodResolver(authValidationSchema),
   });
+  const { setValue } = methods;
+
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
 
@@ -75,6 +79,21 @@ export default function LoginView() {
     }
   });
 
+  const handleDemoLogin = (role: "user" | "admin" | "vendor") => {
+    const { email, password } = demoCredentials[role];
+    setValue("email", email);
+    setValue("password", password);
+    toast.success(
+      `Demo ${
+        role.charAt(0).toUpperCase() + role.slice(1)
+      } credentials loaded!`,
+      {
+        // icon: role === "user" ? "👤" : role === "admin" ? "🛠️" : "🏬",
+        duration: 3000,
+      }
+    );
+  };
+
   useEffect(() => {
     if (errorMessage) {
       const timer = setTimeout(() => {
@@ -86,6 +105,54 @@ export default function LoginView() {
 
   const renderForm = (
     <>
+      <div className="flex flex-col items-start gap-2 mt-5">
+        <Typography
+          variant="body1"
+          component="span"
+          onClick={() => handleDemoLogin("user")}
+          sx={{
+            cursor: "pointer",
+            color: "primary.main",
+            textDecoration: "underline",
+            "&:hover": {
+              color: "primary.dark",
+            },
+          }}
+        >
+          Get Demo User Credentials
+        </Typography>
+        <Typography
+          variant="body1"
+          component="span"
+          onClick={() => handleDemoLogin("admin")}
+          sx={{
+            cursor: "pointer",
+            color: "info.main",
+            textDecoration: "underline",
+            "&:hover": {
+              color: "info.dark",
+            },
+          }}
+        >
+          Get Demo Admin Credentials
+        </Typography>
+        <Typography
+          variant="body1"
+          component="span"
+          onClick={() => handleDemoLogin("vendor")}
+          sx={{
+            cursor: "pointer",
+            color: "warning.main",
+            textDecoration: "underline",
+            "&:hover": {
+              color: "warning.dark",
+            },
+          }}
+        >
+          Get Demo Vendor Credentials
+        </Typography>
+      </div>
+
       <Stack
         spacing={3}
         sx={{

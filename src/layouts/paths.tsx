@@ -33,6 +33,7 @@ export const paths = {
   },
   vendor: {
     root: "/vendor",
+    allVendors: "/all-vendors",
     product: {
       root: "/vendor/products",
       create: "/vendor/products/create",
