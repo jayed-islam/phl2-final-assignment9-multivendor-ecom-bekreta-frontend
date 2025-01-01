@@ -24,26 +24,6 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import CloseIcon from "@mui/icons-material/Close";
 import useBoolean from "@/hooks/use-boolean";
 
-const getPriceRange = (key: string) => {
-  switch (key) {
-    case "1-50":
-      return { minPrice: 1, maxPrice: 50 };
-    case "50-100":
-      return { minPrice: 50, maxPrice: 100 };
-    case "100-200":
-      return { minPrice: 100, maxPrice: 200 };
-    case "200-500":
-      return { minPrice: 200, maxPrice: 500 };
-    case "500-1000":
-      return { minPrice: 500, maxPrice: 1000 };
-    case "1000+":
-      return { minPrice: 1000, maxPrice: Number.MAX_SAFE_INTEGER };
-    case "all":
-    default:
-      return { minPrice: 0, maxPrice: Number.MAX_SAFE_INTEGER };
-  }
-};
-
 const ProductListView = () => {
   const { user } = useAppSelector((state) => state.auth);
   const searchParams = useSearchParams();

@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Logout from "@mui/icons-material/Logout";
-import { userNavConfs } from "./config-navigations";
 import { logout } from "@/redux/reducers/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
@@ -38,9 +37,9 @@ const UserProfilePopover = () => {
     dispatch(logout());
   };
 
-  const handleGO = (route: string) => {
-    router.push(route);
-  };
+  // const handleGO = (route: string) => {
+  //   router.push(route);
+  // };
   const handleNavigation = (path: string) => {
     router.push(path);
     handleClose();
