@@ -31,7 +31,7 @@ const VendorListView = () => {
                 </div>
               ))
             : data?.data?.map((vendor) => (
-                <Link href={`/shop/${vendor._id}`}>
+                <Link href={`/shop/${vendor._id}`} key={vendor._id}>
                   <div
                     key={vendor._id}
                     className="bg-white rounded-3xl shadow border transition-shadow cursor-pointer"

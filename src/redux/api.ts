@@ -26,6 +26,7 @@ export const api = createApi({
     "admin-payments",
     "categories",
     "vendors",
+    "my-reviews",
   ],
   endpoints: () => ({}),
 });

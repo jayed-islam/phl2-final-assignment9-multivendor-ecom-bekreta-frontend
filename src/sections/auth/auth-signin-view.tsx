@@ -1,5 +1,5 @@
 "use client";
-
+// @typescript-eslint/no-unused-vars
 import { useEffect, useState } from "react";
 
 import Box from "@mui/material/Box";
@@ -7,7 +7,6 @@ import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { alpha, useTheme } from "@mui/material/styles";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { AuthFormValues, authValidationSchema } from "./auth-validation";
@@ -16,7 +15,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { useLoginMutation } from "@/redux/reducers/auth/authApi";
 import toast from "react-hot-toast";
 import { setToken } from "@/redux/reducers/auth/authSlice";
-import { Alert, Button, Grid } from "@mui/material";
+import { Alert } from "@mui/material";
 import Link from "next/link";
 import { paths } from "@/layouts/paths";
 import RHFTextField from "@/components/hook-form/rhf-text-field";
@@ -29,8 +28,6 @@ const demoCredentials = {
 };
 
 export default function LoginView() {
-  const theme = useTheme();
-
   const router = useRouter();
 
   const methods = useForm<AuthFormValues>({
@@ -41,10 +38,7 @@ export default function LoginView() {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
 
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit } = methods;
 
   const [loginUser, { isLoading }] = useLoginMutation();
 
@@ -72,10 +66,11 @@ export default function LoginView() {
         toast.error(response.message);
         setErrorMessage(response.message);
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Error submitting form:", error);
-      toast.error(error.data.message);
-      setErrorMessage(error.data.message);
+      toast.error(error?.data.message);
+      setErrorMessage(error?.data.message);
     }
   });
 
