@@ -17,10 +17,12 @@ export type IProductListFilterOptions = {
   category: string;
   page: number;
   limit: number;
-  minPrice: number;
-  maxPrice: number;
+  minPrice?: number;
+  maxPrice?: number;
   isLowestFirst?: boolean;
   userId?: string;
+  status?: string[];
+  ratings?: string[];
 };
 
 interface IGetAllProductListResponse {

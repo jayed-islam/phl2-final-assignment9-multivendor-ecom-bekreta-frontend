@@ -4,19 +4,25 @@
 import React, { useState } from "react";
 import {
   TextField,
-  Select,
-  MenuItem,
   Box,
-  Paper,
   Typography,
   Pagination,
+  Button,
+  Drawer,
+  IconButton,
 } from "@mui/material";
 import { useGetAllProductListQuery } from "@/redux/reducers/product/productApi";
-import { useGetCategoriesQuery } from "@/redux/reducers/category/categoryApi";
 import ProductCard from "@/layouts/common/product-card";
 import ProductCardShimmer from "@/layouts/common/product-shimmer-card";
 import { useAppSelector } from "@/redux/hooks";
 import { useSearchParams } from "next/navigation";
+import RatingFilter from "../../filters/rating-filter";
+import AvailabilityFilter from "../../filters/availabality-filter";
+import PriceFilter from "../../filters/price-filter";
+import CategoryFilter from "../../filters/category-filter";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import CloseIcon from "@mui/icons-material/Close";
+import useBoolean from "@/hooks/use-boolean";
 
 const getPriceRange = (key: string) => {
   switch (key) {
@@ -40,38 +46,47 @@ const getPriceRange = (key: string) => {
 
 const ProductListView = () => {
   const { user } = useAppSelector((state) => state.auth);
-  // const [searchTerm, setSearchTerm] = useState("");
   const searchParams = useSearchParams();
   const queryCategory = searchParams.get("category") || "";
   const querySearchTerm = searchParams.get("search") || "";
-  const [category, setCategory] = useState(queryCategory);
   const [searchTerm, setSearchTerm] = useState(querySearchTerm);
-  const [priceRangeKey, setPriceRangeKey] = useState<string>("all");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [availability, setAvailability] = useState<string[]>([]);
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(queryCategory);
+  const drawerFilter = useBoolean();
 
-  const { data: categoryData, isLoading: isCategoryLoading } =
-    useGetCategoriesQuery();
+  const [selectedRatings, setSelectedRatings] = useState<string[]>([]);
+
+  const handleAvailabilityChange = (status: string, checked: boolean) => {
+    setAvailability((prev) =>
+      checked ? [...prev, status] : prev.filter((item) => item !== status)
+    );
+  };
+
+  const handleRatingChange = (rating: string) => {
+    setSelectedRatings((prevRatings) =>
+      prevRatings.includes(rating)
+        ? prevRatings.filter((r) => r !== rating)
+        : [...prevRatings, rating]
+    );
+  };
 
   const { data: productsData, isFetching: isProductsLoading } =
     useGetAllProductListQuery({
-      category,
+      category: selectedCategory,
       limit,
       page,
       searchTerm,
-      ...getPriceRange(priceRangeKey),
+      status: availability,
+      ratings: selectedRatings,
+      minPrice: minPrice ? parseFloat(minPrice) : undefined,
+      maxPrice: maxPrice ? parseFloat(maxPrice) : undefined,
       ...(user?._id && { userId: user._id }),
     });
-
-  const priceRangeOptions = [
-    { label: "All Prices", value: "all" },
-    { label: "1 to 50", value: "1-50" },
-    { label: "50 to 100", value: "50-100" },
-    { label: "100 to 200", value: "100-200" },
-    { label: "200 to 500", value: "200-500" },
-    { label: "500 to 1000", value: "500-1000" },
-    { label: "1000 and above", value: "1000+" },
-  ];
 
   const totalPages = productsData?.data?.pagination.totalPages;
 
@@ -82,89 +97,205 @@ const ProductListView = () => {
     setPage(value);
   };
 
+  const resetRatings = () => {
+    setSelectedRatings([]);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+  };
+
+  const resetCategory = () => {
+    setSelectedCategory("");
+  };
+
+  const handlePriceChange = (
+    field: "minPrice" | "maxPrice",
+    value: React.SetStateAction<string>
+  ) => {
+    if (field === "minPrice") setMinPrice(value);
+    if (field === "maxPrice") setMaxPrice(value);
+  };
+
+  const resetFilters = () => {
+    setSearchTerm("");
+    setAvailability([]);
+    setMinPrice("");
+    setMaxPrice("");
+    setSelectedCategory("");
+    setSelectedRatings([]);
+  };
+
   return (
     <div className="px-5 2xl:px-0 max-w-5xl mx-auto py-11">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold mb-2">Explore Products</h2>
-        <p className="text-gray-600 text-lg">
-          Grab these exclusive deals before they&lsquo;re gone!
-        </p>
+      <div className="flex items-start gap-5">
+        {/* Sidebar (Filters) */}
+
+        <div className="w-72 hidden lg:block">
+          <div className="space-y-3">
+            <TextField
+              label="Search Products"
+              variant="outlined"
+              size="small"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              sx={{ width: "100%" }}
+              slotProps={{
+                input: {
+                  style: {
+                    borderRadius: "0.25rem",
+                  },
+                },
+              }}
+            />
+
+            <AvailabilityFilter
+              selected={availability}
+              onChange={handleAvailabilityChange}
+              onReset={() => setAvailability([])}
+            />
+
+            <PriceFilter
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              onChange={handlePriceChange}
+              onReset={() => {
+                setMinPrice("");
+                setMaxPrice("");
+              }}
+            />
+
+            <CategoryFilter
+              selected={selectedCategory}
+              onChange={handleCategoryChange}
+              onReset={resetCategory}
+            />
+
+            <RatingFilter
+              selectedRatings={selectedRatings}
+              onChange={handleRatingChange}
+              onReset={resetRatings}
+            />
+          </div>
+        </div>
+
+        {/* Products Section */}
+        <div className="flex-1">
+          <IconButton
+            onClick={drawerFilter.setTrue}
+            sx={{
+              display: {
+                lg: "none",
+              },
+            }}
+          >
+            <FilterListIcon />
+          </IconButton>
+          <div className="mb-3 flex items-center justify-between flex-col lg:flex-row">
+            <Typography variant="h6">Selected Filters:</Typography>
+            <Box display="flex" gap={2} flexWrap="wrap">
+              {searchTerm && <Typography>Search: {searchTerm}</Typography>}
+              {selectedCategory && (
+                <Typography>Category: {selectedCategory}</Typography>
+              )}
+              {availability.length > 0 && (
+                <Typography>Availability: {availability.join(", ")}</Typography>
+              )}
+              {selectedRatings.length > 0 && (
+                <Typography>Ratings: {selectedRatings.join(", ")}</Typography>
+              )}
+              {(minPrice || maxPrice) && (
+                <Typography>
+                  Price: {minPrice || 0} - {maxPrice || "∞"}
+                </Typography>
+              )}
+            </Box>
+            <Button variant="outlined" color="secondary" onClick={resetFilters}>
+              Reset Filters
+            </Button>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
+            {isProductsLoading ? (
+              // Loading shimmer effect
+              Array.from({ length: 6 }).map((_, index) => (
+                <ProductCardShimmer key={index} />
+              ))
+            ) : productsData?.data?.products?.length === 0 ? (
+              // No products message
+              <Typography variant="h6" color="textSecondary" align="center">
+                No products found
+              </Typography>
+            ) : (
+              // Product cards
+              productsData?.data?.products?.map((product, idx) => (
+                <ProductCard product={product} key={idx} />
+              ))
+            )}
+          </div>
+
+          <Box display="flex" justifyContent="center" mt={4}>
+            <Pagination
+              count={totalPages}
+              page={page}
+              onChange={handlePageChange}
+              color="primary"
+            />
+          </Box>
+        </div>
       </div>
 
-      {/* Filters Section */}
-      <Paper sx={{ padding: 2, marginBottom: 4, borderRadius: "0.75rem" }}>
-        <Box display="flex" flexWrap="wrap" gap={2} alignItems="center">
-          {/* Search Bar */}
-          <TextField
-            label="Search Products"
-            variant="outlined"
-            size="small"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{ flex: 1, minWidth: "200px" }}
-          />
-
-          {/* Category Filter */}
-          <Select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            displayEmpty
-            size="small"
-            sx={{ flex: 1, minWidth: "200px", borderRadius: "0.75rem" }}
+      <Drawer
+        anchor="left"
+        open={drawerFilter.value}
+        onClose={drawerFilter.setFalse}
+      >
+        <Box p={3} width="300px">
+          <IconButton
+            onClick={drawerFilter.toggle}
+            aria-label="Close Filters"
+            sx={{ mb: 2 }}
           >
-            <MenuItem value="">All Categories</MenuItem>
-            {categoryData?.data?.map((item) => (
-              <MenuItem value={item._id} key={item._id}>
-                {item.name}
-              </MenuItem>
-            ))}
-          </Select>
+            <CloseIcon />
+          </IconButton>
+          <div className="space-y-3">
+            <TextField
+              label="Search Products"
+              variant="outlined"
+              size="small"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              sx={{ width: "100%" }}
+            />
+            <AvailabilityFilter
+              selected={availability}
+              onChange={handleAvailabilityChange}
+              onReset={() => setAvailability([])}
+            />
 
-          {/* Price Range Filter */}
-          <Select
-            value={priceRangeKey}
-            onChange={(e) => setPriceRangeKey(e.target.value)}
-            displayEmpty
-            size="small"
-            sx={{ flex: 1, minWidth: "200px", borderRadius: "0.75rem" }}
-          >
-            {priceRangeOptions.map((option) => (
-              <MenuItem value={option.value} key={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
+            <PriceFilter
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              onChange={handlePriceChange}
+              onReset={() => {
+                setMinPrice("");
+                setMaxPrice("");
+              }}
+            />
+
+            <CategoryFilter
+              selected={selectedCategory}
+              onChange={handleCategoryChange}
+              onReset={resetCategory}
+            />
+
+            <RatingFilter
+              selectedRatings={selectedRatings}
+              onChange={handleRatingChange}
+              onReset={resetRatings}
+            />
+          </div>
         </Box>
-      </Paper>
-
-      {/* Products Section */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {isProductsLoading ? (
-          // Loading shimmer effect
-          Array.from({ length: 6 }).map((_, index) => (
-            <ProductCardShimmer key={index} />
-          ))
-        ) : productsData?.data?.products?.length === 0 ? (
-          // No products message
-          <Typography variant="h6" color="textSecondary" align="center">
-            No products found
-          </Typography>
-        ) : (
-          // Product cards
-          productsData?.data?.products?.map((product, idx) => (
-            <ProductCard product={product} key={idx} />
-          ))
-        )}
-      </div>
-
-      <Box display="flex" justifyContent="center" mt={4}>
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={handlePageChange}
-          color="primary"
-        />
-      </Box>
+      </Drawer>
     </div>
   );
 };
