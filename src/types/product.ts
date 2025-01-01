@@ -15,6 +15,7 @@ export interface IProduct {
   isFeatured: boolean;
   discount?: number;
   rating: number;
+  averageRating: number;
   vendor: string | IVendor;
   isOnSale: boolean;
   isPublished: boolean;

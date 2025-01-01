@@ -30,6 +30,12 @@ const HomeView = () => {
             isFetching={isFetching}
             products={data?.data?.flashSaleProducts as IProduct[]}
           />
+
+          <HomeNewArrivalProductSection
+            isFetching={isFetching}
+            products={data?.data?.newArrivalProducts as IProduct[]}
+          />
+
           <BestSellingProducts
             isFetching={isFetching}
             products={data?.data?.bestSellingProduct as IProduct[]}
@@ -38,11 +44,6 @@ const HomeView = () => {
           <HomeOfferSection
             isFetching={isFetching}
             products={data?.data?.offerProducts as IProduct[]}
-          />
-
-          <HomeNewArrivalProductSection
-            isFetching={isFetching}
-            products={data?.data?.newArrivalProducts as IProduct[]}
           />
 
           <HomeProductViewSection />

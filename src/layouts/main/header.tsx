@@ -58,7 +58,7 @@ const Header = () => {
       //     "0px 1px 3px 0px rgba(10, 5, 41, 0.10), 0px 1px 2px 0px rgba(10, 5, 41, 0.06)",
       // }}
 
-      className="sticky top-0 w-full py-2 border-b"
+      className="sticky top-0 w-full py-2 border-b z-50 bg-white"
     >
       <div className="max-w-5xl mx-auto w-full h-full flex items-center justify-between px-5 xl:px-0">
         <Link href={paths.root} className="text-black">
