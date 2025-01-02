@@ -14,13 +14,11 @@ export const reviewApi = api.injectEndpoints({
       }),
       providesTags: ["reviews"],
     }),
-    getAllReivewForCustomer: builder.query<
-      IGetReviewResponse,
-      { customerId: string }
-    >({
-      query: ({ customerId }) => ({
+    getCustomerReviews: builder.query<IGetReviewResponse, string>({
+      query: (id) => ({
         url: `/review/my-reviews`,
-        body: { customerId },
+        body: { customerId: id },
+        method: "POST",
       }),
       providesTags: ["my-reviews"],
     }),
@@ -70,5 +68,5 @@ export const {
   useGetReviewAllReviewsForVendorQuery,
   useGetReviewForAdminQuery,
   useDeleteRreviewMutation,
-  useGetAllReivewForCustomerQuery,
+  useGetCustomerReviewsQuery,
 } = reviewApi;

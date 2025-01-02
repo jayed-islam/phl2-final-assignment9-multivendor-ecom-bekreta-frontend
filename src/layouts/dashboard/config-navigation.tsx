@@ -5,6 +5,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
   Category,
   Payment,
+  People,
   Reviews,
   ReviewsOutlined,
 } from "@mui/icons-material";
@@ -42,6 +43,7 @@ export const getMenuItems = (role: "admin" | "vendor" | "user") => {
     case "admin":
       return [
         { path: "/admin", name: "Dashboard", icon: <DashboardIcon /> },
+        { path: "/admin/profile", name: "Profile", icon: <People /> },
         { path: "/admin/users", name: "Manage Users", icon: <PeopleIcon /> },
         {
           path: paths.admin.products,
@@ -63,10 +65,16 @@ export const getMenuItems = (role: "admin" | "vendor" | "user") => {
           name: "Transactions",
           icon: <Payment />,
         },
+        {
+          path: paths.admin.transactions,
+          name: "Transactions",
+          icon: <Payment />,
+        },
       ];
     case "vendor":
       return [
         { path: "/vendor", name: "Dashboard", icon: <DashboardIcon /> },
+        { path: "/vendor/profile", name: "Profile", icon: <People /> },
         {
           path: "/vendor/products",
           name: "Manage Products",
@@ -95,6 +103,11 @@ export const getMenuItems = (role: "admin" | "vendor" | "user") => {
           name: "Change Password",
           path: paths.account.changePassword,
           icon: <AccountCircleIcon />,
+        },
+        {
+          name: "My Reviews",
+          path: paths.account.myReviews,
+          icon: <InfoIcon />,
         },
       ];
   }

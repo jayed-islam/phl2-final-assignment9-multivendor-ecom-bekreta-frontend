@@ -1,8 +1,8 @@
-import VendorAccountView from "@/sections/account/vendor-account-view";
+import DashboardHomeView from "@/sections/dashboard/dashboard-home-view";
 import React from "react";
 
 const Page = () => {
-  return <VendorAccountView />;
+  return <DashboardHomeView />;
 };
 
 export default Page;

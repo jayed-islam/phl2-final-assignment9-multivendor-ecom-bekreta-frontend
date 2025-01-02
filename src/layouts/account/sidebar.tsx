@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer } from "@mui/material";
+import { Drawer, Box } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -17,47 +17,62 @@ const navItems = [
   { label: "My Reviews", route: "/account/my-reviews" },
 ];
 
-const AccountSidebar = ({ mobileOpen, handleDrawerToggle }: Props) => {
+const AccountSidebar: React.FC<Props> = ({
+  mobileOpen,
+  handleDrawerToggle,
+}) => {
   const pathname = usePathname();
+
+  const renderNavItems = () =>
+    navItems.map((item) => (
+      <Link
+        key={item.label}
+        href={item.route}
+        className={`block px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition ${
+          pathname === item.route ? "bg-gray-300 font-semibold" : ""
+        }`}
+      >
+        {item.label}
+      </Link>
+    ));
+
   const drawerContent = (
-    <div>
-      <div className="w-56 bg-gray-100 p-3 rounded-3xl flex flex-col gap-2 border shadow">
-        {navItems.map((item) => (
-          <Link
-            key={item.label}
-            href={item.route}
-            className={`block px-4 py-2 rounded-3xl text-gray-700 hover:bg-gray-300 transition-all duration-200 ${
-              pathname === item.route && "bg-gray-300"
-            }`}
-          >
-            {item.label}
-          </Link>
-        ))}
-      </div>
-    </div>
+    <Box
+      className="p-3 lg:bg-gray-100 lg:rounded-xl lg:shadow-md flex flex-col gap-2"
+      role="presentation"
+    >
+      {renderNavItems()}
+    </Box>
   );
 
   return (
     <>
+      {/* Mobile Drawer */}
       <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{ keepMounted: true }}
         sx={{
-          display: { xs: "block", sm: "none" },
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
           },
         }}
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true,
-        }}
       >
+        <h2 className="text-2xl font-semibold p-5">My Account</h2>
         {drawerContent}
       </Drawer>
 
-      <div>{drawerContent}</div>
+      {/* Desktop Sidebar */}
+      <Box
+        sx={{
+          display: { xs: "none", lg: "block" },
+          width: drawerWidth,
+        }}
+      >
+        {drawerContent}
+      </Box>
     </>
   );
 };

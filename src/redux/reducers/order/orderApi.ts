@@ -43,6 +43,43 @@ interface IGetSingleOrderResponse {
   success: boolean;
 }
 
+export interface IDashboardResponse {
+  message: string;
+  success: boolean;
+  data: {
+    summary: ISummary;
+    chartData: IChartData;
+    lastWeekOrders: IOrder[];
+  };
+}
+
+export interface ISummary {
+  orders: number;
+  revenue: number;
+  products: number;
+}
+
+export interface IChartData {
+  salesOverview: ISalesOverview[];
+  categoryDistribution: ICategoryDistribution[];
+}
+
+export interface ISalesOverview {
+  day: number;
+  totalSales: number;
+}
+
+export interface ICategoryDistribution {
+  category: string; // Category ID
+  count: number; // Count of products in this category
+}
+
+interface IGetSingleOrderResponse {
+  data: IOrder;
+  message: string;
+  success: boolean;
+}
+
 export interface IFeatureOrderUpdateBody {
   orderId: string;
   status: string;
@@ -122,6 +159,13 @@ export const orderApi = api.injectEndpoints({
       }),
       invalidatesTags: ["admin-payments"],
     }),
+    getSummary: builder.query<IDashboardResponse, { vendorId?: string }>({
+      query: ({ vendorId }) => ({
+        url: "/order/get-summary",
+        method: "POST",
+        body: { vendorId },
+      }),
+    }),
   }),
   overrideExisting: true,
 });
@@ -135,4 +179,5 @@ export const {
   useUpdateOrderStatusMutation,
   useGetTransactionListQuery,
   useUpdatePaymentStatusMutation,
+  useGetSummaryQuery,
 } = orderApi;

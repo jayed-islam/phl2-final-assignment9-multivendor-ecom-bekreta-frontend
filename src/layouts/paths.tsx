@@ -8,6 +8,7 @@ export const paths = {
   success: "/success",
   admin: {
     root: "/admin",
+    profile: "/admin/profile",
     products: "/admin/products",
     reviews: "/admin/reviews",
     vendors: "/admin/vendors",
@@ -19,6 +20,7 @@ export const paths = {
     root: "/account",
     orders: "/account/orders",
     changePassword: "/account/change-password",
+    myReviews: "/account/my-reviews",
   },
   cart: {
     root: "/carts",
@@ -34,6 +36,7 @@ export const paths = {
   vendor: {
     root: "/vendor",
     allVendors: "/all-vendors",
+    profile: "/vendor/profile",
     product: {
       root: "/vendor/products",
       create: "/vendor/products/create",

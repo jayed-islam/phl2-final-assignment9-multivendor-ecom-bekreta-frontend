@@ -8,27 +8,23 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
   CircularProgress,
   Paper,
 } from "@mui/material";
 import { useAppSelector } from "@/redux/hooks";
-import { useGetAllReivewForCustomerQuery } from "@/redux/reducers/review/reviewApi";
+import { useGetCustomerReviewsQuery } from "@/redux/reducers/review/reviewApi";
 import { IReview } from "@/types/review";
 
 const CustomerReviewListView = () => {
   const { user } = useAppSelector((state) => state.auth);
 
-  const { data: reviews, isFetching } = useGetAllReivewForCustomerQuery(
-    {
-      customerId: user?._id as string,
-    },
-    {
-      skip: !user,
-    }
-  );
+  const customerId = user?._id as string;
+  const { data: reviews, isLoading } = useGetCustomerReviewsQuery(customerId, {
+    refetchOnMountOrArgChange: true,
+    skip: !customerId,
+  });
 
-  if (isFetching) {
+  if (isLoading) {
     return (
       <div
         style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
@@ -38,18 +34,18 @@ const CustomerReviewListView = () => {
     );
   }
 
-  if (!reviews || reviews?.data?.length === 0) {
-    return (
-      <Typography
-        variant="h6"
-        align="center"
-        color="textSecondary"
-        style={{ marginTop: "20px" }}
-      >
-        No reviews found.
-      </Typography>
-    );
-  }
+  // if (!reviews || reviews?.data?.length === 0) {
+  //   return (
+  //     <Typography
+  //       variant="h6"
+  //       align="center"
+  //       color="textSecondary"
+  //       style={{ marginTop: "20px" }}
+  //     >
+  //       No reviews found.
+  //     </Typography>
+  //   );
+  // }
 
   return (
     <TableContainer component={Paper} style={{ marginTop: "20px" }}>

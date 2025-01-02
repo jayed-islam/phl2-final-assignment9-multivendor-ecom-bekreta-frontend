@@ -22,9 +22,9 @@ import RHFTextField from "@/components/hook-form/rhf-text-field";
 import FormProvider from "@/components/hook-form/form-provider";
 
 const demoCredentials = {
-  user: { email: "customer@text.com", password: "password" },
+  user: { email: "customer@test.com", password: "password" },
   admin: { email: "admin@gmail.com", password: "password" },
-  vendor: { email: "vendor@gmail.com", password: "password" },
+  vendor: { email: "vendor1@gmail.com", password: "password" },
 };
 
 export default function LoginView() {
