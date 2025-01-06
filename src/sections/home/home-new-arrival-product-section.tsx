@@ -10,6 +10,7 @@ import ProductCard from "@/layouts/common/product-card";
 import ProductCardShimmer from "@/layouts/common/product-shimmer-card";
 import { Button } from "@mui/material";
 import Link from "next/link";
+import { paths } from "@/layouts/paths";
 
 interface Props {
   isFetching: boolean;
@@ -71,7 +72,7 @@ const HomeNewArrivalProductSection = ({ isFetching, products }: Props) => {
           </Slider>
         </div>
         <div className="flex items-center justify-center mt-5">
-          <Link href="/new-arrivals">
+          <Link href={`${paths.product.root}?isNewArrival=true`}>
             <Button variant="contained" color="primary">
               All New Arrival Products
             </Button>

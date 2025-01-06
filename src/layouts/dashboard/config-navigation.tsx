@@ -3,6 +3,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
+  Add,
   Category,
   Payment,
   People,
@@ -30,6 +31,11 @@ export const routes = {
       path: "/vendor/products",
       name: "Manage Products",
       icon: <InventoryIcon />,
+    },
+    {
+      path: "/vendor/products/create",
+      name: "Create Products",
+      icon: <Add />,
     },
     { path: "/vendor/orders", name: "Orders", icon: <ShoppingCartIcon /> },
     {

@@ -1,4 +1,5 @@
 import { menuArray } from "@/constants";
+import Link from "next/link";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const HeadMegaMenu = () => {
@@ -8,9 +9,9 @@ const HeadMegaMenu = () => {
         key={index}
         className={`nav-item ${subItem.subItems ? "has-child" : ""}`}
       >
-        <a className="nav-link" href={subItem.link}>
+        <Link className="nav-link" href={subItem.link}>
           {subItem.name}
-        </a>
+        </Link>
         {subItem.subItems && (
           <ul className={`drop-down drop-menu-2`}>
             {renderSubItems(subItem.subItems)}
@@ -32,9 +33,9 @@ const HeadMegaMenu = () => {
 
     return (
       <li className="nav-item has-child multi-col">
-        <a className="nav-link" href={menuItem.link}>
+        <Link className="nav-link" href={menuItem.link}>
           {menuItem.name}
-        </a>
+        </Link>
         <div className="drop-down drop-menu-1">
           <ul>{renderSubItems(firstColumnItems)}</ul>
           <ul>{renderSubItems(secondColumnItems)}</ul>
@@ -49,6 +50,7 @@ const HeadMegaMenu = () => {
         boxShadow:
           "0px 1px 3px 0px rgba(10, 5, 41, 0.10), 0px 1px 2px 0px rgba(10, 5, 41, 0.06)",
       }}
+      className="hidden lg:block"
     >
       <nav className="navbar max-w-5xl mx-auto px-5 2xl:px-0 " id="main-nav">
         <div className="container">
@@ -65,9 +67,9 @@ const HeadMegaMenu = () => {
                   key={index}
                   className={`nav-item ${menuItem.subItems ? "has-child" : ""}`}
                 >
-                  <a className="nav-link" href={menuItem.link}>
+                  <Link className="nav-link" href={menuItem.link}>
                     {menuItem.name}
-                  </a>
+                  </Link>
                   {menuItem.subItems && (
                     <ul className={`drop-down drop-menu-1`}>
                       {renderSubItems(menuItem.subItems)}

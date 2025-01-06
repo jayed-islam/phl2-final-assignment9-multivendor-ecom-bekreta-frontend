@@ -41,7 +41,7 @@ const BestSellingProducts = ({ isFetching, products }: Props) => {
         )}
       </div>
       <div className="flex items-center justify-center mt-7">
-        <Link href={paths.product.flashSale}>
+        <Link href={`${paths.product.root}?isBestSale=true`}>
           <Button>All Best Selling Products</Button>
         </Link>
       </div>

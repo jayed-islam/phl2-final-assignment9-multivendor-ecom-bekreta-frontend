@@ -23,6 +23,7 @@ import CategoryFilter from "../../filters/category-filter";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import CloseIcon from "@mui/icons-material/Close";
 import useBoolean from "@/hooks/use-boolean";
+import { useGetCategoriesQuery } from "@/redux/reducers/category/categoryApi";
 
 const ProductListView = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -41,6 +42,7 @@ const ProductListView = () => {
 
   const [selectedRatings, setSelectedRatings] = useState<string[]>([]);
 
+  const { data, isFetching } = useGetCategoriesQuery();
   const handleAvailabilityChange = (status: string, checked: boolean) => {
     setAvailability((prev) =>
       checked ? [...prev, status] : prev.filter((item) => item !== status)
@@ -104,6 +106,13 @@ const ProductListView = () => {
     setMaxPrice("");
     setSelectedCategory("");
     setSelectedRatings([]);
+  };
+
+  const getCategoryName = (id: string) => {
+    if (id === "") return "All Categories";
+    return (
+      data?.data?.find((item) => item._id === id)?.name || "Unknown Category"
+    );
   };
 
   return (
@@ -176,7 +185,9 @@ const ProductListView = () => {
             <Box display="flex" gap={2} flexWrap="wrap">
               {searchTerm && <Typography>Search: {searchTerm}</Typography>}
               {selectedCategory && (
-                <Typography>Category: {selectedCategory}</Typography>
+                <Typography>
+                  Category: {getCategoryName(selectedCategory)}
+                </Typography>
               )}
               {availability.length > 0 && (
                 <Typography>Availability: {availability.join(", ")}</Typography>

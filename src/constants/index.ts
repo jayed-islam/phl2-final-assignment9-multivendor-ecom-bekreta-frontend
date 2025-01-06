@@ -200,4 +200,8 @@ export const menuArray = [
       },
     ],
   },
+  {
+    name: "Contact Us",
+    link: "/contact",
+  },
 ];

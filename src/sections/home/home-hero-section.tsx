@@ -14,6 +14,8 @@ import banner5 from "../../../public/banner/banner.jpg";
 import { homeHeroSetting } from "@/components/slick-carousel";
 
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import Link from "next/link";
+import { paths } from "@/layouts/paths";
 
 const HomeHeroSection = () => {
   const banners = [banner1, bannere, banner2, banner3, banner4, banner5];
@@ -39,9 +41,10 @@ const HomeHeroSection = () => {
           width: "100%",
           overflow: "hidden",
           height: {
-            xs: "300px",
+            xs: "auto",
             lg: "351px",
           },
+          // height: 400,
         }}
       >
         <div
@@ -64,14 +67,20 @@ const HomeHeroSection = () => {
         </div>
         <Slider {...homeHeroSetting} ref={sliderRef}>
           {banners.map((banner, idx) => (
-            <Box key={idx} sx={{ width: "100%", position: "relative" }}>
-              <Image
-                src={banner}
-                alt={`Banner ${idx + 1}`}
-                layout="responsive"
-                width={500}
-                height={500}
-              />
+            <Box
+              key={idx}
+              sx={{ width: "100%", height: "100%", bgcolor: "gray" }}
+            >
+              <Link href={paths.product.root} className="h-full">
+                <Image
+                  src={banner}
+                  alt={`Banner ${idx + 1}`}
+                  layout="responsive"
+                  width={500}
+                  height={500}
+                  className="h-full"
+                />
+              </Link>
             </Box>
           ))}
         </Slider>
