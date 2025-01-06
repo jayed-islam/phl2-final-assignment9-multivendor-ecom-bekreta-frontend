@@ -24,7 +24,10 @@ const HomeCategorySection = () => {
     useGetCategoriesQuery();
 
   return (
-    <section className="px-5 2xl:px-0 max-w-5xl mx-auto mt-11 md:mt-16">
+    <section
+      className="px-5 2xl:px-0 max-w-5xl mx-auto mt-11 md:mt-16"
+      id="category"
+    >
       <h2 className="text-2xl font-bold text-center mb-6">
         Explore Categories
       </h2>

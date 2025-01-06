@@ -28,7 +28,7 @@ const HomeNewArrivalProductSection = ({ isFetching, products }: Props) => {
   };
 
   return (
-    <section className="px-5 xl:px-0 mt-11 md:mt-16 lg:mt-20">
+    <section className="px-5 xl:px-0 mt-11 md:mt-16 lg:mt-20" id="new">
       <div className="max-w-5xl mx-auto w-full">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold">New Arrival</h2>

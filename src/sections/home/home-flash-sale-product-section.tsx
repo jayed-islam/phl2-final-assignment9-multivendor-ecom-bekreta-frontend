@@ -37,7 +37,7 @@ const HomeFlashSaleProductSection = ({ isFetching, products }: Props) => {
   const { days, hours, minutes, seconds } = formatTime(timeLeft);
 
   return (
-    <div className="bg-gray-100 mt-11 md:mt-16 lg:mt-20 ">
+    <div className="bg-gray-100 mt-11 md:mt-16 lg:mt-20" id="flash">
       <section className="py-11 px-5 2xl:px-0 max-w-5xl mx-auto">
         <div className="flex flex-col items-center mb-6">
           <h2 className="text-2xl font-bold text-center">Flash Sale</h2>

@@ -56,7 +56,7 @@ const ProductCard = ({ product }: Props) => {
     <>
       <Link
         href={`/products/${product._id}`}
-        className="bg-white shadow border rounded flex flex-col items-center justify-center"
+        className="bg-white shadow border rounded flex flex-col items-center justify-center group"
       >
         <div className="relative w-full md:h-48 h-38 bg-gray-100 rounded overflow-hidden">
           <Link href={`/products/${product._id}`} className="h-full w-full">
@@ -68,11 +68,10 @@ const ProductCard = ({ product }: Props) => {
               width={500}
             />
           </Link>
-          <div className="absolute top-2 right-2 rounded-full border border-primary bg-green-100">
+          <div className="absolute top-2 right-2 rounded-full border border-primary bg-green-100 group-hover:translate-y-5 transition-all duration-300">
             <Tooltip title="Add to Cart" arrow>
               <IconButton
                 color="primary"
-                // onClick={() => handleAddToCart(cartItem)}
                 onClick={(e) => {
                   e.preventDefault();
                   handleAddToCart(cartItem);

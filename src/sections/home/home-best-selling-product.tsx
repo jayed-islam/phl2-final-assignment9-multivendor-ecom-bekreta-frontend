@@ -15,7 +15,10 @@ interface Props {
 
 const BestSellingProducts = ({ isFetching, products }: Props) => {
   return (
-    <section className="px-5 2xl:px-0 max-w-5xl mx-auto pt-11  md:pt-16 lg:pt-20">
+    <section
+      className="px-5 2xl:px-0 max-w-5xl mx-auto pt-11  md:pt-16 lg:pt-20"
+      id="best"
+    >
       <h2 className="text-2xl font-bold text-center mb-6">
         Best selling products
       </h2>

@@ -27,7 +27,7 @@ const VendorAccountView = () => {
       <Card
         sx={{
           width: "100%",
-          maxWidth: 800,
+          maxWidth: "100%",
           p: 3,
           mb: 4,
         }}

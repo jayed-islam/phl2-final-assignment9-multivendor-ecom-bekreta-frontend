@@ -1,537 +1,202 @@
-// export const menuData = [
-//   {
-//     title: "Desktop",
-//     link: "https://www.startech.com.bd/desktops",
-//     subMenu: [
-//       {
-//         title: "Desktop Offer",
-//         link: "https://www.startech.com.bd/special-pc",
-//       },
-//       {
-//         title: "Star PC",
-//         link: "https://www.startech.com.bd/desktops/star-pc",
-//         subMenu: [
-//           { title: "Intel PC", link: "https://www.startech.com.bd/intel-pc" },
-//           { title: "Ryzen PC", link: "https://www.startech.com.bd/ryzen-pc" },
-//         ],
-//       },
-//       {
-//         title: "Gaming PC",
-//         link: "https://www.startech.com.bd/desktops/gaming-pc",
-//         subMenu: [
-//           {
-//             title: "Intel PC",
-//             link: "https://www.startech.com.bd/desktops/gaming-pc/intel-gaming-pc",
-//           },
-//           {
-//             title: "RYZEN PC",
-//             link: "https://www.startech.com.bd/desktops/gaming-pc/amd-gaming-pc",
-//           },
-//         ],
-//       },
-//       {
-//         title: "Brand PC",
-//         link: "https://www.startech.com.bd/desktops/brand-pc",
-//         subMenu: [
-//           {
-//             title: "Acer",
-//             link: "https://www.startech.com.bd/desktops/brand-pc/acer-desktop",
-//           },
-//           {
-//             title: "Asus",
-//             link: "https://www.startech.com.bd/desktops/brand-pc/asus-desktop",
-//           },
-//           {
-//             title: "Dell",
-//             link: "https://www.startech.com.bd/desktops/brand-pc/dell-desktop",
-//           },
-//           {
-//             title: "HP",
-//             link: "https://www.startech.com.bd/desktops/brand-pc/hp-desktop",
-//           },
-//           {
-//             title: "Lenovo",
-//             link: "https://www.startech.com.bd/desktops/brand-pc/lenovo-desktop",
-//           },
-//           { title: "MSI", link: "https://www.startech.com.bd/msi-brand-pc" },
-//         ],
-//       },
-//       {
-//         title: "All-in-One PC",
-//         link: "https://www.startech.com.bd/desktops/all-in-one-pc",
-//         subMenu: [
-//           {
-//             title: "DELL",
-//             link: "https://www.startech.com.bd/desktops/all-in-one-pc/dell-all-in-one",
-//           },
-//           {
-//             title: "Microsoft",
-//             link: "https://www.startech.com.bd/microsoft-all-in-one-pc",
-//           },
-//           {
-//             title: "MSI",
-//             link: "https://www.startech.com.bd/msi-all-in-one-pc",
-//           },
-//           {
-//             title: "HP",
-//             link: "https://www.startech.com.bd/desktops/all-in-one-pc/hp-all-in-one",
-//           },
-//           {
-//             title: "ASUS",
-//             link: "https://www.startech.com.bd/desktops/all-in-one-pc/asus-all-in-one",
-//           },
-//           {
-//             title: "LENOVO",
-//             link: "https://www.startech.com.bd/desktops/all-in-one-pc/lenovo-all-in-one",
-//           },
-//           {
-//             title: "Walton",
-//             link: "https://www.startech.com.bd/walton-all-in-one-pc",
-//           },
-//           {
-//             title: "Teclast",
-//             link: "https://www.startech.com.bd/teclast-all-in-one-pc",
-//           },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     title: "alu",
-//     link: "https://www.startech.com.bd/desktops",
-//     subMenu: [
-//       {
-//         title: "Desktop Offer",
-//         link: "https://www.startech.com.bd/special-pc",
-//       },
-//       {
-//         title: "Star PC",
-//         link: "https://www.startech.com.bd/desktops/star-pc",
-//         subMenu: [
-//           { title: "Intel PC", link: "https://www.startech.com.bd/intel-pc" },
-//           { title: "Ryzen PC", link: "https://www.startech.com.bd/ryzen-pc" },
-//         ],
-//       },
-//       {
-//         title: "Gaming PC",
-//         link: "https://www.startech.com.bd/desktops/gaming-pc",
-//         subMenu: [
-//           {
-//             title: "Intel PC",
-//             link: "https://www.startech.com.bd/desktops/gaming-pc/intel-gaming-pc",
-//           },
-//           {
-//             title: "RYZEN PC",
-//             link: "https://www.startech.com.bd/desktops/gaming-pc/amd-gaming-pc",
-//           },
-//         ],
-//       },
-//       {
-//         title: "Brand PC",
-//         link: "https://www.startech.com.bd/desktops/brand-pc",
-//         subMenu: [
-//           {
-//             title: "Acer",
-//             link: "https://www.startech.com.bd/desktops/brand-pc/acer-desktop",
-//           },
-//           {
-//             title: "Asus",
-//             link: "https://www.startech.com.bd/desktops/brand-pc/asus-desktop",
-//           },
-//           {
-//             title: "Dell",
-//             link: "https://www.startech.com.bd/desktops/brand-pc/dell-desktop",
-//           },
-//           {
-//             title: "HP",
-//             link: "https://www.startech.com.bd/desktops/brand-pc/hp-desktop",
-//           },
-//           {
-//             title: "Lenovo",
-//             link: "https://www.startech.com.bd/desktops/brand-pc/lenovo-desktop",
-//           },
-//           { title: "MSI", link: "https://www.startech.com.bd/msi-brand-pc" },
-//         ],
-//       },
-//       {
-//         title: "All-in-One PC",
-//         link: "https://www.startech.com.bd/desktops/all-in-one-pc",
-//         subMenu: [
-//           {
-//             title: "DELL",
-//             link: "https://www.startech.com.bd/desktops/all-in-one-pc/dell-all-in-one",
-//           },
-//           {
-//             title: "Microsoft",
-//             link: "https://www.startech.com.bd/microsoft-all-in-one-pc",
-//           },
-//           {
-//             title: "MSI",
-//             link: "https://www.startech.com.bd/msi-all-in-one-pc",
-//           },
-//           {
-//             title: "HP",
-//             link: "https://www.startech.com.bd/desktops/all-in-one-pc/hp-all-in-one",
-//           },
-//           {
-//             title: "ASUS",
-//             link: "https://www.startech.com.bd/desktops/all-in-one-pc/asus-all-in-one",
-//           },
-//           {
-//             title: "LENOVO",
-//             link: "https://www.startech.com.bd/desktops/all-in-one-pc/lenovo-all-in-one",
-//           },
-//           {
-//             title: "Walton",
-//             link: "https://www.startech.com.bd/walton-all-in-one-pc",
-//           },
-//           {
-//             title: "Teclast",
-//             link: "https://www.startech.com.bd/teclast-all-in-one-pc",
-//           },
-//         ],
-//       },
-//     ],
-//   },
-// ];
+import { paths } from "@/layouts/paths";
+
 export const menuArray = [
   {
-    name: "Desktop",
-    link: "https://www.startech.com.bd/desktops",
+    name: "Home",
+    link: paths.root,
     subItems: [
       {
-        name: "Desktop Offer",
-        link: "https://www.startech.com.bd/special-pc",
+        name: "Home",
+        link: "/",
       },
       {
-        name: "Star PC",
-        link: "https://www.startech.com.bd/desktops/star-pc",
-        subItems: [
-          {
-            name: "Intel PC",
-            link: "https://www.startech.com.bd/intel-pc",
-          },
-          {
-            name: "Ryzen PC",
-            link: "https://www.startech.com.bd/ryzen-pc",
-          },
-        ],
+        name: "Hero Section",
+        link: "/#hero",
       },
       {
-        name: "Apple Mac Mini",
-        link: "https://www.startech.com.bd/apple-mac-mini",
+        name: "Categories",
+        link: "/#category",
       },
       {
-        name: "Show All Desktop",
-        link: "https://www.startech.com.bd/desktops",
-        className: "see-all",
+        name: "Flash Sale",
+        link: "/#flash",
+      },
+      {
+        name: "New Arrival",
+        link: "/#new",
+      },
+      {
+        name: "Best Selling",
+        link: "/#best",
+      },
+      {
+        name: "Offers",
+        link: "/#offer",
+      },
+      {
+        name: "Products",
+        link: "/#product",
       },
     ],
   },
   {
-    name: "Laptop",
-    link: "https://www.startech.com.bd/laptop-notebook",
+    name: "Pages",
+    link: "/",
     subItems: [
       {
-        name: "All Laptop",
-        link: "https://www.startech.com.bd/laptop-notebook/laptop",
-        subItems: [
-          {
-            name: "AVITA Laptop",
-            link: "https://www.startech.com.bd/avita-laptop",
-          },
-          {
-            name: "Lenovo",
-            link: "https://www.startech.com.bd/lenovo-laptop",
-          },
-          {
-            name: "MSI",
-            link: "https://www.startech.com.bd/laptop-notebook/laptop/msi-laptop",
-          },
-          {
-            name: "Walton",
-            link: "https://www.startech.com.bd/walton-laptop",
-          },
-        ],
+        name: "Carts",
+        link: paths.cart.root,
       },
       {
-        name: "Show All Laptop",
-        link: "https://www.startech.com.bd/laptop-notebook",
-        className: "see-all",
+        name: "Checkout",
+        link: paths.checkout.root,
+      },
+      {
+        name: "Comparison Product",
+        link: "/comparison-product",
+      },
+      {
+        name: "Recent Viewed",
+        link: "/recent-viewed",
+      },
+      {
+        name: "All Shops",
+        link: "/all-vendors",
+      },
+
+      {
+        name: "Flash Sale",
+        link: "/flash-sale",
       },
     ],
   },
   {
-    name: "Server & Storage",
-    link: "https://www.startech.com.bd/server-networking",
+    name: "Categories",
+    link: "/products",
     subItems: [
       {
-        name: "Server",
-        link: "https://www.startech.com.bd/server-networking/server",
-        subItems: [
-          {
-            name: "Dell",
-            link: "https://www.startech.com.bd/server-networking/server/dell-server",
-          },
-          {
-            name: "HPE",
-            link: "https://www.startech.com.bd/hpe-server",
-          },
-          {
-            name: "Cisco",
-            link: "https://www.startech.com.bd/server-networking/server/cisco-server",
-          },
-          {
-            name: "ASUS",
-            link: "https://www.startech.com.bd/asus-server",
-          },
-        ],
+        name: "Hoodie",
+        link: "/products?category=67504fe49657b87c96814887",
       },
       {
-        name: "Server HDD",
-        link: "https://www.startech.com.bd/server-hdd",
+        name: "Full Sleeve",
+        link: "/products?category=675a11ce451b95534f479056",
       },
       {
-        name: "Show All Server & Storage",
-        link: "https://www.startech.com.bd/server-networking",
-        className: "see-all",
+        name: "Watch",
+        link: "/products?category=675b341cf1b66f28aeb78b68",
+      },
+      {
+        name: "I-phone",
+        link: "/products?category=675b347ff1b66f28aeb78b6e",
+      },
+      {
+        name: "Vagetable",
+        link: "/products?category=675b3636f1b66f28aeb78b74",
+      },
+      {
+        name: "Baby Item",
+        link: "/products?category=675b36d8f1b66f28aeb78b7a",
+      },
+      {
+        name: "Prayer Tupi",
+        link: "/products?category=675b3749f1b66f28aeb78b80",
+      },
+      {
+        name: "Attar",
+        link: "/products?category=677c3542c223e8be16fc4a79",
+      },
+      {
+        name: "Gadgets",
+        link: "/products?category=677c35c2c223e8be16fc4a9b",
       },
     ],
   },
   {
-    name: "Security",
-    link: "https://www.startech.com.bd/Security-Camera",
+    name: "Services",
+    link: "/",
     subItems: [
       {
-        name: "Portable WiFi Camera",
-        link: "https://www.startech.com.bd/wifi-camera",
-        subItems: [
-          {
-            name: "Dahua",
-            link: "https://www.startech.com.bd/dahua-wifi-camera",
-          },
-          {
-            name: "EZVIZ",
-            link: "https://www.startech.com.bd/ezviz-wifi-camera",
-          },
-          {
-            name: "Jovision",
-            link: "https://www.startech.com.bd/jovision-wifi-camera",
-          },
-          {
-            name: "TP-Link",
-            link: "https://www.startech.com.bd/tp-link-wifi-camera",
-          },
-          {
-            name: "SriHome",
-            link: "https://www.startech.com.bd/srihome-wifi-camera",
-          },
-          {
-            name: "Tenda",
-            link: "https://www.startech.com.bd/tenda-wifi-camera",
-          },
-          {
-            name: "Xiaomi",
-            link: "https://www.startech.com.bd/xiaomi-wifi-camera",
-          },
-          {
-            name: "Uniview",
-            link: "https://www.startech.com.bd/uniview-wifi-camera",
-          },
-          {
-            name: "Vimtag",
-            link: "https://www.startech.com.bd/vimtag-wifi-camera",
-          },
-        ],
+        name: "FAQ",
+        link: "/faq",
       },
       {
-        name: "IP Camera",
-        link: "https://www.startech.com.bd/Security-Camera/ip-camera",
-        subItems: [
-          {
-            name: "Dahua",
-            link: "https://www.startech.com.bd/Security-Camera/ip-camera/Dahua-IPCamera",
-          },
-          {
-            name: "Jovision",
-            link: "https://www.startech.com.bd/Security-Camera/ip-camera/Jovision-IPCamera",
-          },
-          {
-            name: "Hikvision",
-            link: "https://www.startech.com.bd/Security-Camera/ip-camera/Hikvision-IPCamera",
-          },
-          {
-            name: "Havit",
-            link: "https://www.startech.com.bd/havit-ip-camera",
-          },
-          {
-            name: "Uniview",
-            link: "https://www.startech.com.bd/uniview-ip-camera",
-          },
-          {
-            name: "TP-Link",
-            link: "https://www.startech.com.bd/tp-link-ip-camera",
-          },
-          {
-            name: "Tiandy",
-            link: "https://www.startech.com.bd/tiandy-ip-camera",
-          },
-        ],
+        name: "About Us",
+        link: "/about-us",
       },
       {
-        name: "CC Camera",
-        link: "https://www.startech.com.bd/Security-Camera/cc-camera",
-        subItems: [
-          {
-            name: "Dahua",
-            link: "https://www.startech.com.bd/Security-Camera/cc-camera/dahua-cc-camera",
-          },
-          {
-            name: "Jovision",
-            link: "https://www.startech.com.bd/Security-Camera/cc-camera/jovision-cc-camera",
-          },
-          {
-            name: "Uniview",
-            link: "https://www.startech.com.bd/uniview-cc-camera",
-          },
-          {
-            name: "Hikvision",
-            link: "https://www.startech.com.bd/Security-Camera/cc-camera/hikvision-cc-camera",
-          },
-          {
-            name: "ARMOR",
-            link: "https://www.startech.com.bd/armor-cc-camera",
-          },
-        ],
+        name: "Privacy policy",
+        link: "/privacy-policy",
       },
     ],
   },
   {
-    name: "Monitor",
-    link: "https://www.startech.com.bd/monitor",
+    name: "Products",
+    link: "/products",
     subItems: [
-      { name: "MSI", link: "https://www.startech.com.bd/monitor/msi" },
-      { name: "AOC", link: "https://www.startech.com.bd/aoc-monitor" },
-      { name: "Dahua", link: "https://www.startech.com.bd/dahua-monitor" },
       {
-        name: "PC Power",
-        link: "https://www.startech.com.bd/pc-power-monitor",
+        name: "Baby Crib",
+        link: "/products/675c106f235fde4603320c4c",
       },
       {
-        name: "Show All Monitor",
-        link: "https://www.startech.com.bd/monitor",
-        isShowAll: true,
+        name: "Baby Stroller",
+        link: "/products/675c1015235fde4603320c38",
+      },
+      {
+        name: "iPhone 19 Pro Max",
+        link: "/products/675c0f16235fde4603320c1e",
+      },
+      {
+        name: "iPhone 14 Pro Max",
+        link: "/products/675c0f0e235fde4603320c14",
+      },
+      {
+        name: "Baby Feeding Set",
+        link: "/products/675c10d0235fde4603320c60",
       },
     ],
   },
   {
-    name: "Office Equipment",
-    link: "https://www.startech.com.bd/office-equipment",
+    name: "Baby Products",
+    link: "/products?category=67504fe49657b87c96814887",
     subItems: [
       {
-        name: "Projector",
-        link: "https://www.startech.com.bd/projector",
-        subItems: [
-          {
-            name: "InFocus",
-            link: "https://www.startech.com.bd/projector/infocus",
-          },
-          {
-            name: "XINJI",
-            link: "https://www.startech.com.bd/xinji-projector",
-          },
-          {
-            name: "Projection Screen",
-            link: "https://www.startech.com.bd/projection-screen",
-          },
-          {
-            name: "Projector Mount",
-            link: "https://www.startech.com.bd/projector-mount",
-          },
-        ],
-      },
-      { name: "Video Wall", link: "https://www.startech.com.bd/video-wall" },
-      {
-        name: "Signage",
-        link: "https://www.startech.com.bd/office-equipment/signage",
-        subItems: [
-          { name: "BenQ", link: "https://www.startech.com.bd/benq-signage" },
-          {
-            name: "ViewSonic",
-            link: "https://www.startech.com.bd/viewsonic-signage",
-          },
-          { name: "LG", link: "https://www.startech.com.bd/lg-signage" },
-          {
-            name: "Panasonic",
-            link: "https://www.startech.com.bd/panasonic-signage",
-          },
-        ],
+        name: "Baby Feeding Set",
+        link: "/products/675c10d0235fde4603320c60",
       },
       {
-        name: "Laser Printer",
-        link: "https://www.startech.com.bd/laser-printer",
+        name: "Baby Stroller",
+        link: "/products/675c1015235fde4603320c38",
       },
+    ],
+  },
+  {
+    name: "I-Phone",
+    link: "/products?category=675b347ff1b66f28aeb78b6e",
+    subItems: [
       {
-        name: "Large Format Printer",
-        link: "https://www.startech.com.bd/large-format-printer",
+        name: "iPhone 19 Pro Max",
+        link: "/products/675c0f16235fde4603320c1e",
       },
+    ],
+  },
+  {
+    name: "Watch",
+    link: "/products?category=675b341cf1b66f28aeb78b68",
+    subItems: [
       {
-        name: "Cartridge",
-        link: "https://www.startech.com.bd/cartridge",
-        subItems: [
-          {
-            name: "Canon",
-            link: "https://www.startech.com.bd/canon-cartridge",
-          },
-          {
-            name: "Epson",
-            link: "https://www.startech.com.bd/epson-cartridge",
-          },
-          { name: "HP", link: "https://www.startech.com.bd/hp-cartridge" },
-          {
-            name: "Brother",
-            link: "https://www.startech.com.bd/brother-cartridge",
-          },
-        ],
+        name: "TechPro X5 Smartwatch",
+        link: "/products/675c018b235fde4603320ba0",
       },
+    ],
+  },
+  {
+    name: "Hoodie",
+    link: "/products?category=67504fe49657b87c96814887",
+    subItems: [
       {
-        name: "Printer Paper",
-        link: "https://www.startech.com.bd/printer-paper",
-      },
-      {
-        name: "Scanner",
-        link: "https://www.startech.com.bd/office-equipment/Scanner",
-        subItems: [
-          {
-            name: "Plustek",
-            link: "https://www.startech.com.bd/office-equipment/Scanner/plustek",
-          },
-          { name: "Canon", link: "https://www.startech.com.bd/canon-scanner" },
-          { name: "HP", link: "https://www.startech.com.bd/hp-scanner" },
-          { name: "Epson", link: "https://www.startech.com.bd/epson-scanner" },
-          {
-            name: "Brother",
-            link: "https://www.startech.com.bd/brother-scanner",
-          },
-          {
-            name: "Avision",
-            link: "https://www.startech.com.bd/office-equipment/Scanner/avision",
-          },
-          {
-            name: "Fujitsu",
-            link: "https://www.startech.com.bd/fujitsu-scanner",
-          },
-          { name: "Kodak", link: "https://www.startech.com.bd/kodak-scanner" },
-        ],
-      },
-      {
-        name: "Binding Machine",
-        link: "https://www.startech.com.bd/binding-machine",
-      },
-      {
-        name: "Show All Office Equipment",
-        link: "https://www.startech.com.bd/office-equipment",
-        isShowAll: true,
+        name: "Classic Pullover Hoodie",
+        link: "/products/6759e94e26a5749c58648c03",
       },
     ],
   },

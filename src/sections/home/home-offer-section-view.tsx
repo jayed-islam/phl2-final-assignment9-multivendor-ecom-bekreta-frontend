@@ -25,7 +25,10 @@ const HomeOfferSection: React.FC<Props> = ({ products }) => {
   };
 
   return (
-    <section className="px-5 2xl:px-0 mt-11 md:mt-16 lg:mt-20 bg-gray-100 py-11 ">
+    <section
+      className="px-5 2xl:px-0 mt-11 md:mt-16 lg:mt-20 bg-gray-100 py-11"
+      id="offer"
+    >
       <div className="max-w-5xl mx-auto">
         <h2 className="text-2xl font-bold text-center mb-6">
           Exclusive Offers

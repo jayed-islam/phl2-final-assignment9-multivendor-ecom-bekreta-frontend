@@ -58,7 +58,7 @@ const Header = () => {
       //     "0px 1px 3px 0px rgba(10, 5, 41, 0.10), 0px 1px 2px 0px rgba(10, 5, 41, 0.06)",
       // }}
 
-      className="sticky top-0 w-full py-2 border-b z-50 bg-white"
+      className="sticky top-0 w-full py-2 border-b z-50 bg-white g-[#081621]"
     >
       <div className="max-w-5xl mx-auto w-full h-full flex items-center justify-between px-5 xl:px-0">
         <Link href={paths.root} className="text-black">
@@ -67,7 +67,7 @@ const Header = () => {
         <Box
           sx={{
             display: {
-              md: "flex",
+              lg: "flex",
               xs: "none",
             },
             alignItems: "center",
@@ -107,7 +107,7 @@ const Header = () => {
             alignItems: "center",
           }}
         >
-          <div className="items-center gap-[2.5rem] hidden md:flex">
+          <div className="items-center gap-7 hidden md:flex">
             {navConfs.map((route) => (
               <Link
                 href={route.path}
@@ -119,11 +119,12 @@ const Header = () => {
               >
                 <Typography
                   color="inherit"
-                  variant="h6"
                   sx={{
+                    fontSize: 15,
                     "&:hover": {
                       textDecoration: "underline",
                     },
+                    fontWeight: 500,
                   }}
                 >
                   {route.title}

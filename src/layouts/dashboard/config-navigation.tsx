@@ -16,6 +16,7 @@ import InfoIcon from "@mui/icons-material/Info";
 export const routes = {
   admin: [
     { path: "/admin", name: "Dashboard", icon: <DashboardIcon /> },
+    { path: "/admin/profile", name: "Profile", icon: <People /> },
     { path: "/admin/users", name: "Manage Users", icon: <PeopleIcon /> },
     { path: paths.admin.products, name: "Products", icon: <InventoryIcon /> },
     { path: paths.admin.categories, name: "Categories", icon: <Category /> },
@@ -24,6 +25,7 @@ export const routes = {
   ],
   vendor: [
     { path: "/vendor", name: "Dashboard", icon: <DashboardIcon /> },
+    { path: "/vendor/profile", name: "Profile", icon: <People /> },
     {
       path: "/vendor/products",
       name: "Manage Products",

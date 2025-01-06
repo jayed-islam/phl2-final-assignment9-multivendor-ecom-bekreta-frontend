@@ -32,7 +32,7 @@ const HomeHeroSection = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto pt-5">
+    <div className="max-w-5xl mx-auto pt-5" id="hero">
       <Box
         sx={{
           position: "relative",

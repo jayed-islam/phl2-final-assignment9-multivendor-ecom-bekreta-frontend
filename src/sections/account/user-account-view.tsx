@@ -12,7 +12,7 @@ const UserAccountView = () => {
   const dialog = useBoolean();
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow border space-y-8 rounded-3xl">
+    <div className="w-full p-6 bg-white shadow border space-y-8 rounded-3xl">
       {/* Header Section */}
       <div className="flex items-center space-x-4">
         <UserProfilePicturePicker />

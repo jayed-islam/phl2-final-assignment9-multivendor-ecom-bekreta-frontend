@@ -54,7 +54,9 @@ const HeadMegaMenu = () => {
         <div className="container">
           <ul className="navbar-nav">
             {menuArray.map((menuItem, index) => {
-              const isMultiCol = menuItem.subItems.length > 8;
+              const isMultiCol =
+                Array.isArray(menuItem.subItems) &&
+                menuItem.subItems.length > 8;
               if (isMultiCol) {
                 return renderMultiColumn(menuItem);
               }

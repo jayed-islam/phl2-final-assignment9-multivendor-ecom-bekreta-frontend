@@ -8,12 +8,20 @@ export const navConfs = [
     path: paths.comparisonProduct,
   },
   {
-    title: "Recent Viewed",
+    title: "Recent",
     path: paths.product.recent,
   },
   {
     title: "Shops",
     path: paths.vendor.allVendors,
+  },
+  {
+    title: "My Account",
+    path: paths.account.root,
+  },
+  {
+    title: "Cart",
+    path: paths.cart.root,
   },
 ];
 
